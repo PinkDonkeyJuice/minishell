@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/03/14 16:03:00 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:13:35 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,16 @@ void	redir(t_data *data, size_t i)
 	}
 	else if (parent == 0)
 	{
-		close(data->pipin); // Close the read end of the pipe
 		dup2(data->pipout, 1);
+		close(data->pipin); // Close the read end of the pipe
 		exec(data, i); // Execute the command
 		exit(EXIT_FAILURE); // Exit child process after execution
 	}
 	else
 	{
+		dup2(data->pipin, 0);
 		close(data->pipout); // Close the read end of the pipe
-		dup2(data->pipin, 0); // Redirect stdout to write to the pipe
-		waitpid(parent, NULL, 0); // Wait for child process to finish
+		waitpid(-1, NULL, 0); // Wait for child process to finish
 	}
 }
 
