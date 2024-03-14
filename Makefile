@@ -4,6 +4,7 @@ CFLAGS = -Wall -Werror -Wextra -I ./includes/
 CFILES = ft_split.c\
 	libft.c\
 	main.c\
+	init.c\
 
 SRCS_DIR = ./src/
 OBJS_DIR = ./.obj/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/03/13 12:38:36 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/03/14 16:03:00 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,54 +44,100 @@ char	*get_exec_path(char *line)
 	return (NULL);
 }
 
-void	exec(int *pip, char *path, char *line, char **env)
+int	check_builtin(char *command)
 {
-	char **cmd_split;
+	char *nul;
 
-	cmd_split = ft_split(line, ' ');
-	execve(path, cmd_split, env);
+	nul = command;
+	nul++;
+	return (0);
 }
 
-void	exec_commands(char *line, char **env)
+size_t	commands_len(char **commands)
 {
-	char	**commands;
-	char	*path;
-	int		parent;
-	size_t	i;
-	int		pip[2];
+	size_t i;
 
-	commands = ft_split(line, '|');
-	if (pipe(pip) == -1)
-	{
-	    perror("Error creating the pipe");
-	    return ;
-	}
 	i = 0;
 	while (commands[i])
+		i++;
+	return (i);
+}
+
+void	exec(t_data *data, size_t i)
+{
+	char **cmd_split;
+	char	*path;
+	
+	cmd_split = ft_split(data->commands[i], ' ');
+	path = get_exec_path(data->commands[i]);
+/* 	if (!path)
+		return ; */
+	//printf("There are %ld commands\nWe are on command %ld, Pipin is %d\nPipout is %d\n", data->n_commands, i, data->pipin, data->pipout);
+	execve(path, cmd_split, data->env);
+}
+
+void	redir(t_data *data, size_t i)
+{
+	pid_t	parent;
+
+	parent = fork();
+	if (parent == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (parent == 0)
+	{
+		close(data->pipin); // Close the read end of the pipe
+		dup2(data->pipout, 1);
+		exec(data, i); // Execute the command
+		exit(EXIT_FAILURE); // Exit child process after execution
+	}
+	else
+	{
+		close(data->pipout); // Close the read end of the pipe
+		dup2(data->pipin, 0); // Redirect stdout to write to the pipe
+		waitpid(parent, NULL, 0); // Wait for child process to finish
+	}
+}
+
+void	exec_commands(t_data *data)
+{
+	char	**commands;
+	size_t	i;
+	pid_t	parent;
+	
+	commands = ft_split(data->line, '|');
+	data->commands = commands;
+	data->n_commands = commands_len(commands);
+	i = 0;
+	while (i < data->n_commands - 1)
 	{
 		if (!check_builtin(commands[i]))
-		{
-			path = get_exec_path(line);
-			parent = fork();
-			if (parent == 0)
-				exec(pip, path, line, env);
-			if (parent > 0)
-			waitpid(-1, NULL, 0);
-		}
+			redir(data, i);
 		i++;
 	}
+	parent = fork();
+	if (!parent)
+		exec(data, i);
+	if (parent)
+		waitpid(-1, NULL, 0);
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	char 	*line;
-	t_mini	data;
+	t_data	data;
 
-	init_mini(data);
+	(void)argv;
+	(void)argc;
+	init_data(&data);
+	data.env = env;
 	while ((line = readline("$>")) != NULL)
 	{
 		//check_builtin(line);
-		exec_commands(line, env);
+		data.line = line;
+		exec_commands(&data);
 	}
 	return (0);
 }
