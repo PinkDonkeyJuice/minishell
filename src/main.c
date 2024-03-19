@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/03/14 16:13:35 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:29:47 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,24 +79,45 @@ void	exec(t_data *data, size_t i)
 void	redir(t_data *data, size_t i)
 {
 	pid_t	parent;
+	int		pipe_fds[2];
 
+	if (pipe(pipefds) == -1) 
+	{
+   		perror("pipe");
+    	exit(EXIT_FAILURE);
+	}
+	dup2(pipefds[0], data->pipin);
+	data->pipout = pipefds[1];
+	data->pipin = pipefds[0];
 	parent = fork();
 	if (parent == -1)
 	{
 		perror("fork");
 		exit(EXIT_FAILURE);
 	}
-	else if (parent == 0)
+	if (parent == 0)
 	{
-		dup2(data->pipout, 1);
-		close(data->pipin); // Close the read end of the pipe
-		exec(data, i); // Execute the command
+		if (i == 0) // First command in pipeline
+		{
+			if (data->n_commands != 1)
+				dup2(data->pipout, STDOUT_FILENO);
+		}
+		else if (i == data->n_commands - 1) // Last command in pipeline
+			dup2(data->pipin, STDIN_FILENO);
+		else // Intermediate command in pipeline
+		{
+			dup2(data->pipin, STDIN_FILENO);
+			dup2(data->pipout, STDOUT_FILENO);
+		}
+		close(data->pipin);
+		close(data->pipout);
+		exec(data, i);
 		exit(EXIT_FAILURE); // Exit child process after execution
 	}
-	else
+	else if (parent > 0)
 	{
-		dup2(data->pipin, 0);
-		close(data->pipout); // Close the read end of the pipe
+		close(data->pipin);
+		close(data->pipout);
 		waitpid(-1, NULL, 0); // Wait for child process to finish
 	}
 }
@@ -105,23 +126,17 @@ void	exec_commands(t_data *data)
 {
 	char	**commands;
 	size_t	i;
-	pid_t	parent;
 	
 	commands = ft_split(data->line, '|');
 	data->commands = commands;
 	data->n_commands = commands_len(commands);
 	i = 0;
-	while (i < data->n_commands - 1)
+	while (i < data->n_commands)
 	{
 		if (!check_builtin(commands[i]))
 			redir(data, i);
 		i++;
 	}
-	parent = fork();
-	if (!parent)
-		exec(data, i);
-	if (parent)
-		waitpid(-1, NULL, 0);
 }
 
 int	main(int argc, char **argv, char **env)
