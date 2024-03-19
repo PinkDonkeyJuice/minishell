@@ -13,6 +13,12 @@
 # define STDIN 0
 # define STDOUT 1
 
+typedef struct		s_pipe
+{
+	size_t	id;
+	int		p[2];
+	struct s_pipe	*next;
+}					t_pipe;
 
 typedef struct			s_data
 {
@@ -33,5 +39,15 @@ char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	init_data(t_data *data);
+void	exec(t_data *data, size_t i);
+void	redir(t_data *data, size_t i, t_pipe **pipe_list);
+void	exec_commands(t_data *data);
+void	generate_pipes(t_pipe **pipe_list, t_data *data);
+char	*get_exec_path(char *line);
+size_t	commands_len(char **commands);
+void	create_pipe(size_t i, t_pipe **pipe_list);
+t_pipe	*access_pipe(t_pipe **pipe_list, size_t i);
+int		check_builtin(char *command);
+void	close_pipes(t_data *data, t_pipe **pipe_list);
 
 #endif

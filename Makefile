@@ -5,6 +5,9 @@ CFILES = ft_split.c\
 	libft.c\
 	main.c\
 	init.c\
+	exec.c\
+	pipes.c\
+	utils_lists.c\
 
 SRCS_DIR = ./src/
 OBJS_DIR = ./.obj/
