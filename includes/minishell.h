@@ -48,6 +48,6 @@ size_t	commands_len(char **commands);
 void	create_pipe(size_t i, t_pipe **pipe_list);
 t_pipe	*access_pipe(t_pipe **pipe_list, size_t i);
 int		check_builtin(char *command);
-void	close_pipes(t_data *data, t_pipe **pipe_list);
+void	close_other_pipes(t_data *data, t_pipe **pipe_list, size_t i);
 
 #endif

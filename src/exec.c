@@ -16,9 +16,13 @@ void	redir(t_data *data, size_t i, t_pipe **pipe_list)
 {
 	pid_t	parent;
 	int		p1;
+	int 	p0;
 
 	if (i != data->n_commands - 1)
+	{
 		p1 = access_pipe(pipe_list, i)->p[1];
+		p0 = access_pipe(pipe_list, i)->p[0];
+	}
 	parent = fork();
 	if (parent == -1)
 	{
@@ -28,20 +32,29 @@ void	redir(t_data *data, size_t i, t_pipe **pipe_list)
 	if (parent == 0)
 	{
 		if (i == 0 && data->n_commands != 1)
-			dup2(p1, STDOUT_FILENO);
-		else if (i == data->n_commands - 1 && data->n_commands != 1)
-			dup2(access_pipe(pipe_list, i -1)->p[0], STDIN_FILENO);
-		else if (data->n_commands != 1)
 		{
-			dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
+			close(p0);
 			dup2(p1, STDOUT_FILENO);
 		}
-		close_pipes(data, pipe_list);
+		else if (i == data->n_commands - 1 && data->n_commands != 1)
+		{
+			close(access_pipe(pipe_list, i -1)->p[1]);
+			dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
+			//printf("Fd in: %d, fd out : %d\n", access_pipe(pipe_list, i - 1)->p[0], access_pipe(pipe_list, i)->p[1]);		
+		}
+		else if (data->n_commands != 1)
+		{
+			close(access_pipe(pipe_list, i -1)->p[1]);
+			dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
+			close(p0);
+			dup2(p1, STDOUT_FILENO);
+		}
+		//close_other_pipes(data, pipe_list, i);
 		exec(data, i);
 	}
 	else if (parent > 0)
 	{
-		waitpid(parent, NULL, 0); // Wait for child process to finish
+		waitpid(-1, NULL, 0); // Wait for child process to finish
 	}
 }
 
