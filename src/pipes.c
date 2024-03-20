@@ -22,16 +22,13 @@ void	add_back(t_pipe **lst, t_pipe *new)
 void	create_pipe(size_t i, t_pipe **pipe_list)
 {
 	t_pipe	*new;
-	int		pip[2];
 
-	if (pipe(pip) == -1)
-		perror("pipe");
 	new = malloc(sizeof(t_pipe));
 	if (!new)
 		return ;
+	if (pipe(new->p) == -1)
+		perror("pipe");
 	new->id = i;
-	new->p[0] = pip[0];
-	new->p[1] = pip[1];
 	new->next = NULL;
 	add_back(pipe_list, new);
 }
@@ -59,22 +56,20 @@ void	generate_pipes(t_pipe **pipe_list, t_data *data)
 	while (i < data->n_commands - 1)
 	{
 		create_pipe(i, pipe_list);
+		//printf("Pipe %ld has fd in %d and fd out %d", pi->id, pi->p[0], pi->p[1]);
 		i++;
 	}
 }
 
-void	close_other_pipes(t_data *data, t_pipe **pipe_list, size_t i)
+void	close_all_pipes(t_data *data, t_pipe **pipe_list)
 {
 	size_t 	j;
 	
 	j = 0;
 	while (j < data->n_commands - 1)
 	{
-		if (j != i && j != i - 1)
-		{
-			close(access_pipe(pipe_list, j)->p[0]);
-			close(access_pipe(pipe_list, j)->p[1]);
-		}
-		i++;
+		close(access_pipe(pipe_list, j)->p[0]);
+		close(access_pipe(pipe_list, j)->p[1]);
+		j++;
 	}
 }
