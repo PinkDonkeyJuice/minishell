@@ -9,6 +9,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 # define STDIN 0
 # define STDOUT 1

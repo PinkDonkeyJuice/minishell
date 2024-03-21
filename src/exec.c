@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/03/20 16:49:06 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:59:27 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	child_proc(t_data *data, t_pipe **pipe_list, size_t i)
 		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
 		dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
 	}
-	close_all_pipes(data, pipe_list);
+	//close_all_pipes(data, pipe_list);
 	exec(data, i);
 }
 
