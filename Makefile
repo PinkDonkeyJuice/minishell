@@ -5,9 +5,12 @@ CFILES = ft_split.c\
 	libft.c\
 	main.c\
 	init.c\
-	exec.c\
-	pipes.c\
-	utils_lists.c\
+	exec/exec.c\
+	exec/pipes.c\
+	exec/utils_lists.c\
+	env/env_variables.c\
+	parsing/handle_operators.c\
+	parsing/parse_line.c
 
 SRCS_DIR = ./src/
 OBJS_DIR = ./.obj/
@@ -21,6 +24,9 @@ $(NAME): $(OBJS)
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 	mkdir -p $(OBJS_DIR)
+	mkdir -p $(OBJS_DIR)env
+	mkdir -p $(OBJS_DIR)exec
+	mkdir -p $(OBJS_DIR)parsing
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)

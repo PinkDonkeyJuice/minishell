@@ -34,6 +34,6 @@ char	*handle_env_var(char *name)
 {
 	char *value;
 
-	value = ft_substr(get_env(name), ft_strlen(name) + 1, ft_strlen(get_env(name)));
+	value = ft_substr(getenv(name), ft_strlen(name) + 1, ft_strlen(getenv(name)));
 	return (value);
 }
