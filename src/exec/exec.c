@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/03/22 16:19:27 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/03 14:36:15 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,28 @@ void	child_proc(t_data *data, t_pipe **pipe_list, size_t i)
 {
 	if (i == 0)
 	{
-		if (data->fdin)
+		if (data->fdin != -1)
 			dup2(data->fdin, STDIN_FILENO);
 		if (data->n_commands == 1)
 			exec(data, i);
 		dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
+		close(access_pipe(pipe_list, i)->p[0]);
 	}
 	else if (i == data->n_commands - 1)
 	{
 		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
-		if (data->fdout)
+		close(access_pipe(pipe_list, i - 1)->p[1]);
+		if (data->fdout != -1)
 			dup2(data->fdout, 1);
 	}
 	else
 	{
+		close(access_pipe(pipe_list, i - 1)->p[1]);
 		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
-		dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
+		dup2(access_pipe(pipe_list, i)->p[0], STDOUT_FILENO);
+		close(access_pipe(pipe_list, i)->p[1]);
 	}
-	//close_all_pipes(data, pipe_list);
+	//close_all_pipes(data, pipe_list, i);
 	exec(data, i);
 }
 
@@ -72,7 +76,7 @@ void	redir(t_data *data, t_pipe **pipe_list)
 		child_proc(data, pipe_list, i);
 	else if (parent > 0)
 	{
-		close_all_pipes(data, pipe_list);
+		close_all_pipes(data, pipe_list, -1);
 		waitpid(parent, NULL, 0);
 	}
 }
@@ -87,7 +91,7 @@ void	exec_commands(t_data *data)
 	data->n_commands = commands_len(commands);
 	pipe_list = NULL;
 	generate_pipes(&pipe_list, data);
-	data->fdin = open("input.txt", O_RDWR | O_APPEND | O_CREAT, 0644);
-	data->fdout = open("output.txt", O_RDWR | O_APPEND | O_CREAT, 0644);
+	//data->fdin = open("input.txt", O_RDWR | O_APPEND , 0644);
+	//data->fdout = open("output.txt", O_RDWR | O_APPEND | O_CREAT, 0644);
 	redir(data, &pipe_list);
 }

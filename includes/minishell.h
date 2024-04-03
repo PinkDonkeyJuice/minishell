@@ -11,6 +11,8 @@
 # include <unistd.h>
 # include <stdbool.h>
 
+# include "./get_next_line.h"
+
 # define STDIN 0
 # define STDOUT 1
 
@@ -49,6 +51,16 @@ size_t	commands_len(char **commands);
 void	create_pipe(size_t i, t_pipe **pipe_list);
 t_pipe	*access_pipe(t_pipe **pipe_list, size_t i);
 int		check_builtin(char *command);
-void	close_all_pipes(t_data *data, t_pipe **pipe_list);
+void	close_all_pipes(t_data *data, t_pipe **pipe_list, size_t i);
+char	*get_next_line(int fd);
+
+size_t	end_line(char *str);
+char	*clean(char *str);
+char	*ft_strdup(const char *str);
+char	*append_stock(char *buffer, char *stock);
+char	*ft_strstr(char *str, size_t start, size_t end);
+char	*get_next_line(int fd);
+char	*sub_line(char *stock);
+size_t	ft_strlen(const char *str);
 
 #endif

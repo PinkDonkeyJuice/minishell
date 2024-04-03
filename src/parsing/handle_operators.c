@@ -19,7 +19,7 @@ void	handle_operators(t_data *data, char *path_in, char *path_out, char delim, b
 		data->fdout = open(path_out, O_RDWR, O_APPEND, O_CREAT, 0644);
 	else
 		data->fdout = open(path_out, O_RDWR, O_CREAT, 0644);
-	if (data->fdin = open(path_in, O_RDONLY, 0644) == -1)
+	if ((data->fdin = open(path_in, O_RDONLY, 0644)) == -1)
 	{
 		perror("Opening input file: ");
 		exit(-1);

@@ -1,16 +1,18 @@
 NAME = minishell
 RLINEFLAGS = -lreadline
 CFLAGS = -Wall -Werror -Wextra -I ./includes/
-CFILES = ft_split.c\
-	libft.c\
-	main.c\
-	init.c\
+CFILES = utils/ft_split.c\
+	utils/libft.c\
+	exec/main.c\
+	exec/init.c\
 	exec/exec.c\
 	exec/pipes.c\
 	exec/utils_lists.c\
 	env/env_variables.c\
-	parsing/handle_operators.c\
-	parsing/parse_line.c
+	# parsing/handle_operators.c\
+	# parsing/parse_line.c\
+	# utils/GNL/get_next_line\
+	# utils/GNL/get_next_line_utils.c
 
 SRCS_DIR = ./src/
 OBJS_DIR = ./.obj/
@@ -27,6 +29,8 @@ $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 	mkdir -p $(OBJS_DIR)env
 	mkdir -p $(OBJS_DIR)exec
 	mkdir -p $(OBJS_DIR)parsing
+	mkdir -p $(OBJS_DIR)utils
+	mkdir -p $(OBJS_DIR)utils/GNL
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
