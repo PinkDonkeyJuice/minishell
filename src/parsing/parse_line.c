@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/15 13:35:29 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:02:18 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,5 +247,5 @@ t_command	*parse_line(char *line, t_data *data)
 		j++;
 	}
 	parsed[j].command = NULL;
-	return (parsed);
+	return ((free(line), finish_parsing(parsed)));
 }
