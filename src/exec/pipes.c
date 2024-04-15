@@ -61,18 +61,18 @@ void	generate_pipes(t_pipe **pipe_list, t_data *data)
 	}
 }
 
-void	close_all_pipes(t_data *data, t_pipe **pipe_list, size_t i)
+void	close_all_pipes(t_data *data, t_pipe **pipe_list, size_t i, size_t j)
 {
-	size_t 	j;
+	size_t 	fd;
 	
-	j = 0;
-	while (j < data->n_commands - 1)
+	fd = 0;
+	while (fd < data->n_commands - 1)
 	{
-		if (i + 1 == i + 1)
+		if (fd != j && fd != i)
 		{
-			close(access_pipe(pipe_list, j)->p[0]);
-			close(access_pipe(pipe_list, j)->p[1]);
+			close(access_pipe(pipe_list, fd)->p[0]);
+			close(access_pipe(pipe_list, fd)->p[1]);
 		}
-		j++;
+		fd++;
 	}
 }

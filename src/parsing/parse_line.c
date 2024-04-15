@@ -6,35 +6,56 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/03/22 16:22:13 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/08 17:31:37 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		count_args(char *line)
+int        count_args(char *line)
 {
-	int		i;
-	int		count;
+    int        i;
+    int        count;
 
-	i = 0;
-	count = 0;
-	while (line[i])
-	{
-		if ((line[i + 1] != ' ' && line[i] == ' ')
-			|| (i == 0 && line[i] != ' '))
-		{
-			count++;
-		}
-		if (line[i] == '\"')
-		{
-			i++;
-			while(line[i] && line[i] != '\"')
-				i++;
-		}
-		i++;
-	}
-	return (count);
+    i = 0;
+    count = 0;
+    while (line[i])
+    {
+        if ((line[i + 1] != ' ' && line[i] == ' ' && line[i + 1] != '|'
+			&& line[i + 1] != '<' && line[i + 1] != '>')
+            || (i == 0 && line[i] != ' '))
+        {
+            count++;
+        }
+        if (line[i] == '|')
+            count++;
+        if (line[i] == '|' && line[i + 1] != ' ' && line[i + 1])
+            count++;
+		if (line[i] == '<' && line[i + 1] != '<')
+        	count++;
+		if (line[i] == '<' && line[i + 1] != '<'
+			&& line[i + 1] != ' ' && line[i + 1])
+            count++;
+		if (line[i] == '>' && line[i + 1] != '>')
+        	count++;
+		if (line[i] == '>' && line[i + 1] != '>'
+			&& line[i + 1] != ' ' && line[i + 1])
+            count++;
+        if (line[i] == '\"')
+        {
+            i++;
+            while(line[i] && line[i] != '\"')
+                i++;
+        }
+        if (line[i] == '\'')
+        {
+            i++;
+            while(line[i] && line[i] != '\'')
+                i++;
+        }
+        i++;
+    }
+    return (count);
 }
 
 int	len_to_next(char *line)
@@ -44,9 +65,44 @@ int	len_to_next(char *line)
 	i = 0;
 	while (line[i] == ' ')
 		i++;
+	if (line[i] == '|')
+    {
+		i++;
+		if (line[i] != ' ')
+			return (i);
+    }
+	if (line[i] == '<')
+    {
+		i++;
+		if (line[i] == '<')
+			i++;
+		if (line[i] != ' ')
+			return (i);
+    }
+	if (line[i] == '>')
+    {
+		i++;
+		if (line[i] == '>')
+			i++;
+		if (line[i] != ' ')
+			return (i);
+    }
 	while (line[i])
 	{
-		if (line[i] == ' ')
+		if (line[i] == '\"')
+        {
+            i++;
+            while(line[i] && line[i] != '\"')
+                i++;
+        }
+        if (line[i] == '\'')
+        {
+            i++;
+            while(line[i] && line[i] != '\'')
+                i++;
+        }
+		if (line[i] == ' ' || line[i] == '|'
+			|| line[i] == '<' || line[i] == '>')
 			return (i);
 		i++;
 	}
@@ -58,87 +114,136 @@ int	len_of_arg(char *line)
 	int		i;
 	int		count;
 	int	g;
+	int	g2;
 
 	count = 0;
 	i = 0;
 	g = 0;
+	g2 = 0;
 	while (line[i] == ' ')
 		i++;
+	if (line[i] == '|')
+        count++;
+	if (line[i] == '<')
+	{
+		count++;
+		if (line[i + 1] == '<')
+			count++;
+	}
+	if (line[i] == '>')
+	{
+		count++;
+		if (line[i + 1] == '>')
+			count++;
+	}
 	while (line[i])
 	{
-		if (line[i] == ' ' && g == 0)
+		if ((line[i] == ' ' || line[i] == '|'
+			|| line[i] == '<' || line[i] == '>')
+			&& g == 0 && g2 == 0)
 			return (count);
-		if (line[i] == '\"' && g == 0)
+		if (line[i] == '\"' && g == 0 && g2 == 0)
 		{
 			g = 1;
 			i++;
 		}
-		if (line[i] == '\"' && g == 1)
+		if (line[i] == '\'' && g2 == 0 && g == 0)
+		{
+			g2 = 1;
+			i++;
+		}
+		if (line[i] == '\"' && g == 1 && g2 == 0)
 			g = 0;
-		if (line[i] != '\"')
+		if (line[i] == '\'' && g2 == 1 && g == 0)
+			g2 = 0;
+		if ((line[i] != '\"' && line[i] != '\'') ||
+			(line[i] == '\"' && g2 == 1) || (line[i] == '\'' && g == 1))
 			count++;
 		i++;
 	}
 	return (count);
 }
 
-static void	free_all(char **to_free, int i_words)
+static void	free_all(t_command *to_free, int i_words)
 {
 	while (i_words >= 0)
 	{
-		free(to_free[i_words]);
+		free(to_free[i_words].command);
 		i_words--;
 	}
 	free(to_free);
 }
 
-char	*write_string(char *line, int len)
+t_command	write_string(char *line, int len)
 {
 	int		i;
 	int		j;
-	char	*send;
+	t_command	send;
 
 	i = 0;
 	j = 0;
-	send = malloc(sizeof(char) * len + 1);
+	send.op = 0;
+	send.command = malloc(sizeof(char) * len + 1);
 	while (line[i] == ' ')
 		i++;
 	while (j < len)
 	{
-		if (line[i] != '\"')
+		if (line[i] == '\"')
 		{
-			send[j] = line[i];
+			i++;
+			while (line[i] != '\"')
+			{
+				send.command[j] = line[i];
+				j++;
+				i++;
+			}
+		}		
+		if (line[i] == '\'')
+		{
+			i++;
+			while (line[i] != '\'')
+			{
+				send.command[j] = line[i];
+				j++;
+				i++;
+			}
+		}
+		if (line[i] != '\"' && line[i] != '\'')
+		{
+			send.command[j] = line[i];
+			if (send.command[j] == '<' || send.command[j] == '>')
+				send.op = 1;
 			j++;
 		}
 		i++;
 	}
-	send[j] = '\0';
+	send.command[j] = '\0';
 	return (send);
 }
 
-char	**parse_line(char *line)
+t_command	*parse_line(char *line, t_data *data)
 {
-	int		i;
-	int		j;
-	char	**parsed;
-	int		lenarg;
-	int		args;
+	int			i;
+	int			j;
+	t_command *parsed;
+	int			args;
 
 	i = 0;
 	j = 0;
+/* 	if (!checker(&line, data))
+		return (change_last_error(data, 2), NULL); */
 	args = count_args(line);
-	parsed = malloc(sizeof(char *) * (args + 1));
+	parsed = malloc(sizeof(t_command) * (args + 1));
 	if (!parsed)
 		return (NULL);
 	while (j < args)
 	{
-		lenarg = len_of_arg(&line[i]);
-		parsed[j] = write_string(&line[i], lenarg);
-		if (!parsed[j])
-			return (free_all(parsed, i), NULL);
+		parsed[j] = write_string(&line[i], len_of_arg(&line[i]));
+		if (!parsed[j].command)
+			return (free_all(parsed, j), NULL);
 		i += len_to_next(&line[i]);
 		j++;
 	}
-	parsed[j] = NULL;
+	parsed[j].command = NULL;
 	return (parsed);
 }

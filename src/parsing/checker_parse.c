@@ -1,0 +1,251 @@
+#include "minishell.h"
+
+int		check_closed_quotes(char *line)
+{
+	int	i;
+	int	g1;
+	int	g2;
+
+	i = 0;
+	g1 = 0;
+	g2 = 0;
+	while (line[i])
+	{
+		if (line[i] == '\"' && g1 == 0 && g2 == 0)
+		{
+			g1 = 1;
+			i++;
+		}
+		if (line[i] == '\'' && g2 == 0 && g1 == 0)
+		{
+			g2 = 1;
+			i++;
+		}
+		if (line[i] == '\'' && g2 == 1 && g1 == 0)
+			g2 = 0;
+		if (line[i] == '\"' && g1 == 1 && g2 == 0)
+			g1 = 0; 
+		i++;
+	}
+	if (g1 == 0 && g2 == 0)
+		return (1);
+	else
+		return (0);
+}
+
+int	check_operator(char *line)
+{
+	int	i;
+	int	o;
+
+	i = 0;
+	o = 0;
+	while (line[i])
+	{
+		if (line[i] == '\"')
+		{
+			i++;
+			while (line[i] != '\"')
+				i++;
+		}
+		if (line[i] == '\'')
+		{
+			i++;
+			while (line[i] != '\'')
+				i++;
+		}
+		if (line[i] == '>' && line[i + 1] && o == 0)
+		{
+			o = 1;
+			i++;
+			if (line[i] == '>')
+				i++;
+		}
+		if (line[i] == '<' && line[i + 1] && o == 0)
+		{
+			o = 1;
+			i++;
+			if (line[i] == '<')
+				i++;
+		}
+		if ((line[i] == '>' || line[i] == '<') && o == 1)
+		{
+			if (line[i] == '>')
+				printf("minishell: syntax error near unexpected token \'>\'\n");
+			if (line[i] == '<')
+				printf("minishell: syntax error near unexpected token \'<\'\n");
+			return (0);
+		}
+		if (line[i] != '>' && line[i] != '<' && line[i] != ' ')
+			o = 0;
+		i++;
+	}
+	return (1);
+}
+
+int		new_line_len(char *line, t_data *data)
+{
+	int	len;
+	int	i;
+	int	location;
+	char *content;
+
+	len = 0;
+	i = 0;
+	while(line[i])
+	{
+		if (line[i] != '$' && line[i] != '\'')
+			len++;
+		if (line[i] == '\'')
+		{
+			len++;
+			i++;
+			while (line[i] != '\'')
+			{
+				i++;
+				len++;
+			}
+		}
+		if (line[i] == '$')
+		{
+			if(!ft_isalnum(line[i + 1]))
+			{
+				if (line[i + 1] == '?')
+				{
+					len += num_len(data->last_error); 
+					i++;
+				}
+				i++;
+				continue ;
+			}
+			location = search_var(&line[i + 1], data);
+			if (location != -1)
+			{
+				content = cont_of_var(data->env[location]);
+				len += ft_strlen(content);
+			}
+			while (line[i + 1] != ' ' && line[i + 1] != '\"' && line[i + 1] != '\'' && line[i + 1])
+				i++;
+			continue ;
+		}
+		i++;
+	}
+	return (len);
+}
+
+char	*check_var(char *line, t_data *data)
+{
+	char	*new_line;
+	char	*content;
+	char	*num;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	new_line = malloc(sizeof(char) * (new_line_len(line, data) + 1));
+	if (!new_line)
+		return (NULL);
+	while (line[i])
+	{
+		if (line[i] == '\'')
+		{
+			new_line[j] = line[i];
+			i++;
+			j++;
+			while (line[i] != '\'' && line[i])
+			{
+				new_line[j] = line[i];
+				i++;
+				j++;
+			}
+			new_line[j] = line[i];
+			j++;
+			i++; 
+			continue ;
+		}
+		else
+		{
+			if (line[i] == '$')
+			{
+				if (!ft_isalnum(line[i + 1]))
+				{
+					if (line[i + 1] == '?')
+					{
+						i += 2;
+						num = ft_itoa(data->last_error);
+						while (*num)
+						{
+							new_line[j] = *num;
+							num++;
+							j++;
+						}
+						//free(num);
+						continue ;
+					}
+					new_line[j] = line[i];
+					i++;
+					j++;
+					continue ;
+				}
+				i++;
+				if (search_var(&line[i], data) != -1)
+				{
+					content = cont_of_var(data->env[search_var(&line[i], data)]);
+					while (*content)
+					{
+						new_line[j] = *content;
+						if (new_line[j] == '\"' || new_line[j] == '\'')
+							new_line[j] *= -1;
+						content++;
+						j++;
+					}
+				}
+				while (ft_isalnum(line[i]) && line[i])
+					i++;
+			}
+			new_line[j] = line[i];
+		}
+		if (line[i] != '\'')
+		{
+			i++;
+			j++;
+		}
+	}
+	new_line[j] = '\0';
+	free(line);
+	return (new_line);
+}
+
+t_command	*finish_parsing(t_command *parsed)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	while (parsed[i].command)
+	{
+		j = 0;
+		while (parsed[i].command[j])
+		{
+			if (parsed[i].command[j] < 0)
+				parsed[i].command[j] *= -1;
+			j++;
+		}
+		i++;
+	}
+	return (parsed);
+}
+
+int	checker(char **line, t_data *data)
+{
+	if (!check_closed_quotes(*line))
+		return (0);
+	if (!check_operator(*line))
+		return (0);
+	*line = check_var(*line, data);
+	if (!(*line))
+		return (0);
+	return (1);
+}

@@ -1,36 +1,53 @@
 NAME = minishell
 RLINEFLAGS = -lreadline
-CFLAGS = -Wall -Werror -Wextra -I ./includes/
-CFILES = utils/ft_split.c\
-	utils/libft.c\
-	exec/main.c\
-	exec/init.c\
-	exec/exec.c\
-	exec/pipes.c\
-	exec/utils_lists.c\
-	env/env_variables.c\
-	# parsing/handle_operators.c\
-	# parsing/parse_line.c\
-	# utils/GNL/get_next_line\
-	# utils/GNL/get_next_line_utils.c
+CFLAGS = -Werror -Wextra -I ./includes/
 
-SRCS_DIR = ./src/
+CFILES_UTILS = ft_split.c\
+	libft.c
+
+CFILES_EXEC = main.c\
+	init.c\
+	exec.c\
+	pipes.c\
+	utils_lists.c\
+
+CFILES_PARSING = env_variables.c\
+	parse_line.c\
+	cd.c\
+	env.c\
+	exit.c\
+	ft_itoa.c\
+	parse_utils.c\
+	checker_parse.c\
+	pwd.c\
+	search_var.c\
+
+SRCS_UTILS_DIR = ./src/utils/
+SRCS_EXEC_DIR = ./src/exec/
+SRCS_PARSING_DIR = ./src/parsing/
+
 OBJS_DIR = ./.obj/
+SRCS_UTILS = $(addprefix $(SRCS_UTILS_DIR), $(CFILES_UTILS))
+SRCS_EXEC = $(addprefix $(SRCS_EXEC_DIR), $(CFILES_EXEC))
+SRCS_PARSING = $(addprefix $(SRCS_PARSING_DIR), $(CFILES_PARSING))
 
-SRCS = $(addprefix $(SRCS_DIR), $(CFILES))
+OBJS_UTILS = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_UTILS:.c=.o)))
+OBJS_EXEC = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_EXEC:.c=.o)))
+OBJS_PARSING = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_PARSING:.c=.o)))
 
-OBJS = $(addprefix $(OBJS_DIR), $(CFILES:.c=.o))
+$(NAME): $(OBJS_UTILS) $(OBJS_EXEC) $(OBJS_PARSING)
+	$(CC) $(OBJS_UTILS) $(OBJS_EXEC) $(OBJS_PARSING) -o $(NAME) $(RLINEFLAGS)
 
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) $(RLINEFLAGS)
-
-$(OBJS_DIR)%.o: $(SRCS_DIR)%.c
+$(OBJS_DIR)%.o: $(SRCS_UTILS_DIR)%.c
 	mkdir -p $(OBJS_DIR)
-	mkdir -p $(OBJS_DIR)env
-	mkdir -p $(OBJS_DIR)exec
-	mkdir -p $(OBJS_DIR)parsing
-	mkdir -p $(OBJS_DIR)utils
-	mkdir -p $(OBJS_DIR)utils/GNL
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS_DIR)%.o: $(SRCS_EXEC_DIR)%.c
+	mkdir -p $(OBJS_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS_DIR)%.o: $(SRCS_PARSING_DIR)%.c
+	mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
