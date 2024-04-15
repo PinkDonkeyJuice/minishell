@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/15 13:18:40 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:35:29 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,9 +212,9 @@ t_command	write_string(char *line, int len)
 		{
 			send.command[j] = line[i];
 			if (send.command[j] == '<' || send.command[j] == '>')
-				send.type = 3;
-			if (send.command[j] == '|')
 				send.type = 2;
+			if (send.command[j] == '|')
+				send.type = 1;
 			j++;
 		}
 		i++;

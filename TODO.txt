@@ -1,5 +1,5 @@
 1. g: exec : finir implementation des commandes depuis data
-2. n: parsing: faire des types (0 : commande, 1 : option, 2 : pipe, 3: operator)
+2. n: parsing: faire des types (0 : commande, 1 : pipe, 2: operator)
 3. builtins : export, unset et tt ceux pas finis
 4. g : exec : gerer input output
 5. n : parsing : fix variable d'env qui s'expand mal

@@ -25,9 +25,8 @@
 # define STDOUT 1
 
 # define TYPE_COMMAND 0
-# define TYPE_OPTION 1
-# define TYPE_PIPE 2
-# define TYPE_OPERATOR 3
+# define TYPE_PIPE 1
+# define TYPE_OPERATOR 2
 
 typedef struct		s_pipe
 {
