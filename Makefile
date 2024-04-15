@@ -3,24 +3,20 @@ RLINEFLAGS = -lreadline
 CFLAGS = -Werror -Wextra -I ./includes/
 
 CFILES_UTILS = ft_split.c\
-	libft.c
+    libft.c
 
 CFILES_EXEC = main.c\
-	init.c\
-	exec.c\
-	pipes.c\
-	utils_lists.c\
+    init.c\
+    exec.c\
+    pipes.c\
+    utils_lists.c\
 
 CFILES_PARSING = env_variables.c\
-	parse_line.c\
-	cd.c\
-	env.c\
-	exit.c\
-	ft_itoa.c\
-	parse_utils.c\
-	checker_parse.c\
-	pwd.c\
-	search_var.c\
+    parse_line.c\
+    ft_itoa.c\
+    parse_utils.c\
+    checker_parse.c\
+    search_var.c\
 
 CFILES_BUILTINS = cd.c\
 	env.c\
@@ -39,27 +35,14 @@ SRCS_EXEC = $(addprefix $(SRCS_EXEC_DIR), $(CFILES_EXEC))
 SRCS_PARSING = $(addprefix $(SRCS_PARSING_DIR), $(CFILES_PARSING))
 SRCS_BUILTINS = $(addprefix $(SRCS_BUILTINS_DIR), $(CFILES_BUILTINS))
 
-OBJS_UTILS = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_UTILS:.c=.o)))
-OBJS_EXEC = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_EXEC:.c=.o)))
-OBJS_PARSING = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_PARSING:.c=.o)))
-OBJS_BUILTINS = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_BUILTINS:.c=.o)))
+ALL_SRCS = $(SRCS_UTILS) $(SRCS_EXEC) $(SRCS_PARSING) $(SRCS_BUILTINS)
 
-$(NAME): $(OBJS_UTILS) $(OBJS_EXEC) $(OBJS_PARSING) $(OBJS_BUILTINS)
-	$(CC) $(OBJS_UTILS) $(OBJS_EXEC) $(OBJS_PARSING) $(OBJS_BUILTINS) -o $(NAME) $(RLINEFLAGS)
+OBJS = $(ALL_SRCS:.c=.o)
 
-$(OBJS_DIR)%.o: $(SRCS_UTILS_DIR)%.c
-	mkdir -p $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) -o $(NAME) $(RLINEFLAGS)
 
-$(OBJS_DIR)%.o: $(SRCS_EXEC_DIR)%.c
-	mkdir -p $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJS_DIR)%.o: $(SRCS_PARSING_DIR)%.c
-	mkdir -p $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJS_DIR)%.o: $(SRCS_BUILTINS_DIR)%.c
+$(OBJS_DIR)%.o: $(ALL_SRCS)%.c
 	mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 

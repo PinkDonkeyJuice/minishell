@@ -58,7 +58,6 @@ typedef struct			s_data
 
 size_t	ft_strlen(const char *str);
 char	**ft_split(char const *s, char c);
-char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	init_data(t_data *data);
 void	exec(t_data *data, size_t i);
@@ -75,7 +74,7 @@ char	*get_next_line(int fd);
 
 size_t	end_line(char *str);
 char	*clean(char *str);
-char	*ft_strdup(const char *str);
+char	*ft_strdup(const char *s);
 char	*append_stock(char *buffer, char *stock);
 char	*ft_strstr(char *str, size_t start, size_t end);
 char	*get_next_line(int fd);
