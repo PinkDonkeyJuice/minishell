@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker_parse.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
+/*   Updated: 2024/04/11 14:48:04 by nchaize-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int		check_closed_quotes(char *line)
@@ -133,11 +145,70 @@ int		new_line_len(char *line, t_data *data)
 	return (len);
 }
 
+
+void	check_var_sq(char *line, char *new_line, int *i, int *j)
+{
+	new_line[*j] = line[*i];
+	*i += 1;
+	*j += 1;
+	while (line[*i] != '\'' && line[*i])
+	{
+		new_line[*j] = line[*i];
+		*i += 1;
+		*j += 1;
+	}
+	new_line[*j] = line[*i];
+	*i += 1;
+	*j += 1;
+	return ;
+}
+
+void	check_var_dq(char *line, char *new_line, int *i, int *j)
+{
+	new_line[*j] = line[*i];
+	*i += 1;
+	*j += 1;
+	while (line[*i] != '\"' && line[*i] && line[*i] != '$')
+	{
+		new_line[*j] = line[*i];
+		*i += 1;
+		*j += 1;
+	}
+	if (line[*i] == '$')
+		return ;
+	new_line[*j] = line[*i];
+	*i += 1;
+	*j += 1; 
+	return ;
+}
+
+void	not_an_env_var(t_data *data, char *new_line, int *i, int *j)
+{
+	char	*num;
+	
+	if (data->line[*i + 1] == '?')
+	{
+		*i += 2;
+		num = ft_itoa(data->last_error);
+		while (*num)
+		{
+			new_line[*j] = *num;
+			num++;
+			*j += 1;
+		}
+		// free(num);
+		return ;
+	}
+	new_line[*j] = data->line[*i];
+	*i += 1;
+	*j += 1;
+	return ;
+}
+
 char	*check_var(char *line, t_data *data)
 {
 	char	*new_line;
 	char	*content;
-	char	*num;
 	int		i;
 	int		j;
 
@@ -149,19 +220,10 @@ char	*check_var(char *line, t_data *data)
 	while (line[i])
 	{
 		if (line[i] == '\'')
+			check_var_sq(line, new_line, &i, &j);
+		else if (line[i] == '\"')
 		{
-			new_line[j] = line[i];
-			i++;
-			j++;
-			while (line[i] != '\'' && line[i])
-			{
-				new_line[j] = line[i];
-				i++;
-				j++;
-			}
-			new_line[j] = line[i];
-			j++;
-			i++; 
+			check_var_dq(line, new_line, &i, &j);
 			continue ;
 		}
 		else
@@ -170,22 +232,7 @@ char	*check_var(char *line, t_data *data)
 			{
 				if (!ft_isalnum(line[i + 1]))
 				{
-					if (line[i + 1] == '?')
-					{
-						i += 2;
-						num = ft_itoa(data->last_error);
-						while (*num)
-						{
-							new_line[j] = *num;
-							num++;
-							j++;
-						}
-						//free(num);
-						continue ;
-					}
-					new_line[j] = line[i];
-					i++;
-					j++;
+					not_an_env_var(data, new_line, &i, &j);
 					continue ;
 				}
 				i++;
@@ -195,7 +242,9 @@ char	*check_var(char *line, t_data *data)
 					while (*content)
 					{
 						new_line[j] = *content;
-						if (new_line[j] == '\"' || new_line[j] == '\'')
+						if (new_line[j] == '\"' || new_line[j] == '\''
+							|| new_line[j] == '|' || new_line[j] == '<'
+							|| new_line[j] == '>')
 							new_line[j] *= -1;
 						content++;
 						j++;
@@ -217,20 +266,20 @@ char	*check_var(char *line, t_data *data)
 	return (new_line);
 }
 
-t_command	*finish_parsing(t_command *parsed)
+t_commande	*finish_parsing(t_commande *parsed)
 {
 	int	i;
 	int	j;
 	
 	i = 0;
 	j = 0;
-	while (parsed[i].command)
+	while (parsed[i].commande)
 	{
 		j = 0;
-		while (parsed[i].command[j])
+		while (parsed[i].commande[j])
 		{
-			if (parsed[i].command[j] < 0)
-				parsed[i].command[j] *= -1;
+			if (parsed[i].commande[j] < 0)
+				parsed[i].commande[j] *= -1;
 			j++;
 		}
 		i++;
