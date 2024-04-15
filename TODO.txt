@@ -3,3 +3,5 @@
 3. builtins : export, unset et tt ceux pas finis
 4. g : exec : gerer input output
 5. ######## FAIT ######## n : parsing : fix variable d'env qui s'expand mal
+6. builtins : mettre l'environnement dans une liste chainée
+7. builtins : changer le parsing pour naviguer dans la liste chainée lors de la recherche de variable d'environnement
