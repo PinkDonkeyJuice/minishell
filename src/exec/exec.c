@@ -6,13 +6,13 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/15 13:09:56 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:15:30 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char **next_command(t_command *command_list, size_t i)
+char **get_commands(t_command *command_list, size_t i)
 {
 	size_t ind;
 	size_t j;
@@ -21,30 +21,36 @@ char **next_command(t_command *command_list, size_t i)
 
 	j = 0;
 	ind = 0;
-	while(ind != i)
+	while (ind != i)
 	{
-		if (command_list[i + j].type == TYPE_COMMAND || command_list[i + j].type == TYPE_OPTION)
+		if (command_list[j].type == TYPE_PIPE)
 			ind++;
 		j++;
 	}
-	n = 1;
-	while(command_list[i + j + n - 1].command != TYPE_PIPE)
+	n = 0;
+	while (command_list[j + n].type != TYPE_PIPE)
 		n++;
 	commands = malloc(sizeof(char *) * (n + 1));
-	while()
-	commands[0] = ft_strdup(command_list[i + j + 1])
+	ind = 0;
+	while (ind != n)
+	{
+		if (command_list[j + ind].type != TYPE_OPERATOR && command_list[j + ind - 1].type != TYPE_OPERATOR)
+			commands[n] = ft_strdup(command_list[j + ind].command);
+		ind++;
+	}
+	return (commands);
 }
 
 void	exec(t_data *data, size_t i)
 {
-	char **cmd_split;
+	char **commands;
 	char	*path;
 
-	cmd_split = ft_split(next_command(data->command_list, i), ' ');
-	path = get_exec_path(data->command_list);
+	commands = get_commands(data->command_list, i);
+	path = get_exec_path(commands[0]);
 	if (!path)
 		return ;
-	execve(path, cmd_split, data->env);
+	execve(path, commands, data->env);
 }
 
 void	child_proc(t_data *data, t_pipe **pipe_list, size_t i)
@@ -106,14 +112,45 @@ void	redir(t_data *data, t_pipe **pipe_list)
 		}
 	}
 
+size_t	count_pipes(t_command *command_list)
+{
+	size_t n;
+	size_t i;
 
-
-	void	exec_commands(t_data *data)
+	n = 1;
+	i = 0;
+	while (command_list[i].command != NULL)
 	{
-		t_pipe	*pipe_list;
-
-		data->n_commands = commands_len(commands);
-		pipe_list = NULL;
-		generate_pipes(&pipe_list, data);
-		redir(data, &pipe_list);
+		if (command_list[i].type == TYPE_PIPE)
+			n++;
+		i++;
 	}
+	return (n);
+}
+
+void	handle_input_output(t_data *data)
+{
+	size_t i;
+
+	i = 0;
+	while (data->command_list[i].command)
+	{
+		if (data->command_list[i].type == TYPE_OPERATOR)
+		{
+			//if (data->command_list[i].command == ft_strcmp(">"));
+			{
+				
+			}
+		}
+	}
+}
+
+void	exec_commands(t_data *data)
+{
+	t_pipe	*pipe_list;
+	
+	data->n_commands = count_pipes(data -> command_list);
+	pipe_list = NULL;
+	generate_pipes(&pipe_list, data);
+	redir(data, &pipe_list);
+}

@@ -1,2 +1,9 @@
-Je contiens des mots
-
+cat
+includes
+input.txt
+Makefile
+minishell
+output.txt
+src
+test.c
+TODO.txt
