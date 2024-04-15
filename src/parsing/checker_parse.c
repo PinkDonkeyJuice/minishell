@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/15 14:22:06 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:09:39 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,14 @@ int		new_line_len(char *line, t_data *data)
 				i++;
 				continue ;
 			}
-			location = search_var(&line[i + 1], data);
+			i++;
+			location = search_var(&line[i], data);
 			if (location != -1)
 			{
 				content = cont_of_var(data->env[location]);
 				len += ft_strlen(content);
 			}
-			while (line[i + 1] != ' ' && line[i + 1] != '\"' && line[i + 1] != '\'' && line[i + 1])
+			while (ft_isalnum(line[i]) && line[i])
 				i++;
 			continue ;
 		}
@@ -252,6 +253,7 @@ char	*check_var(char *line, t_data *data)
 				}
 				while (ft_isalnum(line[i]) && line[i])
 					i++;
+				continue ;
 			}
 			new_line[j] = line[i];
 		}
