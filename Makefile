@@ -35,14 +35,27 @@ SRCS_EXEC = $(addprefix $(SRCS_EXEC_DIR), $(CFILES_EXEC))
 SRCS_PARSING = $(addprefix $(SRCS_PARSING_DIR), $(CFILES_PARSING))
 SRCS_BUILTINS = $(addprefix $(SRCS_BUILTINS_DIR), $(CFILES_BUILTINS))
 
-ALL_SRCS = $(SRCS_UTILS) $(SRCS_EXEC) $(SRCS_PARSING) $(SRCS_BUILTINS)
+OBJS_UTILS = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_UTILS:.c=.o)))
+OBJS_EXEC = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_EXEC:.c=.o)))
+OBJS_PARSING = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_PARSING:.c=.o)))
+OBJS_BUILTINS = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_BUILTINS:.c=.o)))
 
-OBJS = $(ALL_SRCS:.c=.o)
+$(NAME): $(OBJS_UTILS) $(OBJS_EXEC) $(OBJS_PARSING) $(OBJS_BUILTINS)
+	$(CC) $(OBJS_UTILS) $(OBJS_EXEC) $(OBJS_PARSING) $(OBJS_BUILTINS) -o $(NAME) $(RLINEFLAGS)
 
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) $(RLINEFLAGS)
+$(OBJS_DIR)%.o: $(SRCS_UTILS_DIR)%.c
+	mkdir -p $(OBJS_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJS_DIR)%.o: $(SRCS_UTILS_DIR)%.c $(SRCS_EXEC_DIR)%.c $(SRCS_PARSING_DIR)%.c $(SRCS_BUILTINS_DIR)%.c
+$(OBJS_DIR)%.o: $(SRCS_EXEC_DIR)%.c
+	mkdir -p $(OBJS_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS_DIR)%.o: $(SRCS_PARSING_DIR)%.c
+	mkdir -p $(OBJS_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS_DIR)%.o: $(SRCS_BUILTINS_DIR)%.c
 	mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
