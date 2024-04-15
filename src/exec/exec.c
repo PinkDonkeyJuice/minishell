@@ -6,11 +6,22 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/15 14:15:30 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:00:06 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* void	read_commands(char **commands)
+{
+	size_t		i;
+
+	while (commands[i])
+	{
+		printf("Command %zu is %s\n", i, commands[i]);
+		i++;
+	}
+} */
 
 char **get_commands(t_command *command_list, size_t i)
 {
@@ -28,26 +39,38 @@ char **get_commands(t_command *command_list, size_t i)
 		j++;
 	}
 	n = 0;
-	while (command_list[j + n].type != TYPE_PIPE)
+	while (command_list[j + n].type != TYPE_PIPE && command_list[j + n].command != NULL)
 		n++;
+	//printf("N is %zu, j is %zu, ind is %zu, i is %zu\n", n, j, ind, i);
 	commands = malloc(sizeof(char *) * (n + 1));
 	ind = 0;
+	j = 0;
 	while (ind != n)
 	{
-		if (command_list[j + ind].type != TYPE_OPERATOR && command_list[j + ind - 1].type != TYPE_OPERATOR)
-			commands[n] = ft_strdup(command_list[j + ind].command);
+		if (command_list[j].type != TYPE_OPERATOR && \
+			(command_list[j - 1].type != TYPE_OPERATOR || (j == 0)))
+			commands[j] = ft_strdup(command_list[j].command);
 		ind++;
+		j++;
 	}
+	commands[n] = NULL;
+/* 	dprintf(1, "command in list is %s\n", command_list[j + ind].command);
+	dprintf(1, "command in list is dup %s\n", ft_strdup(command_list[j + ind].command));
+	dprintf(1, "command duplicated is %s\n", commands[0]); */
+	//read_commands(commands);
 	return (commands);
 }
 
 void	exec(t_data *data, size_t i)
 {
-	char **commands;
 	char	*path;
+	char	**commands;
 
-	commands = get_commands(data->command_list, i);
-	path = get_exec_path(commands[0]);
+	/*commands = get_commands(data->command_list, i);
+	dprintf(2, "Command is : %s\n", commands[i]);
+	printf("This is path: %s, for i = %zu\n", path, i);
+ */	commands = ft_split(data->commands[i], ' ');
+	path = get_exec_path(data->commands[i]);
 	if (!path)
 		return ;
 	execve(path, commands, data->env);
@@ -80,37 +103,37 @@ void	child_proc(t_data *data, t_pipe **pipe_list, size_t i)
 }
 
 void	redir(t_data *data, t_pipe **pipe_list)
+{
+	pid_t	parent;
+	size_t	i;
+ 
+	i = 0;
+	parent = 1;
+	while (i < data->n_commands && parent)
 	{
-		pid_t	parent;
-		size_t	i;
-	 
-		i = 0;
-		parent = 1;
-		while (i < data->n_commands && parent)
+		if (parent)
+			parent = fork();
+		if (parent)
+			i++;
+		if (parent < 0)
 		{
-			if (parent)
-				parent = fork();
-			if (parent)
-				i++;
-			if (parent < 0)
-			{
-				perror("fork");
-				exit(EXIT_FAILURE);
-			}
-		}
-		if (parent == 0)
-		{
-			waitpid(parent, NULL, 0);
-			child_proc(data, pipe_list, i);
-		}
-		if (parent > 0)
-		{
-			close_all_pipes(data, pipe_list, -1, -1);
-			while (waitpid(-1, NULL, 0) != -1)
-			{
-			}
+			perror("fork");
+			exit(EXIT_FAILURE);
 		}
 	}
+	if (parent == 0)
+	{
+		//waitpid(parent, NULL, 0);
+		child_proc(data, pipe_list, i);
+	}
+	if (parent > 0)
+	{
+		close_all_pipes(data, pipe_list, -1, -1);
+		while (waitpid(-1, NULL, 0) != -1)
+		{
+		}
+	}
+}
 
 size_t	count_pipes(t_command *command_list)
 {
@@ -128,29 +151,33 @@ size_t	count_pipes(t_command *command_list)
 	return (n);
 }
 
-void	handle_input_output(t_data *data)
+/* void	handle_input_output(t_data *data)
 {
 	size_t i;
+	char *command;
 
 	i = 0;
 	while (data->command_list[i].command)
 	{
+		command = data->command_list[i].command;
 		if (data->command_list[i].type == TYPE_OPERATOR)
 		{
-			//if (data->command_list[i].command == ft_strcmp(">"));
-			{
-				
-			}
+			if (ft_strncmp(command, "<", ft_strlen(command)));
+				open(data->command_list[i + 1].command, O_RDONLY, 0644);
+			if (ft_strncmp(command, "<<", ft_strlen(command)))
+				open()
 		}
 	}
-}
+} */
 
 void	exec_commands(t_data *data)
 {
 	t_pipe	*pipe_list;
 	
 	data->n_commands = count_pipes(data -> command_list);
+	//printf("N commands: %zu\n", data->n_commands);
 	pipe_list = NULL;
+	data->commands = ft_split(data->line, '|');
 	generate_pipes(&pipe_list, data);
 	redir(data, &pipe_list);
 }

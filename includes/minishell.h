@@ -79,7 +79,7 @@ char	*append_stock(char *buffer, char *stock);
 char	*ft_strstr(char *str, size_t start, size_t end);
 char	*get_next_line(int fd);
 char	*sub_line(char *stock);
-
+void	ft_putstr_fd(char *s, int fd);
 
 //For parsing by Noam
 

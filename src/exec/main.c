@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/15 16:19:15 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:29:35 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ char	*get_exec_path(char *line)
 			if ((try_path = ft_strjoin(try_path, cmd_split[0])) == NULL)
 				return (NULL);
 			if (access(try_path, X_OK) == 0)
+			{
+				ft_putstr_fd(try_path, 1);
 				return (try_path);
+			}
 			i++;
 		}
 	}
@@ -100,12 +103,22 @@ void	print_commands(t_command *commands)
 	i = 0;
 	while (commands[i].command)
 	{
-		printf("%s\n", commands[i].command);
+		ft_putstr_fd(commands[i].command, 1);
 		i++;
 	}
 }
 
+void	print_type(t_command *command_list)
+{
+	int i;
 
+	i = 0;
+	while (command_list[i].command != NULL)
+	{
+		printf("Type of command is %d\n", command_list[i].type);
+		i++;
+	}
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -126,8 +139,9 @@ int	main(int argc, char **argv, char **env)
 			data.command_list = parse_line(data.line, &data);
 			if (data.command_list == NULL)
 				continue ;
-			print_commands(data.command_list);
-			check_builtins(&data);
+			//print_commands(data.command_list);
+			//print_type(data.command_list);
+			//check_builtins(&data);
 			exec_commands(&data);
 		}
 	}
