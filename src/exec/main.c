@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/13 11:59:53 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/15 11:46:06 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,19 +109,16 @@ void	print_commands(t_command *commands)
 
 int	main(int argc, char **argv, char **env)
 {
-	char 	*line;
 	t_data	data;
-	struct sigaction	sa;
-	
-	(void)argv;
-	(void)argc;
-	sa.sa_handler = handle;
+
+	(void) argc;
+	(void) argv;
 	init_data(&data);
 	data.env = env;
 	data.last_error = 0;
-	sigaction(SIGINT, &sa, NULL);
+	signal(SIGINT, handle);
 	signal(SIGQUIT, SIG_IGN);
-	while ((data.line = readline("$>")) != NULL)
+	while ((data.line = readline("$> ")) != NULL)
 	{
 		ft_add_history(data.line);
 		if (data.line[0] != '\0')
@@ -129,12 +126,11 @@ int	main(int argc, char **argv, char **env)
 			data.command_list = parse_line(data.line, &data);
 			if (data.command_list == NULL)
 				continue ;
-			//print_commands(data.command_list);
+			print_commands(data.command_list);
 			check_builtins(&data);
 			exec_commands(&data);
 		}
 	}
 	if (data.line == NULL)
 		do_exit(&data);
-	return (0);
 }
