@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/08 17:31:37 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/15 11:24:28 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,8 +230,8 @@ t_command	*parse_line(char *line, t_data *data)
 
 	i = 0;
 	j = 0;
-/* 	if (!checker(&line, data))
-		return (change_last_error(data, 2), NULL); */
+ 	if (!checker(&line, data))
+		return (change_last_error(data, 2), NULL);
 	args = count_args(line);
 	parsed = malloc(sizeof(t_command) * (args + 1));
 	if (!parsed)

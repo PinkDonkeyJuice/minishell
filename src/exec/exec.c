@@ -3,22 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/13 14:04:55 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/15 13:09:56 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char **next_command(t_command *command_list, size_t i)
+{
+	size_t ind;
+	size_t j;
+	char **commands;
+	size_t n;
+
+	j = 0;
+	ind = 0;
+	while(ind != i)
+	{
+		if (command_list[i + j].type == TYPE_COMMAND || command_list[i + j].type == TYPE_OPTION)
+			ind++;
+		j++;
+	}
+	n = 1;
+	while(command_list[i + j + n - 1].command != TYPE_PIPE)
+		n++;
+	commands = malloc(sizeof(char *) * (n + 1));
+	while()
+	commands[0] = ft_strdup(command_list[i + j + 1])
+}
+
 void	exec(t_data *data, size_t i)
 {
 	char **cmd_split;
 	char	*path;
-	
-	cmd_split = ft_split(data->commands[i], ' ');
-	path = get_exec_path(data->commands[i]);
+
+	cmd_split = ft_split(next_command(data->command_list, i), ' ');
+	path = get_exec_path(data->command_list);
 	if (!path)
 		return ;
 	execve(path, cmd_split, data->env);
@@ -78,17 +101,17 @@ void	redir(t_data *data, t_pipe **pipe_list)
 		{
 			close_all_pipes(data, pipe_list, -1, -1);
 			while (waitpid(-1, NULL, 0) != -1)
-				i = 0;
+			{
+			}
 		}
 	}
-	 
+
+
+
 	void	exec_commands(t_data *data)
 	{
-		char	**commands;
 		t_pipe	*pipe_list;
-	 
-		commands = ft_split(data->line, '|');
-		data->commands = commands;
+
 		data->n_commands = commands_len(commands);
 		pipe_list = NULL;
 		generate_pipes(&pipe_list, data);

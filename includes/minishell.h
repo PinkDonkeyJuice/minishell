@@ -24,6 +24,11 @@
 # define STDIN 0
 # define STDOUT 1
 
+# define TYPE_COMMAND 0
+# define TYPE_OPTION 1
+# define TYPE_PIPE 2
+# define TYPE_OPERATOR 3
+
 typedef struct		s_pipe
 {
 	size_t	id;
@@ -34,7 +39,7 @@ typedef struct		s_pipe
 typedef struct		s_command
 {
 	char	*command;
-	int 	op;
+	int		type;
 }					t_command;
 
 typedef struct			s_data
