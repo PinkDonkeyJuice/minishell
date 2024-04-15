@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/15 14:16:19 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:18:40 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,9 +212,9 @@ t_command	write_string(char *line, int len)
 		{
 			send.command[j] = line[i];
 			if (send.command[j] == '<' || send.command[j] == '>')
-				send.type = 3;
-			if (send.command[j] == '|')
 				send.type = 2;
+			if (send.command[j] == '|')
+				send.type = 1;
 			j++;
 		}
 		i++;
@@ -247,5 +247,5 @@ t_command	*parse_line(char *line, t_data *data)
 		j++;
 	}
 	parsed[j].command = NULL;
-	return (parsed);
+	return ((free(line), finish_parsing(parsed)));
 }
