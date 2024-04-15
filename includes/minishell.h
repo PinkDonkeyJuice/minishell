@@ -90,7 +90,6 @@ int		ft_isalnum(int c);
 int		len_tab(char **tab);
 void	change_last_error(t_data *data, int i);
 int		num_len(int	num);
-int		is_operator(char *commande);
 
 char	*ft_itoa(int n);
 
@@ -98,8 +97,6 @@ char	**get_args(char const *s, char c);
 
 t_command	*parse_line(char *line, t_data *data);
 int		checker(char **line, t_data *data);
-
-int		is_operator(char *commande);
 
 int		search_var(char *search, t_data *data);
 

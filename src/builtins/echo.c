@@ -10,7 +10,7 @@ int	is_echo(char *line)
 	while (line[i] == echo[i])
 	{
 		if (line[i] == echo[i] && echo[i + 1] == '\0' 
-			&& (line[i + 1] == '\0' || is_operator(&line[i])))
+			&& (line[i + 1] == '\0')/* && type != TYPE_OPERATOR*/)
 			return (1);
 		i++;
 	}
@@ -25,17 +25,15 @@ void	exec_echo(t_data *data)
 	i = 1;
 	if (!data->command_list[1].command)
 		return ;
-	//if (is_operator(data->command[i]))
-	//	return ;
 	while (data->command_list[i].command != NULL)
 	{
-		//if (is_operator(data->command[i]))
+		//if (commande[i].type == TYPE_OPERATOR)
 		//	(void) i;
 		//else
 		//{
 			printf("%s", data->command_list[i].command);
-			if (data->command_list[i + 1].command /*&& !is_operator(data->command[i + 1])
-				&& !is_operator(data->command[i])*/)
+			if (data->command_list[i + 1].command /*&& commande[i + 1].type != TYPE_OPERATOR)
+				&& commande[i].type != TYPE_OPERATOR*/)
 				printf(" ");
 		//}
 		i++;
