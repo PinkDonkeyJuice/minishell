@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/11 14:48:04 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:22:06 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,20 +266,20 @@ char	*check_var(char *line, t_data *data)
 	return (new_line);
 }
 
-t_commande	*finish_parsing(t_commande *parsed)
+t_command	*finish_parsing(t_command *parsed)
 {
 	int	i;
 	int	j;
 	
 	i = 0;
 	j = 0;
-	while (parsed[i].commande)
+	while (parsed[i].command)
 	{
 		j = 0;
-		while (parsed[i].commande[j])
+		while (parsed[i].command[j])
 		{
-			if (parsed[i].commande[j] < 0)
-				parsed[i].commande[j] *= -1;
+			if (parsed[i].command[j] < 0)
+				parsed[i].command[j] *= -1;
 			j++;
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/15 14:18:40 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:20:13 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ t_command	write_string(char *line, int len)
 
 	i = 0;
 	j = 0;
-	send.op = 0;
+	send.type = 0;
 	send.command = malloc(sizeof(char) * len + 1);
 	while (line[i] == ' ')
 		i++;

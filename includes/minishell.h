@@ -97,6 +97,7 @@ char	**get_args(char const *s, char c);
 
 t_command	*parse_line(char *line, t_data *data);
 int		checker(char **line, t_data *data);
+t_command	*finish_parsing(t_command *parsed);
 
 int		search_var(char *search, t_data *data);
 
