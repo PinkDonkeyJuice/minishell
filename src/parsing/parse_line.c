@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/15 11:24:28 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:18:40 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,9 @@ t_command	write_string(char *line, int len)
 		{
 			send.command[j] = line[i];
 			if (send.command[j] == '<' || send.command[j] == '>')
-				send.op = 1;
+				send.type = 3;
+			if (send.command[j] == '|')
+				send.type = 2;
 			j++;
 		}
 		i++;
