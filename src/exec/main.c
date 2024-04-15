@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/15 11:46:06 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/15 12:00:00 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ void	handle(int sig)
 
 int	check_builtins(t_data *data)
 {
+	if (is_echo(data->command_list[0].command))
+		return (exec_echo(data), 1);
 	if (is_cd(data->command_list[0].command))
 		return (exec_cd(data), 1);
 	if (is_pwd(data->command_list[0].command))
 		return (exec_pwd(), 1);
-/* 	if (is_echo(data->command_list[0].command))
-		return (exec_echo(data), 1);
-	if (is_export(line))
+/*	if (is_export(line))
 		return (exec_export(), 1);
 	if (is_unset(line))
 		return (exec_unset(), 1); */
