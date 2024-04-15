@@ -42,7 +42,7 @@ OBJS = $(ALL_SRCS:.c=.o)
 $(NAME): $(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(RLINEFLAGS)
 
-$(OBJS_DIR)%.o: $(ALL_SRCS)%.c
+$(OBJS_DIR)%.o: $(SRCS_UTILS_DIR)%.c $(SRCS_EXEC_DIR)%.c $(SRCS_PARSING_DIR)%.c $(SRCS_BUILTINS_DIR)%.c
 	mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
