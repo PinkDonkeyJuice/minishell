@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:06:28 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/15 17:23:27 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:40:38 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
-
 
 void	ft_putchar_fd(char c, int fd)
 {

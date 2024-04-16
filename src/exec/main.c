@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/16 10:50:42 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:38:56 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_exec_path(char *line)
 				return (NULL);
 			if (access(try_path, X_OK) == 0)
 			{
-				ft_putstr_fd(try_path, 1);
+				//ft_putstr_fd(try_path, 1);
 				return (try_path);
 			}
 			i++;
@@ -104,6 +104,7 @@ void	print_commands(t_command *commands)
 	while (commands[i].command)
 	{
 		ft_putstr_fd(commands[i].command, 1);
+		write(1, "\n", 1);
 		i++;
 	}
 }
