@@ -45,10 +45,10 @@ void	init_env(char **env, t_data *data)
 	int	i;
 
 	i = 0;
-	data->env = NULL;
+	data->env_c = NULL;
 	while (env[i])
 	{
-		append_node(&(data->env), env[i]);
+		append_node(&(data->env_c), env[i]);
 		i++;
 	}
 }

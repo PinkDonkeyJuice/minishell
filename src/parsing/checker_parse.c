@@ -131,12 +131,12 @@ int		new_line_len(char *line, t_data *data)
 				continue ;
 			}
 			i++;
-			location = search_var(&line[i], data);
+			/*location = search_var(&line[i], data);
 			if (location != -1)
 			{
 				content = cont_of_var(data->env[location]);
 				len += ft_strlen(content);
-			}
+			}*/
 			while (ft_isalnum(line[i]) && line[i])
 				i++;
 			continue ;
@@ -239,7 +239,7 @@ char	*check_var(char *line, t_data *data)
 					continue ;
 				}
 				i++;
-				if (search_var(&line[i], data) != -1)
+				/*if (search_var(&line[i], data) != -1)
 				{
 					content = cont_of_var(data->env[search_var(&line[i], data)]);
 					while (*content)
@@ -252,7 +252,7 @@ char	*check_var(char *line, t_data *data)
 						content++;
 						j++;
 					}
-				}
+				}*/
 				while (ft_isalnum(line[i]) && line[i])
 					i++;
 				continue ;

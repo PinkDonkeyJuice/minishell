@@ -12,52 +12,53 @@
 
 #include "minishell.h"
 
-/* void	read_commands(char **commands)
+void	read_commands(char **commands)
 {
 	size_t		i;
 
+	i = 0;
 	while (commands[i])
 	{
-		printf("Command %zu is %s\n", i, commands[i]);
+		printf("Command read %zu is %s\n", i, commands[i]);
 		i++;
 	}
-} */
+}
 
 char **get_commands(t_command *command_list, size_t i)
 {
-	size_t ind;
-	size_t j;
+	size_t i_pipe;
+	size_t i_start;
 	char **commands;
 	size_t n;
 
-	j = 0;
-	ind = 0;
-	while (ind != i)
+	i_start = 0;
+	i_pipe = 0;
+	while (i_pipe != i)
 	{
-		if (command_list[j].type == TYPE_PIPE)
-			ind++;
-		j++;
+		if (command_list[i_start].type == TYPE_PIPE)
+			i_pipe++;
+		i_start++;
 	}
 	n = 0;
-	while (command_list[j + n].type != TYPE_PIPE && command_list[j + n].command != NULL)
+	while (command_list[i_start + n].type != TYPE_PIPE && command_list[i_start + n].command != NULL)
 		n++;
-	//printf("N is %zu, j is %zu, ind is %zu, i is %zu\n", n, j, ind, i);
-	commands = malloc(sizeof(char *) * (n + 1));
-	ind = 0;
-	j = 0;
-	while (ind != n)
+	//printf("N is %zu, i_start is %zu, i_pipe is %zu, i is %zu\n", n, i_start, i_pipe, i);
+	commands = (char **)malloc(sizeof(char *) * (n + 1));
+	i_pipe = 0;
+	while (i_pipe != n)
 	{
-		if (command_list[j].type != TYPE_OPERATOR && \
-			(command_list[j - 1].type != TYPE_OPERATOR || (j == 0)))
-			commands[j] = ft_strdup(command_list[j].command);
-		ind++;
-		j++;
+		if (command_list[i_start + i_pipe].type != TYPE_OPERATOR && \
+			((i_start == 0) || command_list[i_start + i_pipe - 1].type != TYPE_OPERATOR))
+		{	
+			commands[i_pipe] = ft_strdup(command_list[i_start + i_pipe].command);
+			i_pipe++;
+		}
+		i_start++;
 	}
 	commands[n] = NULL;
-/* 	dprintf(1, "command in list is %s\n", command_list[j + ind].command);
-	dprintf(1, "command in list is dup %s\n", ft_strdup(command_list[j + ind].command));
-	dprintf(1, "command duplicated is %s\n", commands[0]); */
-	//read_commands(commands);
+/*  	dprintf(1, "command in list is %s\n", command_list[i_start - 1].command);
+	dprintf(1, "command now is %s\n", commands[0]); */
+	read_commands(commands);
 	return (commands);
 }
 
@@ -66,11 +67,10 @@ void	exec(t_data *data, size_t i)
 	char	*path;
 	char	**commands;
 
-	/*commands = get_commands(data->command_list, i);
-	dprintf(2, "Command is : %s\n", commands[i]);
-	printf("This is path: %s, for i = %zu\n", path, i);
- */	commands = ft_split(data->commands[i], ' ');
-	path = get_exec_path(data->commands[i]);
+	commands = get_commands(data->command_list, i);
+	//read_commands(commands);
+	path = get_exec_path(commands[0]);
+	//ft_putstr_fd(path, 2);
 	if (!path)
 		return ;
 	execve(path, commands, data->env);
@@ -78,6 +78,7 @@ void	exec(t_data *data, size_t i)
 
 void	child_proc(t_data *data, t_pipe **pipe_list, size_t i)
 {
+		printf("i is %zu\n", i);
 		if (i == 0)
 		{
 			if (data->n_commands == 1)
@@ -123,7 +124,7 @@ void	redir(t_data *data, t_pipe **pipe_list)
 	}
 	if (parent == 0)
 	{
-		//waitpid(parent, NULL, 0);
+		waitpid(parent, NULL, 0);
 		child_proc(data, pipe_list, i);
 	}
 	if (parent > 0)
@@ -177,7 +178,6 @@ void	exec_commands(t_data *data)
 	data->n_commands = count_pipes(data -> command_list);
 	//printf("N commands: %zu\n", data->n_commands);
 	pipe_list = NULL;
-	data->commands = ft_split(data->line, '|');
 	generate_pipes(&pipe_list, data);
 	redir(data, &pipe_list);
 }

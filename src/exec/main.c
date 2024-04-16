@@ -16,17 +16,16 @@
 #include "stdlib.h"
 #include "minishell.h"
 
-char	*get_exec_path(char *line)
+char	*get_exec_path(char *command)
 {
 	int		i;
 	char 	**paths;
 	char	*try_path;
-	char 	**cmd_split;
 
 	paths = ft_split(getenv("PATH"), ':');
-	cmd_split = ft_split(line, ' ');
+	//ft_putstr_fd(command, 1);
 	i = 0;
-	if (paths && cmd_split)
+	if (paths && command)
 	{
 		while (paths[i])
 		{
@@ -34,7 +33,7 @@ char	*get_exec_path(char *line)
 				return (NULL);
 			if ((try_path = ft_strjoin(try_path, "/")) == NULL)
 				return (NULL);
-			if ((try_path = ft_strjoin(try_path, cmd_split[0])) == NULL)
+			if ((try_path = ft_strjoin(try_path, command)) == NULL)
 				return (NULL);
 			if (access(try_path, X_OK) == 0)
 			{
@@ -129,6 +128,7 @@ int	main(int argc, char **argv, char **env)
 	(void) argv;
 	init_data(&data);
 	init_env(env, &data);
+	data.env = env;
 	data.last_error = 0;
 	signal(SIGINT, handle);
 	signal(SIGQUIT, SIG_IGN);
@@ -140,8 +140,8 @@ int	main(int argc, char **argv, char **env)
 			data.command_list = parse_line(data.line, &data);
 			if (data.command_list == NULL)
 				continue ;
-			//print_commands(data.command_list);
-			//print_type(data.command_list);
+/* 			print_commands(data.command_list);
+			print_type(data.command_list); */
 			check_builtins(&data);
 			exec_commands(&data);
 		}

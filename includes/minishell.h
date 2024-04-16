@@ -60,7 +60,8 @@ typedef struct			s_data
 	char	**commands;
 	int		parent;
 	t_command *command_list;
-	t_env	*env;
+	t_env	*env_c;
+	char **env;
 }						t_data;
 
 size_t	ft_strlen(const char *str);
