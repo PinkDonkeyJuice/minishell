@@ -74,9 +74,9 @@ void	exec_exit(t_data *data)
 		do_exit(data);
 	else
 	{
-		if (data->command_list[1].command && is_num(data->command_list[1].command))
+		if (data->command_list[1].command != NULL && is_num(data->command_list[1].command))
 		{
-			if (data->command_list[2].command)
+			if (data->command_list[2].command != NULL)
 			{
 				printf("exit\nminishell: exit: too many arguments\n");
 				data->last_error = 1;

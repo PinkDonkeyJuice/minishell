@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:34:45 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/16 11:58:41 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/16 12:13:14 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ void	init_env(char **env, t_data *data)
 	int	i;
 
 	i = 0;
+	data->env = NULL;
 	while (env[i])
 	{
-		append_node(data->&env, env[i])
+		append_node(&(data->env), env[i]);
 		i++;
 	}
 }

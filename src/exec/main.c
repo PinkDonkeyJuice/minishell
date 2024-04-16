@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/16 11:59:58 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/16 12:05:04 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int	check_builtins(t_data *data)
 		return (exec_export(), 1);
 	if (is_unset(line))
 		return (exec_unset(), 1); */
-	if (is_env(data->command_list[0].command))
-		return (exec_env(data->command_list, data->env), 1);
+/*	if (is_env(data->command_list[0].command))
+		return (exec_env(data->command_list, data->env), 1);*/
 	if (is_exit(data->command_list[0].command))
 		return (exec_exit(data), 1);
 	return (0);

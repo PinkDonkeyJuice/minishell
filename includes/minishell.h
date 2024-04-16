@@ -31,7 +31,7 @@
 typedef struct		s_env
 {
 	char			*data;
-	struct s_pile	*next;
+	struct s_env	*next;
 
 }					t_env;
 
