@@ -33,7 +33,7 @@ typedef struct		s_env
 	char			*data;
 	struct s_pile	*next;
 
-}					t_env
+}					t_env;
 
 typedef struct		s_pipe
 {
@@ -60,7 +60,7 @@ typedef struct			s_data
 	char	**commands;
 	int		parent;
 	t_command *command_list;
-	t_env	**env;
+	t_env	*env;
 }						t_data;
 
 size_t	ft_strlen(const char *str);
@@ -115,6 +115,8 @@ char	**ft_split(char const *s, char c);
 int		is_exit(char *line);
 void	exec_exit(t_data *data);
 void	do_exit(t_data *data);
+
+void	init_env(char **env, t_data *data);
 
 int		is_echo(char *line);
 void	exec_echo(t_data *data);

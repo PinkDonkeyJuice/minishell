@@ -23,6 +23,7 @@ CFILES_BUILTINS = cd.c\
 	exit.c\
 	pwd.c\
 	echo.c\
+	init_env.c\
 
 SRCS_UTILS_DIR = ./src/utils/
 SRCS_EXEC_DIR = ./src/exec/

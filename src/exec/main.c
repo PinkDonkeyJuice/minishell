@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/16 11:38:56 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:59:58 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	main(int argc, char **argv, char **env)
 	(void) argc;
 	(void) argv;
 	init_data(&data);
-	data.env = env;
+	init_env(env, &data);
 	data.last_error = 0;
 	signal(SIGINT, handle);
 	signal(SIGQUIT, SIG_IGN);
