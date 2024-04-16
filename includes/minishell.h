@@ -28,6 +28,13 @@
 # define TYPE_PIPE 1
 # define TYPE_OPERATOR 2
 
+typedef struct		s_env
+{
+	char			*data;
+	struct s_pile	*next;
+
+}					t_env
+
 typedef struct		s_pipe
 {
 	size_t	id;
@@ -52,8 +59,8 @@ typedef struct			s_data
 	char	*line;
 	char	**commands;
 	int		parent;
-	char	**env;
 	t_command *command_list;
+	t_env	**env;
 }						t_data;
 
 size_t	ft_strlen(const char *str);
