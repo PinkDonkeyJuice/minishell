@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/15 16:09:39 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:40:58 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,18 +186,20 @@ void	check_var_dq(char *line, char *new_line, int *i, int *j)
 void	not_an_env_var(t_data *data, char *new_line, int *i, int *j)
 {
 	char	*num;
+	int		index;
 	
+	index = 0;
 	if (data->line[*i + 1] == '?')
 	{
 		*i += 2;
 		num = ft_itoa(data->last_error);
-		while (*num)
+		while (num[index])
 		{
-			new_line[*j] = *num;
-			num++;
+			new_line[*j] = num[index];
+			index++;
 			*j += 1;
 		}
-		// free(num);
+		free(num);
 		return ;
 	}
 	new_line[*j] = data->line[*i];
