@@ -89,6 +89,9 @@ char	*get_next_line(int fd);
 char	*sub_line(char *stock);
 void	ft_putstr_fd(char *s, int fd);
 
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+
+
 //For parsing by Noam
 
 int		check_builtins(t_data *data);

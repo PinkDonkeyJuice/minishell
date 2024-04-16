@@ -21,8 +21,8 @@ void	init_data(t_data *data)
 		perror("In main: ");
 		return ;
 	}
-	data->fdout = -1;
-	data->fdin = -1;
+	data->fdout = STDOUT_FILENO;
+	data->fdin = STDIN_FILENO;
 	data->pipin = pip[0];
 	data->pipout = pip[1];
 	return ;

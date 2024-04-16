@@ -1,9 +1,3 @@
-cat
-includes
-input.txt
-Makefile
-minishell
-output.txt
-src
-test.c
-TODO.txt
+Bonjour
+Je suis un texte
+Lashat
