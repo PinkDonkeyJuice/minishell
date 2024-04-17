@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/16 12:05:04 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:04:39 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	main(int argc, char **argv, char **env)
 			data.command_list = parse_line(data.line, &data);
 			if (data.command_list == NULL)
 				continue ;
-/* 			print_commands(data.command_list);
+ 			/*print_commands(data.command_list);
 			print_type(data.command_list); */
 			check_builtins(&data);
 			exec_commands(&data);

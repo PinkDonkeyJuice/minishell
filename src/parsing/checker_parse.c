@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/16 10:40:58 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:50:55 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		new_line_len(char *line, t_data *data)
 {
 	int	len;
 	int	i;
-	int	location;
+	t_env	*search;
 	char *content;
 
 	len = 0;
@@ -131,12 +131,12 @@ int		new_line_len(char *line, t_data *data)
 				continue ;
 			}
 			i++;
-			/*location = search_var(&line[i], data);
-			if (location != -1)
+			search = search_var(&line[i], data);
+			if (search != NULL)
 			{
-				content = cont_of_var(data->env[location]);
+				content = cont_of_var(search->content);
 				len += ft_strlen(content);
-			}*/
+			}
 			while (ft_isalnum(line[i]) && line[i])
 				i++;
 			continue ;
@@ -212,6 +212,7 @@ char	*check_var(char *line, t_data *data)
 {
 	char	*new_line;
 	char	*content;
+	t_env	*search;
 	int		i;
 	int		j;
 
@@ -239,9 +240,10 @@ char	*check_var(char *line, t_data *data)
 					continue ;
 				}
 				i++;
-				/*if (search_var(&line[i], data) != -1)
+				search = search_var(&line[i], data);
+				if (search != NULL)
 				{
-					content = cont_of_var(data->env[search_var(&line[i], data)]);
+					content = cont_of_var(search->content);
 					while (*content)
 					{
 						new_line[j] = *content;
@@ -252,7 +254,7 @@ char	*check_var(char *line, t_data *data)
 						content++;
 						j++;
 					}
-				}*/
+				}
 				while (ft_isalnum(line[i]) && line[i])
 					i++;
 				continue ;

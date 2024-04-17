@@ -15,24 +15,23 @@ char	*cont_of_var(char *var)
 	return (NULL);
 }
 
-int	search_var(char *search, t_data *data)
+t_env	*search_var(char *namevar, t_data *data)
 {
 	int	i;
-	int	j;
+	t_env	*search;
 
 	i = 0;
-	j = 0;
-	while (data->env[i])
+	search = data->env_c;
+	while (search)
 	{
-		j = 0;
-		while (data->env[i][j] == search[j] && search[j])
+		i = 0;
+		while (search->content[i] == namevar[i]) 
 		{
-			if ((search[j + 1] == '\0'
-				|| !ft_isalnum(search[j + 1])) && data->env[i][j + 1] == '=')
-				return (i);
-			j++;
+			if (!ft_isalnum(namevar[i + 1]) && search->content[i + 1] == '=')
+				return (search);
+			i++;
 		}
-		i++;
+		search = search->next;
 	}
-	return (-1);
+	return (NULL);
 }

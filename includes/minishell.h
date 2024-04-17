@@ -30,7 +30,7 @@
 
 typedef struct		s_env
 {
-	char			*data;
+	char			*content;
 	struct s_env	*next;
 
 }					t_env;
@@ -109,7 +109,7 @@ t_command	*parse_line(char *line, t_data *data);
 int		checker(char **line, t_data *data);
 t_command	*finish_parsing(t_command *parsed);
 
-int		search_var(char *search, t_data *data);
+t_env		*search_var(char *namevar, t_data *data);
 
 char	*cont_of_var(char *var);
 int		new_line_len(char *line, t_data *data);
