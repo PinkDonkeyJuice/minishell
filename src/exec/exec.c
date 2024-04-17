@@ -43,7 +43,6 @@ char **get_commands(t_command *command_list, size_t i)
 	while (command_list[i_start + n].type != TYPE_PIPE && command_list[i_start + n].command != NULL &&\
 		command_list[i_start + n].type != TYPE_OPERATOR)
 		n++;
-	//printf("N is %zu, i_start is %zu, i_pipe is %zu, i is %zu\n", n, i_start, i_pipe, i);
 	commands = (char **)malloc(sizeof(char *) * (n + 1));
 	i_pipe = 0;
 	while (i_pipe != n)
@@ -58,9 +57,6 @@ char **get_commands(t_command *command_list, size_t i)
 			i_start++;
 	}
 	commands[n] = NULL;
-/*  dprintf(1, "command in list is %s\n", command_list[i_start - 1].command);
-	dprintf(1, "command now is %s\n", commands[0]); */
-	//read_commands(commands);
 	return (commands);
 }
 
@@ -70,8 +66,7 @@ void	exec(t_data *data, size_t i)
 	char	**commands;
 
 	commands = get_commands(data->command_list, i);
-	read_commands(commands);
-	//ft_putstr_fd(path, 2);
+	//read_commands(commands);
 	data->commands = commands;
 	if (check_builtins(data) == 0)
 	{

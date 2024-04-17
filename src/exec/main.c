@@ -144,7 +144,6 @@ int	main(int argc, char **argv, char **env)
 				return (exec_exit(&data), 1);
 /*  			print_commands(data.command_list);
 			print_type(data.command_list); */
-			write(1, "a\n", 2);
 			exec_commands(&data);
 		}
 	}
