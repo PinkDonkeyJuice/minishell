@@ -91,6 +91,9 @@ void	ft_putstr_fd(char *s, int fd);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 char **get_commands(t_command *command_list, size_t i);
+
+size_t	count_pipes(t_command *command_list);
+
 //For parsing by Noam
 
 int		check_builtins(t_data *data);

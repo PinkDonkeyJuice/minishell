@@ -70,6 +70,7 @@ void	do_exit(t_data *data)
 
 void	exec_exit(t_data *data)
 {
+	printf("In exec n_commands = %zu\n", data->n_commands);
 	if (data->n_commands > 1)
 		return ;
 	if (!data->commands[1])

@@ -137,12 +137,14 @@ int	main(int argc, char **argv, char **env)
 		if (data.line[0] != '\0')
 		{
 			data.command_list = parse_line(data.line, &data);
-			data.commands = get_commands(data.command_list, 0);
-			check_builtins(&data);
 			if (data.command_list == NULL)
 				continue ;
+			data.n_commands = count_pipes(data.command_list);
+			if (is_exit(data.command_list[0].command))
+				return (exec_exit(&data), 1);
 /*  			print_commands(data.command_list);
 			print_type(data.command_list); */
+			write(1, "a\n", 2);
 			exec_commands(&data);
 		}
 	}
