@@ -11,7 +11,7 @@ int	is_exit(char *line)
 	while (line[i] == exit[i])
 	{
 		if (line[i] == exit[i] && exit[i + 1] == '\0'
-			&& line[i + 1] == '\0')
+			&& !ft_isalnum(line[i + 1]))
 			return (1);
 		i++;
 	}
@@ -70,7 +70,6 @@ void	do_exit(t_data *data)
 
 void	exec_exit(t_data *data)
 {
-	printf("In exec n_commands = %zu\n", data->n_commands);
 	if (data->n_commands > 1)
 		return ;
 	if (!data->commands[1])

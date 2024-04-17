@@ -141,7 +141,7 @@ int	main(int argc, char **argv, char **env)
 				continue ;
 			data.n_commands = count_pipes(data.command_list);
 			if (is_exit(data.command_list[0].command))
-				return (exec_exit(&data), 1);
+				exec_exit(&data);
 /*  			print_commands(data.command_list);
 			print_type(data.command_list); */
 			exec_commands(&data);
