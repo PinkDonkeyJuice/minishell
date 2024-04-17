@@ -31,6 +31,8 @@ void	exec_cd(t_data *data)
 
 	home_path = NULL;
 	path = NULL;
+	if (data->n_commands > 1)
+		return ;
 	if (data->command_list[2].command)
 	{
 		printf("minishell: cd: too many arguments\n");
@@ -39,10 +41,11 @@ void	exec_cd(t_data *data)
 	}
 	if (data->command_list[1].command)
 	{
-		if (chdir(data->command_list[1].command) == -1)
-			printf("minishell: cd: permission denied: %s\n", data->command_list[1].command);
-		//if (chdir(data->command_list[1].command) == ENOENT)
-			//printf("minishell: cd: no such file or directory\n");
+		chdir(data->command_list[1].command);
+		if (errno == EACCES)
+			return ((void) printf("minishell: cd: permission denied: %s\n", data->command_list[1].command));
+		//if (errno == ENOENT)
+			//return ((void) printf("minishell: cd: no such file or directory\n"));
 	}
 	else
 	{
