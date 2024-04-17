@@ -75,7 +75,6 @@ void	handle(int sig)
 	}
 }
 
-
 int	check_builtins(t_data *data)
 {
 	if (is_echo(data->commands[0]))
@@ -138,6 +137,8 @@ int	main(int argc, char **argv, char **env)
 		if (data.line[0] != '\0')
 		{
 			data.command_list = parse_line(data.line, &data);
+			data.commands = get_commands(data.command_list, 0);
+			check_builtins(&data);
 			if (data.command_list == NULL)
 				continue ;
 /*  			print_commands(data.command_list);

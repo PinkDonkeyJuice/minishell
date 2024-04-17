@@ -1,1 +1,8 @@
-      9       9      73
+includes
+input.txt
+Makefile
+minishell
+output.txt
+src
+test.c
+TODO.txt

@@ -40,7 +40,8 @@ char **get_commands(t_command *command_list, size_t i)
 		i_start++;
 	}
 	n = 0;
-	while (command_list[i_start + n].type != TYPE_PIPE && command_list[i_start + n].command != NULL)
+	while (command_list[i_start + n].type != TYPE_PIPE && command_list[i_start + n].command != NULL &&\
+		command_list[i_start + n].type != TYPE_OPERATOR)
 		n++;
 	//printf("N is %zu, i_start is %zu, i_pipe is %zu, i is %zu\n", n, i_start, i_pipe, i);
 	commands = (char **)malloc(sizeof(char *) * (n + 1));
@@ -176,12 +177,12 @@ void	handle_input_output(t_data *data)
 		command = data->command_list[i].command;
 		if (data->command_list[i].type == TYPE_OPERATOR)
 		{
-			if (ft_strncmp(command, "<", ft_strlen(command)))
-				data-> fdin = open(data->command_list[i + 1].command, O_RDONLY, 0644);
-			if (ft_strncmp(command, ">", ft_strlen(command)))
-				data -> fdout = open(data->command_list[i + 1].command, O_RDWR | O_CREAT, 0644);
-			if (ft_strncmp(command, ">>", ft_strlen(command)))
-				data -> fdout = open(data->command_list[i + 1].command, O_WRONLY | O_APPEND | O_CREAT, 0644);
+			if (ft_strncmp(command, "<", 2) == 0)
+				data->fdin = open(data->command_list[i + 1].command, O_RDONLY, 0644);
+			if (ft_strncmp(command, ">", 2) == 0)
+				data->fdout = open(data->command_list[i + 1].command, O_RDWR | O_CREAT, 0644);
+			if (ft_strncmp(command, ">>", 2) == 0)
+				data->fdout = open(data->command_list[i + 1].command, O_WRONLY | O_APPEND | O_CREAT, 0644);
 		}
 		i++;
 	}

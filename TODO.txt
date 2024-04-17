@@ -1,4 +1,4 @@
-1. g: exec : finir implementation des commandes depuis data
+1. ######## FAIT ######## g: exec : finir implementation des commandes depuis data
 2. ######## FAIT ######## n: parsing: faire des types (0 : commande, 1 : pipe, 2: operator) 
 3. builtins : export, unset et tt ceux pas finis
 4. g : exec : gerer input output
