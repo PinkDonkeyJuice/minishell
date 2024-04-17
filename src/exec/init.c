@@ -25,5 +25,6 @@ void	init_data(t_data *data)
 	data->fdin = STDIN_FILENO;
 	data->pipin = pip[0];
 	data->pipout = pip[1];
+	data->delimiter = NULL;
 	return ;
 }

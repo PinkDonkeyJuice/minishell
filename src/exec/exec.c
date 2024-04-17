@@ -33,6 +33,8 @@ char **get_commands(t_command *command_list, size_t i)
 
 	i_start = 0;
 	i_pipe = 0;
+	if (command_list[0].type == TYPE_OPERATOR)
+		i_start += 2;
 	while (i_pipe != i)
 	{
 		if (command_list[i_start].type == TYPE_PIPE)
@@ -44,6 +46,7 @@ char **get_commands(t_command *command_list, size_t i)
 		command_list[i_start + n].type != TYPE_OPERATOR)
 		n++;
 	commands = (char **)malloc(sizeof(char *) * (n + 1));
+	//printf("n is: %zu\ni_start is: %zu\n", n, i_start);
 	i_pipe = 0;
 	while (i_pipe != n)
 	{
@@ -76,8 +79,9 @@ void	exec(t_data *data, size_t i)
 			printf("Unkown command\n");
 			exit(-1) ;
 		}
-		else
-			execve(path, commands, data->env);
+		if (data->fdin != STDIN_FILENO)
+			close(data->fdin);
+		execve(path, commands, data->env);
 	}
 	exit(1);
 }
@@ -87,7 +91,11 @@ void	child_proc(t_data *data, t_pipe **pipe_list, size_t i)
 		if (i == 0)
 		{
 			if (data->n_commands == 1)
+			{
+				dup2(data->fdin, STDIN_FILENO);
+				dup2(data->fdout, STDOUT_FILENO);
 				exec(data, i);
+			}
 			if (data->fdin != STDIN_FILENO)
 				dup2(data->fdin, STDIN_FILENO);
 			close(access_pipe(pipe_list, i)->p[0]);
@@ -167,17 +175,21 @@ void	handle_input_output(t_data *data)
 	char *command;
 
 	i = 0;
+	data->fdout = STDOUT_FILENO;
+	data->fdin = STDIN_FILENO;
 	while (data->command_list[i].command)
 	{
 		command = data->command_list[i].command;
 		if (data->command_list[i].type == TYPE_OPERATOR)
 		{
-			if (ft_strncmp(command, "<", 1) == 0)
-				if ((data->fdin = open(data->command_list[i + 1].command, O_RDONLY, 0644)) == -1)
+			if (ft_strncmp(command, "<", 2) == 0)
+				if ((data->fdin = open(data->command_list[i + 1].command, O_RDONLY)) == -1)
 					return ;
+			if (ft_strncmp(command, "<<", 2) == 0)
+				data->delimiter = data->command_list[i + 1].command;
 			if (ft_strncmp(command, ">", 2) == 0)
 			{
-				data->fdout = open(data->command_list[i + 1].command, O_RDWR | O_CREAT, 0644);
+				data->fdout = open(data->command_list[i + 1].command, O_RDWR | O_TRUNC | O_CREAT, 0644);
 			}
 			if (ft_strncmp(command, ">>", 2) == 0)
 				data->fdout = open(data->command_list[i + 1].command, O_WRONLY | O_APPEND | O_CREAT, 0644);
@@ -191,8 +203,7 @@ void	exec_commands(t_data *data)
 	t_pipe	*pipe_list;
 	
 	handle_input_output(data);
-	data->n_commands = count_pipes(data -> command_list);
-	//printf("N commands: %zu\n", data->n_commands);
+	printf("fdin : %d, fdout: %d\n", data->fdin, data->fdout);
 	pipe_list = NULL;
 	generate_pipes(&pipe_list, data);
 	redir(data, &pipe_list);

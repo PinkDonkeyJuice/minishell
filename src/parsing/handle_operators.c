@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-bool	find_delim(char *line, char delim)
+bool	find_delim(char *line, char *delim)
 {
 	while (*line)
 	{
@@ -11,7 +11,7 @@ bool	find_delim(char *line, char delim)
 	return (false);
 }
 
-void	handle_operators(t_data *data, char *path_in, char *path_out, char delim, bool append)
+void	handle_operators(t_data *data, char *path_in, char *path_out, char *delim, bool append)
 {
 	char	*line;
 
@@ -27,7 +27,7 @@ void	handle_operators(t_data *data, char *path_in, char *path_out, char delim, b
 	if (delim)
 	{
 		line = get_next_line(data->fdin);
-		while(!find_delim(line, delim))
+		while(!ft_strnstr(line, delim, ft_strlen(delim)))
 		{
 			read(data->fdin, NULL, ft_strlen(line));
 			line = get_next_line(data->fdin);

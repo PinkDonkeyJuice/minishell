@@ -53,6 +53,7 @@ typedef struct			s_data
 {
 	int		fdin;
 	int		fdout;
+	char	*delimiter;
 	int		last_error;
 	int		pipin;
 	int		pipout;
@@ -94,6 +95,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char **get_commands(t_command *command_list, size_t i);
 
 size_t	count_pipes(t_command *command_list);
+
+char	*ft_strnstr(const char *big, const char *little, size_t len);
 
 //For parsing by Noam
 

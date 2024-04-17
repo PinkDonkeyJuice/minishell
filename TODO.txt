@@ -6,3 +6,4 @@
 6. ######## FAIT ######## n : builtins : mettre l'environnement dans une liste chainée
 7. ######## FAIT ######## n : parsing : changer le parsing pour naviguer dans la liste chainée lors de la recherche de variable d'environnement
 8. regarder pour faire tourner un programme dans minishell
+9. A FIX: dans command_list, une commande supplementaire vide quand la chaine commence par "<"

@@ -150,8 +150,8 @@ int	main(int argc, char **argv, char **env)
 				continue ;
 			data.n_commands = count_pipes(data.command_list);
 			check_builtins_main(&data);
-/*  			print_commands(data.command_list);
-			print_type(data.command_list); */
+  			print_commands(data.command_list);
+		/*	print_type(data.command_list); */
 			exec_commands(&data);
 		}
 	}
