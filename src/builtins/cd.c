@@ -26,33 +26,33 @@ int	is_cd(char *line)
 
 void	exec_cd(t_data *data)
 {
-	t_env	*home_path;
+	t_env	*home;
 	char	*path;
 
-	home_path = NULL;
+	home = NULL;
 	path = NULL;
 	if (data->n_commands > 1)
 		return ;
-	if (data->command_list[2].command)
+	if (data->command_list[1].command != NULL)
 	{
-		printf("minishell: cd: too many arguments\n");
-		data->last_error = 127;
-		return ;
-	}
-	if (data->command_list[1].command)
-	{
+		if (data->command_list[2].command && data->command_list[2].command != NULL)
+		{
+			printf("minishell: cd: too many arguments\n");
+			data->last_error = 127;
+			return ;
+		}
 		chdir(data->command_list[1].command);
 		if (errno == EACCES)
 			return ((void) printf("minishell: cd: permission denied: %s\n", data->command_list[1].command));
-		//if (errno == ENOENT)
-			//return ((void) printf("minishell: cd: no such file or directory\n"));
+		if (errno == ENOENT)
+			return ((void) printf("minishell: cd: no such file or directory\n"));
 	}
 	else
 	{
-		home_path = search_var("HOME", data);
+		home = search_var("HOME", data);
 		//if (!home_path)
 			/**/
-		path = cont_of_var(home_path->content);
+		path = cont_of_var(home->content);
 		/*if (!path)
 			*/
 		chdir(path);
