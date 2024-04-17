@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <linux/limits.h>
+# include <errno.h>
 
 # include "./get_next_line.h"
 
