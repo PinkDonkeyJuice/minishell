@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/15 19:00:06 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:06:30 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ char **get_commands(t_command *command_list, size_t i)
 			commands[i_pipe] = ft_strdup(command_list[i_start + i_pipe].command);
 			i_pipe++;
 		}
-		i_start++;
+		else
+			i_start++;
 	}
 	commands[n] = NULL;
-/*  	dprintf(1, "command in list is %s\n", command_list[i_start - 1].command);
+/*  dprintf(1, "command in list is %s\n", command_list[i_start - 1].command);
 	dprintf(1, "command now is %s\n", commands[0]); */
-	read_commands(commands);
+	//read_commands(commands);
 	return (commands);
 }
 
@@ -68,17 +69,25 @@ void	exec(t_data *data, size_t i)
 	char	**commands;
 
 	commands = get_commands(data->command_list, i);
-	//read_commands(commands);
-	path = get_exec_path(commands[0]);
+	read_commands(commands);
 	//ft_putstr_fd(path, 2);
-	if (!path)
-		return ;
-	execve(path, commands, data->env);
+	data->commands = commands;
+	if (check_builtins(data) == 0)
+	{
+		path = get_exec_path(commands[0]);
+		if (!path)
+		{
+			printf("Unkown command\n");
+			exit(-1) ;
+		}
+		else
+			execve(path, commands, data->env);
+	}
+	exit(1);
 }
 
 void	child_proc(t_data *data, t_pipe **pipe_list, size_t i)
 {
-		printf("i is %zu\n", i);
 		if (i == 0)
 		{
 			if (data->n_commands == 1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/17 10:04:39 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:08:39 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ void	handle(int sig)
 
 int	check_builtins(t_data *data)
 {
-	if (is_echo(data->command_list[0].command))
+	if (is_echo(data->commands[0]))
 		return (exec_echo(data), 1);
-	if (is_cd(data->command_list[0].command))
+	if (is_cd(data->commands[0]))
 		return (exec_cd(data), 1);
-	if (is_pwd(data->command_list[0].command))
+	if (is_pwd(data->commands[0]))
 		return (exec_pwd(), 1);
 /*	if (is_export(line))
 		return (exec_export(), 1);
@@ -90,7 +90,7 @@ int	check_builtins(t_data *data)
 		return (exec_unset(), 1); */
 /*	if (is_env(data->command_list[0].command))
 		return (exec_env(data->command_list, data->env), 1);*/
-	if (is_exit(data->command_list[0].command))
+	if (is_exit(data->commands[0]))
 		return (exec_exit(data), 1);
 	return (0);
 }
@@ -140,9 +140,8 @@ int	main(int argc, char **argv, char **env)
 			data.command_list = parse_line(data.line, &data);
 			if (data.command_list == NULL)
 				continue ;
- 			/*print_commands(data.command_list);
+/*  			print_commands(data.command_list);
 			print_type(data.command_list); */
-			check_builtins(&data);
 			exec_commands(&data);
 		}
 	}

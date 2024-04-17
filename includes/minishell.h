@@ -76,7 +76,6 @@ char	*get_exec_path(char *line);
 size_t	commands_len(char **commands);
 void	create_pipe(size_t i, t_pipe **pipe_list);
 t_pipe	*access_pipe(t_pipe **pipe_list, size_t i);
-int		check_builtin(char *command);
 void	close_all_pipes(t_data *data, t_pipe **pipe_list, size_t i, size_t j);
 char	*get_next_line(int fd);
 
