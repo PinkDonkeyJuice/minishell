@@ -75,12 +75,21 @@ void	handle(int sig)
 	}
 }
 
+int	check_builtins_main(t_data *data)
+{
+	if (is_exit(data->command_list[0].command))
+		exec_exit(data);
+	if (is_cd(data->command_list[0].command))
+		(exec_cd(data));
+	return (0);
+}
+
 int	check_builtins(t_data *data)
 {
-	if (is_echo(data->commands[0]))
-		return (exec_echo(data), 1);
 	if (is_cd(data->commands[0]))
 		return (exec_cd(data), 1);
+	if (is_echo(data->commands[0]))
+		return (exec_echo(data), 1);
 	if (is_pwd(data->commands[0]))
 		return (exec_pwd(), 1);
 /*	if (is_export(line))
@@ -140,8 +149,7 @@ int	main(int argc, char **argv, char **env)
 			if (data.command_list == NULL)
 				continue ;
 			data.n_commands = count_pipes(data.command_list);
-			if (is_exit(data.command_list[0].command))
-				exec_exit(&data);
+			check_builtins_main(&data);
 /*  			print_commands(data.command_list);
 			print_type(data.command_list); */
 			exec_commands(&data);
