@@ -26,7 +26,7 @@ int	is_cd(char *line)
 
 void	exec_cd(t_data *data)
 {
-	if (data->command_list[2].command)
+	if (data->command_list[2].command != NULL)
 	{
 		printf("minishell: cd: too many arguments\n");
 		data->last_error = 127;
