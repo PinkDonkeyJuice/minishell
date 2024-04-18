@@ -98,6 +98,10 @@ size_t	count_pipes(t_command *command_list);
 
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 
+void	handle_input_output(t_data *data);
+
+int	ft_strcmp(const char *s1, const char *s2);
+
 //For parsing by Noam
 
 int		check_builtins(t_data *data);
