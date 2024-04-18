@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/15 17:29:20 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:39:41 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,24 @@ int        count_args(char *line)
     while (line[i])
     {
         if ((line[i + 1] != ' ' && line[i] == ' ' && line[i + 1] != '|'
-			&& line[i + 1] != '<' && line[i + 1] != '>')
+			&& line[i + 1] != '<' && line[i + 1] != '>' && line[i + 1] != '\0')
             || (i == 0 && line[i] != ' '))
         {
             count++;
         }
-        if (line[i] == '|')
+        if (line[i] == '|' && i != 0)
             count++;
-        if (line[i] == '|' && line[i + 1] != ' ' && line[i + 1])
+        if (line[i] == '|' && line[i + 1] != ' ' && line[i + 1] && i != 0)
             count++;
-		if (line[i] == '<' && line[i + 1] != '<')
+		if (line[i] == '<' && line[i + 1] != '<' && i != 0)
         	count++;
 		if (line[i] == '<' && line[i + 1] != '<'
-			&& line[i + 1] != ' ' && line[i + 1])
+			&& line[i + 1] != ' ' && line[i + 1] && i != 0)
             count++;
-		if (line[i] == '>' && line[i + 1] != '>')
+		if (line[i] == '>' && line[i + 1] != '>' && i != 0)
         	count++;
 		if (line[i] == '>' && line[i + 1] != '>'
-			&& line[i + 1] != ' ' && line[i + 1])
+			&& line[i + 1] != ' ' && line[i + 1] && i != 0)
             count++;
         if (line[i] == '\"')
         {
