@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:34:45 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/18 11:37:23 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/18 12:19:11 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	append_node(t_env **env, char *env_var)
 	if (!node)
 		return ;
 	node->next = NULL;
-	//node->data = env_var;
+	node->content = env_var;
 	if (*env == NULL)
 		*env = node;
 	else
