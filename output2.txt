@@ -1,0 +1,9 @@
+includes
+Makefile
+minishell
+outfile
+output2.txt
+output.txt
+src
+test.c
+TODO.txt
