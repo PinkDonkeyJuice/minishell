@@ -65,6 +65,8 @@ int	exit_atoi(const char *str)
 void	do_exit(t_data *data)
 {
 	printf("exit\n");
+	if (data->heredoc_name)
+		unlink(data->heredoc_name);
 	exit(data->last_error);
 }
 

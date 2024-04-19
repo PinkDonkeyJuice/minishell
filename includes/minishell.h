@@ -53,6 +53,8 @@ typedef struct			s_data
 {
 	int		fdin;
 	int		fdout;
+	bool	heredoc;
+	char	*heredoc_name;
 	char	*delimiter;
 	int		last_error;
 	int		pipin;

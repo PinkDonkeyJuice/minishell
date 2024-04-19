@@ -5,7 +5,6 @@ void	here_doc(t_data *data)
 	char *line;
 	size_t i;
 	bool	stop;
-	char 	*name;
 	char	*number;
 
 	i = 0;
@@ -13,10 +12,10 @@ void	here_doc(t_data *data)
 	while (!stop)
 	{
 		number = ft_itoa(i);
-		name = ft_strjoin("./.heredoc_", number);
-		if (access(name, F_OK) == -1)
+		data->heredoc_name = ft_strjoin("./.heredoc_", number);
+		if (access(data->heredoc_name, F_OK) == -1)
 		{	
-			if ((data->fdin = open(name, O_RDWR | O_CREAT, 0644)) == -1)
+			if ((data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644)) == -1)
 			{}	//error();
 			stop = true; 
 		}
@@ -25,7 +24,11 @@ void	here_doc(t_data *data)
 	while ((line = readline("$> here_doc: ")) != NULL)
 	{
 		if (ft_strcmp(line, data->delimiter) == 0)
+		{
+			close(data->fdin);
+			data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);	
 			return ;
+		}
 		ft_putstr_fd(line, data->fdin);
 		ft_putstr_fd("\n", data->fdin);
 	}
