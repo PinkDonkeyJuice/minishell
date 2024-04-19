@@ -3,11 +3,31 @@
 void	here_doc(t_data *data)
 {
 	char *line;
+	size_t i;
+	bool	stop;
+	char 	*name;
+	char	*number;
 
+	i = 0;
+	stop = false;
+	while (!stop)
+	{
+		number = ft_itoa(i);
+		name = ft_strjoin("./.heredoc_", number);
+		if (access(name, F_OK) == -1)
+		{	
+			if ((data->fdin = open(name, O_RDWR | O_CREAT, 0644)) == -1)
+			{}	//error();
+			stop = true; 
+		}
+		i++;
+	}
 	while ((line = readline("$> here_doc: ")) != NULL)
 	{
 		if (ft_strcmp(line, data->delimiter) == 0)
 			return ;
+		ft_putstr_fd(line, data->fdin);
+		ft_putstr_fd("\n", data->fdin);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/18 15:14:48 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/19 14:07:34 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ char **get_commands(t_command *command_list, size_t i)
 	size_t i_start;
 	char **commands;
 	size_t n;
+	size_t	j;
 
 	i_start = 0;
 	i_pipe = 0;
-	if (command_list[0].type == TYPE_OPERATOR)
-		i_start += 2;
 	while (i_pipe != i)
 	{
 		if (command_list[i_start].type == TYPE_PIPE)
@@ -42,19 +41,24 @@ char **get_commands(t_command *command_list, size_t i)
 		i_start++;
 	}
 	n = 0;
-	while (command_list[i_start + n].type != TYPE_PIPE && command_list[i_start + n].command != NULL &&\
-		command_list[i_start + n].type != TYPE_OPERATOR)
-		n++;
+	j = 0;
+	while (command_list[i_start + j].type != TYPE_PIPE && command_list[i_start + j].command != NULL)
+	{
+		if (command_list[i_start + j].type != TYPE_OPERATOR && \
+			((i_start + j == 0) || command_list[i_start + j - 1].type != TYPE_OPERATOR))
+			n++;
+		j++;
+	}
 	commands = (char **)malloc(sizeof(char *) * (n + 1));
 	//printf("n is: %zu\ni_start is: %zu\n", n, i_start);
-	i_pipe = 0;
-	while (i_pipe != n)
+	j = 0;
+	while (j != n)
 	{
-		if (command_list[i_start + i_pipe].type != TYPE_OPERATOR && \
-			((i_start == 0) || command_list[i_start + i_pipe - 1].type != TYPE_OPERATOR))
+		if (command_list[i_start + j].type != TYPE_OPERATOR && \
+			((i_start + j == 0) || command_list[i_start + j - 1].type != TYPE_OPERATOR))
 		{	
-			commands[i_pipe] = ft_strdup(command_list[i_start + i_pipe].command);
-			i_pipe++;
+			commands[j] = ft_strdup(command_list[i_start + j].command);
+			j++;
 		}
 		else
 			i_start++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/19 13:18:11 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:09:20 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int	main(int argc, char **argv, char **env)
 			data.n_commands = count_pipes(data.command_list);
 			check_builtins_main(&data);
   			print_commands(data.command_list);
-		/*	print_type(data.command_list); */
+			print_type(data.command_list);
 			exec_commands(&data);
 		}
 	}
