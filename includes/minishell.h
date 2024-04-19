@@ -33,6 +33,7 @@ typedef struct		s_env
 {
 	char			*content;
 	struct s_env	*next;
+	struct s_env	*previous;
 
 }					t_env;
 
@@ -103,9 +104,13 @@ void	handle_input_output(t_data *data);
 
 int	ft_strcmp(const char *s1, const char *s2);
 
-//For parsing by Noam
+/*Built-ins*/
+
+int	check_builtins_main(t_data *data);
 
 int		check_builtins(t_data *data);
+//For parsing by Noam
+
 int	checker(char **line, t_data *data);
 int		ft_isalnum(int c);
 int		len_tab(char **tab);
@@ -148,5 +153,5 @@ int		is_env(char *line);
 void	exec_env(t_data *data);
 
 int	is_export(char *line);
-void	exec_export(t_data *data);
+void	exec_export(t_data *data, bool is_piped);
 #endif

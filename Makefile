@@ -26,6 +26,8 @@ CFILES_BUILTINS = cd.c\
 	echo.c\
 	init_env.c\
 	export.c\
+	unset.c\
+	check_builtins.c\
 
 SRCS_UTILS_DIR = ./src/utils/
 SRCS_EXEC_DIR = ./src/exec/

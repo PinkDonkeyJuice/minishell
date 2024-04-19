@@ -1,29 +1,5 @@
 #include "minishell.h"
 
-int	is_cd(char *line)
-{
-	int	i;
-	int	j;
-	char	*cd;
-
-	i = 0;
-	j = 0;
-	cd = "cd";
-	while (line[i])
-	{
-		j = 0;
-		while (line[i + j] == cd[j])
-		{
-			if (line[i + j] == cd[j] && cd[j + 1] == '\0' 
-				&& (line[i + j + 1] == ' ' || line[i + j + 1] == '\0'))
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
 void	exec_cd(t_data *data)
 {
 	t_env	*home;

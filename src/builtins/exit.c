@@ -1,30 +1,6 @@
 
 #include "minishell.h"
 
-int	is_exit(char *line)
-{
-	int	i;
-	int	j;
-	char	*exit;
-
-	i = 0;
-	j = 0;
-	exit = "exit";
-	while (line[i])
-	{
-		j = 0;
-		while (line[i + j] == exit[j])
-		{
-			if (line[i + j] == exit[j] && exit[j + 1] == '\0' 
-				&& (line[i + j + 1] == ' ' || line[i + j + 1] == '\0'))
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
 int	is_num(char *str)
 {
 	int	i;

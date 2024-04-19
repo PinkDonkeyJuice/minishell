@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/19 16:21:42 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:34:29 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,36 +75,6 @@ void	handle(int sig)
 	}
 }
 
-int	check_builtins_main(t_data *data)
-{
-	if (is_exit(data->command_list[0].command))
-		exec_exit(data);
-	if (is_cd(data->command_list[0].command))
-		(exec_cd(data));
-	if (is_export(data->command_list[0].command))
-		return (exec_export(data), 1);
-	return (0);
-}
-
-int	check_builtins(t_data *data)
-{
-	if (is_cd(data->commands[0]))
-		return (exec_cd(data), 1);
-	if (is_echo(data->commands[0]))
-		return (exec_echo(data), 1);
-	if (is_pwd(data->commands[0]))
-		return (exec_pwd(), 1);
-	if (is_export(data->commands[0]))
-		return (exec_export(data), 1);
-	/*if (is_unset(line))
-		return (exec_unset(), 1); */
-	if (is_env(data->commands[0]))
-		return (exec_env(data), 1);
-	if (is_exit(data->commands[0]))
-		return (exec_exit(data), 1);
-	return (0);
-}
-
 void	print_commands(t_command *commands)
 {
 	int	i;
@@ -151,6 +121,7 @@ int	main(int argc, char **argv, char **env)
 			if (data.command_list == NULL)
 				continue ;
 			data.n_commands = count_pipes(data.command_list);
+			data.commands = get_commands(data.command_list, 0);
 			check_builtins_main(&data);
   			print_commands(data.command_list);
 			print_type(data.command_list);

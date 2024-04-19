@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/19 16:15:10 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:06:01 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,15 @@ char **get_commands(t_command *command_list, size_t i)
 void	exec(t_data *data, size_t i)
 {
 	char	*path;
-	char	**commands;
 
-	commands = get_commands(data->command_list, i);
+	data->commands = get_commands(data->command_list, i);
 	//read_commands(commands);
-	data->commands = commands;
 	if (check_builtins(data) == 0)
 	{
-		path = get_exec_path(commands[0]);
+		path = get_exec_path(data->commands[0]);
 		if (data->fdin != STDIN_FILENO)
 			close(data->fdin);
-		execve(path, commands, data->env);
+		execve(path, data->commands, data->env);
 	}
 	exit(1);
 }
