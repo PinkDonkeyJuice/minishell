@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/17 12:06:30 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:14:48 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,35 +167,6 @@ size_t	count_pipes(t_command *command_list)
 		i++;
 	}
 	return (n);
-}
-
-void	handle_input_output(t_data *data)
-{
-	size_t i;
-	char *command;
-
-	i = 0;
-	data->fdout = STDOUT_FILENO;
-	data->fdin = STDIN_FILENO;
-	while (data->command_list[i].command)
-	{
-		command = data->command_list[i].command;
-		if (data->command_list[i].type == TYPE_OPERATOR)
-		{
-			if (ft_strncmp(command, "<", 2) == 0)
-				if ((data->fdin = open(data->command_list[i + 1].command, O_RDONLY)) == -1)
-					return ;
-			if (ft_strncmp(command, "<<", 2) == 0)
-				data->delimiter = data->command_list[i + 1].command;
-			if (ft_strncmp(command, ">", 2) == 0)
-			{
-				data->fdout = open(data->command_list[i + 1].command, O_RDWR | O_TRUNC | O_CREAT, 0644);
-			}
-			if (ft_strncmp(command, ">>", 2) == 0)
-				data->fdout = open(data->command_list[i + 1].command, O_WRONLY | O_APPEND | O_CREAT, 0644);
-		}
-		i++;
-	}
 }
 
 void	exec_commands(t_data *data)
