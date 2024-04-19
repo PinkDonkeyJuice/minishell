@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/19 14:39:30 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:12:29 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,6 @@ void	exec(t_data *data, size_t i)
 	if (check_builtins(data) == 0)
 	{
 		path = get_exec_path(commands[0]);
-		if (!path)
-		{
-			printf("Unkown command\n");
-			exit(-1) ;
-		}
 		if (data->fdin != STDIN_FILENO)
 			close(data->fdin);
 		execve(path, commands, data->env);
