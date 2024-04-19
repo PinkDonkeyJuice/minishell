@@ -3,16 +3,23 @@
 
 int	is_exit(char *line)
 {
-	int		i;
+	int	i;
+	int	j;
 	char	*exit;
 
 	i = 0;
+	j = 0;
 	exit = "exit";
-	while (line[i] == exit[i])
+	while (line[i])
 	{
-		if (line[i] == exit[i] && exit[i + 1] == '\0'
-			&& !ft_isalnum(line[i + 1]))
-			return (1);
+		j = 0;
+		while (line[i + j] == exit[j])
+		{
+			if (line[i + j] == exit[j] && exit[j + 1] == '\0' 
+				&& (line[i + j + 1] == ' ' || line[i + j + 1] == '\0'))
+				return (1);
+			j++;
+		}
 		i++;
 	}
 	return (0);
@@ -65,8 +72,6 @@ int	exit_atoi(const char *str)
 void	do_exit(t_data *data)
 {
 	printf("exit\n");
-	if (data->heredoc_name)
-		unlink(data->heredoc_name);
 	exit(data->last_error);
 }
 
