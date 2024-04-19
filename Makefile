@@ -1,6 +1,6 @@
 NAME = minishell
 RLINEFLAGS = -lreadline
-CFLAGS = -Werror -Wextra -I ./includes/
+CFLAGS = -Werror -Wextra -I ./includes/ -g3
 
 CFILES_UTILS = ft_split.c\
     libft.c
@@ -43,7 +43,7 @@ OBJS_EXEC = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_EXEC:.c=.o)))
 OBJS_PARSING = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_PARSING:.c=.o)))
 OBJS_BUILTINS = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_BUILTINS:.c=.o)))
 
-$(NAME): $(OBJS_UTILS) $(OBJS_EXEC) $(OBJS_PARSING) $(OBJS_BUILTINS)
+$(NAME): $(OBJS_UTILS) $(OBJS_EXEC) $(OBJS_PARSING) $(OBJS_BUILTINS) Makefile ./includes/
 	$(CC) $(OBJS_UTILS) $(OBJS_EXEC) $(OBJS_PARSING) $(OBJS_BUILTINS) -o $(NAME) $(RLINEFLAGS)
 
 $(OBJS_DIR)%.o: $(SRCS_UTILS_DIR)%.c
