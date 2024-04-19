@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/19 16:11:27 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:21:42 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	check_builtins(t_data *data)
 		return (exec_export(data), 1);
 	/*if (is_unset(line))
 		return (exec_unset(), 1); */
-	if (is_env(data->command_list[0].command))
+	if (is_env(data->commands[0]))
 		return (exec_env(data), 1);
 	if (is_exit(data->commands[0]))
 		return (exec_exit(data), 1);
