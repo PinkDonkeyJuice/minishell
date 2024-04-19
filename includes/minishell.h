@@ -130,6 +130,8 @@ int		is_exit(char *line);
 void	exec_exit(t_data *data);
 void	do_exit(t_data *data);
 
+t_env	*find_last_node(t_env *env);
+void	append_node(t_env **env, char *env_var);
 void	init_env(char **env, t_data *data);
 
 int		is_echo(char *line);
@@ -142,5 +144,8 @@ int		is_pwd(char *line);
 void	exec_pwd(void);
 
 int		is_env(char *line);
-void	exec_env(t_command *commande, char **env);
+void	exec_env(t_data *data);
+
+int	is_export(char *line);
+void	exec_export(t_data *data);
 #endif

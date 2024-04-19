@@ -25,15 +25,14 @@ int	is_env(char *line)
 	return (0);
 }
 
-void	exec_env(t_command *command, char **env)
+void	exec_env(t_data *data)
 {
-	int	i;
+	t_env *print;
 
-	i = 0;
-	(void) command;
-	while(env[i])
+	print = data->env_c;
+	while(print)
 	{
-		printf("%s\n", env[i]);
-		i++;
+		printf("%s\n", print->content);
+		print = print->next;
 	}
 }

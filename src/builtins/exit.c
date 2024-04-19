@@ -72,25 +72,25 @@ void	exec_exit(t_data *data)
 {
 	if (data->n_commands > 1)
 		return ;
-	if (!data->commands[1])
+	if (!data->command_list[1].command)
 		do_exit(data);
 	else
 	{
-		if (data->commands[1] != NULL && is_num(data->commands[1]))
+		if (data->command_list[1].command != NULL && is_num(data->command_list[1].command))
 		{
-			if (data->commands[2] != NULL)
+			if (data->command_list[2].command != NULL)
 			{
 				printf("exit\nminishell: exit: too many arguments\n");
 				data->last_error = 1;
 				return ;
 			}
 			printf("exit\n");
-			exit(exit_atoi(data->commands[1]));
+			exit(exit_atoi(data->command_list[1].command));
 		}
 		else
 		{
 			printf("exit\nminishell: exit: %s: numeric argument required\n",
-				data->commands[1]);
+				data->command_list[1].command);
 			exit(2);
 		}
 	}

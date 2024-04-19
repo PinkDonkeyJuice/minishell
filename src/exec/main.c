@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/18 11:37:35 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/19 13:18:11 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	check_builtins_main(t_data *data)
 		exec_exit(data);
 	if (is_cd(data->command_list[0].command))
 		(exec_cd(data));
+	if (is_export(data->command_list[0].command))
+		return (exec_export(data), 1);
 	return (0);
 }
 
@@ -92,12 +94,12 @@ int	check_builtins(t_data *data)
 		return (exec_echo(data), 1);
 	if (is_pwd(data->commands[0]))
 		return (exec_pwd(), 1);
-/*	if (is_export(line))
-		return (exec_export(), 1);
-	if (is_unset(line))
+	if (is_export(data->commands[0]))
+		return (exec_export(data), 1);
+	/*if (is_unset(line))
 		return (exec_unset(), 1); */
-/*	if (is_env(data->command_list[0].command))
-		return (exec_env(data->command_list, data->env), 1);*/
+	if (is_env(data->command_list[0].command))
+		return (exec_env(data), 1);
 	if (is_exit(data->commands[0]))
 		return (exec_exit(data), 1);
 	return (0);
