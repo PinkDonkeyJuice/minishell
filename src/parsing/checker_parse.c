@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/17 10:50:55 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:28:20 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ int		new_line_len(char *line, t_data *data)
 			}
 			while (ft_isalnum(line[i]) && line[i])
 				i++;
+			if (search == NULL && (line[i] == ' ' || line[i] == '\0'))
+				len++;
 			continue ;
 		}
 		i++;
@@ -257,6 +259,11 @@ char	*check_var(char *line, t_data *data)
 				}
 				while (ft_isalnum(line[i]) && line[i])
 					i++;
+				if (search == NULL && (line[i] == ' ' || line[i] == '\0'))
+				{
+					new_line[j] = -32;
+					j++;
+				}
 				continue ;
 			}
 			new_line[j] = line[i];
@@ -285,7 +292,11 @@ t_command	*finish_parsing(t_command *parsed)
 		while (parsed[i].command[j])
 		{
 			if (parsed[i].command[j] < 0)
+			{
+				if (parsed[i].command[j] == -32)
+					parsed[i].command[j] = 0;
 				parsed[i].command[j] *= -1;
+			}
 			j++;
 		}
 		i++;

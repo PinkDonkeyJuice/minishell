@@ -27,7 +27,7 @@ t_env	*search_var(char *namevar, t_data *data)
 		i = 0;
 		while (search->content[i] == namevar[i]) 
 		{
-			if (!ft_isalnum(namevar[i + 1]) && search->content[i + 1] == '=')
+			if (!ft_isalnum(namevar[i + 1]) && (search->content[i + 1] == '=' || search->content[i + 1] == '\0'))
 				return (search);
 			i++;
 		}
