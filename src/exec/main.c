@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/19 17:34:29 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:33:32 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,10 @@ int	main(int argc, char **argv, char **env)
 				continue ;
 			data.n_commands = count_pipes(data.command_list);
 			data.commands = get_commands(data.command_list, 0);
-			check_builtins_main(&data);
   			print_commands(data.command_list);
 			print_type(data.command_list);
-			exec_commands(&data);
+			if (check_builtins_main(&data) == 0 || data.n_commands != 1)
+				exec_commands(&data);
 			if (data.heredoc_name)
 				unlink(data.heredoc_name);
 		}

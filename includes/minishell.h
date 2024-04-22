@@ -155,5 +155,5 @@ int		is_env(char *line);
 void	exec_env(t_data *data);
 
 int	is_export(char *line);
-void	exec_export(t_data *data, bool is_piped);
+void	exec_export(t_data *data);
 #endif

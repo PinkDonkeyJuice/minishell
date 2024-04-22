@@ -6,21 +6,20 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/19 17:33:09 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:49:07 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-void	exec_export(t_data *data, bool is_piped)
+void	exec_export(t_data *data)
 {
 	int		i;
 	char	*var_def;
 	t_env	*to_replace;	
 
 	i = 1;
-	if (!data->commands[1] && is_piped)
+	if (!data->commands[1])
 		exec_env(data);
 	while ((var_def = data->commands[i]) != NULL && data->n_commands == 1)
 	{
