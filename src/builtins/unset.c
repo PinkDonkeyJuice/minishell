@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:25:47 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/19 17:52:21 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:21:05 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void	exec_unset(t_data *data)
 	{
 		if ((to_delete = search_var(var_def, data)) != NULL)
 		{	
-			previous = search_var_before(var_def, data);
-			to_replace->content = var_def;
+			previous = to_delete->previous;
+			previous->next = to_delete->next;
+			to_delete->next->previous = previous;
+			free(to_delete);
 		}
 		else
 			append_node(&(data->env_c), var_def);

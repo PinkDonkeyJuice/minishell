@@ -104,6 +104,8 @@ void	handle_input_output(t_data *data);
 
 int	ft_strcmp(const char *s1, const char *s2);
 
+void	exec_unset(t_data *data);
+
 /*Built-ins*/
 
 int	check_builtins_main(t_data *data);
