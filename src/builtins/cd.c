@@ -1,21 +1,27 @@
 #include "minishell.h"
 
-void	update_oldpwd(t_data *data, char *path_oldpwd, char *path_pwd)
+void	update_oldpwd(t_data *data, char *path_oldpwd)
 {
 	t_env	*oldpwd;
-	t_env	*pwd;
 	char	*var_oldpwd;
-	char	*var_pwd;
-
+	
 	var_oldpwd = ft_strjoin("OLDPWD=", path_oldpwd);
 	oldpwd = search_var("OLDPWD", data);
 	if (oldpwd != NULL)
 		oldpwd->content = var_oldpwd;
-	var_pwd = ft_strjoin("PWD=", path_pwd);
+}
+
+void	update_pwd(t_data *data)
+{
+	char	buf[PATH_MAX];
+	t_env	*pwd;
+	char	*var_pwd;
+
+	if (getcwd(buf, PATH_MAX))
+		var_pwd = ft_strjoin("PWD=", buf);
 	pwd = search_var("PWD", data);
-	if (pwd != NULL)
+	if (pwd)
 		pwd->content = var_pwd;
-	printf("Old pwd: %s\n", pwd->content);
 }
 
 void	exec_cd(t_data *data)
@@ -62,6 +68,7 @@ void	exec_cd(t_data *data)
 		if (!path)
 			return ;
 	}
-	update_oldpwd(data, cont_of_var(search_var("PWD", data)->content), path);
+	update_oldpwd(data, cont_of_var(search_var("PWD", data)->content));
 	chdir(path);
+	update_pwd(data);
 }
