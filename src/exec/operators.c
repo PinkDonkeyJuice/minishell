@@ -1,5 +1,39 @@
 #include "minishell.h"
 
+int    g_signal_handle;
+
+void    here_doc_sigint(int sig)
+{
+    g_signal_handle = sig;
+    rl_done = 1;
+}
+
+int    heredoc_signal_handler(void)
+{
+    struct sigaction    sa;
+
+    ft_bzero(&sa, sizeof(sa));
+    sa.sa_handler = here_doc_sigint;
+    if (sigaction(SIGINT, &sa, NULL))
+        return (-1);
+    return (0);
+}
+
+char    *expand_line(char *line, t_data *data)
+{
+    int    i;
+
+    i = 0;
+    line = check_var(line, data);
+    while (line[i])
+    {
+        if (line[i] < 0)
+            line[i] *= -1;
+        i++;
+    }
+    return (line);
+}
+
 void	here_doc(t_data *data)
 {
 	char *line;
@@ -9,6 +43,8 @@ void	here_doc(t_data *data)
 
 	i = 0;
 	stop = false;
+    line = NULL;
+	heredoc_signal_handler();
 	while (!stop)
 	{
 		number = ft_itoa(i);
@@ -29,6 +65,14 @@ void	here_doc(t_data *data)
 			data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);	
 			return ;
 		}
+		if (g_signal_handle == SIGINT)
+        {
+            g_signal_handle = 0;
+            data->last_error = 130;
+            return (close(data->fdin), data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644),
+                (void) free(line));
+        }
+		line = expand_line(line, data);
 		ft_putstr_fd(line, data->fdin);
 		ft_putstr_fd("\n", data->fdin);
 	}

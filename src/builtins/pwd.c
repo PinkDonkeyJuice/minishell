@@ -6,5 +6,6 @@ void	exec_pwd(void)
 
 	if (getcwd(buf, PATH_MAX))
 		printf("%s\n", buf);
-	/*securiser pwd*/
+	else
+		perror("Pwd: ");
 }

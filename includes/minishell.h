@@ -34,7 +34,6 @@ typedef struct		s_env
 	char			*content;
 	struct s_env	*next;
 	struct s_env	*previous;
-
 }					t_env;
 
 typedef struct		s_pipe
@@ -156,4 +155,12 @@ void	exec_env(t_data *data);
 
 int	is_export(char *line);
 void	exec_export(t_data *data);
+
+void    ft_bzero(void *s, size_t n);
+
+int    signal_handler(void);
+
+char	*check_var(char *line, t_data *data);
+
+
 #endif

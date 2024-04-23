@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:26:48 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/22 15:49:46 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:50:38 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 int	check_builtins_main(t_data *data)
 {
+	if (data->commands[0] == NULL)
+		return (0);
 	if (!ft_strcmp(data->commands[0], "exit"))
 		return (exec_exit(data), 1);
 	if (!ft_strcmp(data->commands[0], "unset"))

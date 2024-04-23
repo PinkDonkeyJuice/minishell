@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/22 15:33:32 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:49:22 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include <readline/history.h>
 #include "stdlib.h"
 #include "minishell.h"
+
+int		void_event(void)
+{
+	return (0);
+}
 
 char	*get_exec_path(char *command)
 {
@@ -62,17 +67,25 @@ void	ft_add_history(char *line)
 		add_history(line);
 }
 
-void	handle(int sig)
+void    handle_sigint(int sig)
 {
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	else if (sig == SIGQUIT)
-	{
-	}
+    (void) sig;
+    printf("\n");
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+}
+
+int    signal_handler(void)
+{
+    struct sigaction    sa;
+
+    signal(SIGQUIT, SIG_IGN);
+    ft_bzero(&sa, sizeof(sa));
+    sa.sa_handler = handle_sigint;
+    if (sigaction(SIGINT, &sa, NULL))
+        return (-1);
+    return (0);
 }
 
 void	print_commands(t_command *commands)
@@ -106,12 +119,12 @@ int	main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
+	rl_event_hook = void_event;
 	init_data(&data);
 	init_env(env, &data);
 	data.env = env;
 	data.last_error = 0;
-	signal(SIGINT, handle);
-	signal(SIGQUIT, SIG_IGN);
+	signal_handler();
 	while ((data.line = readline("$> ")) != NULL)
 	{
 		ft_add_history(data.line);
@@ -122,6 +135,7 @@ int	main(int argc, char **argv, char **env)
 				continue ;
 			data.n_commands = count_pipes(data.command_list);
 			data.commands = get_commands(data.command_list, 0);
+			printf("Command 0 is %s\n", data.commands[0]);
   			print_commands(data.command_list);
 			print_type(data.command_list);
 			if (check_builtins_main(&data) == 0 || data.n_commands != 1)

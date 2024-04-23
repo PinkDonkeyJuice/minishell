@@ -1,12 +1,15 @@
 ######## FAIT ######## g: exec : finir implementation des commandes depuis data
 ######## FAIT ######## n: parsing: faire des types (0 : commande, 1 : pipe, 2: operator)
-builtins : export, unset
+######## FAIT ######## builtins : export, unset
 ######## FAIT ######## g : exec : gerer input output
 ######## FAIT ######## n : parsing : fix variable d'env qui s'expand mal
 ######## FAIT ######## n : builtins : mettre l'environnement dans une liste chainée
 ######## FAIT ######## n : parsing : changer le parsing pour naviguer dans la liste chainée lors de la recherche de variable d'environnement
 ######## FAIT ######## regarder pour faire tourner un programme dans minishell
 ######## FAIT ######## A FIX: dans command_list, une commande supplementaire vide quand la chaine commence par "<"
-remplacer les varaibles d'env dans les heredoc
-control c handle
-finir correctement echo et securiser pwd et cd
+######## FAIT ######## remplacer les varaibles d'env dans les heredoc
+######## FAIT ######## control c handle
+######## FAIT ######## finir correctement echo et securiser pwd et cd
+valgrind
+norme
+gestion d'erreur

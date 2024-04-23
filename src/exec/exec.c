@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/19 17:06:01 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:53:57 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void	redir(t_data *data, t_pipe **pipe_list)
 	}
 	if (parent == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		waitpid(parent, NULL, 0);
 		child_proc(data, pipe_list, i);
 	}
@@ -170,9 +171,11 @@ void	exec_commands(t_data *data)
 {
 	t_pipe	*pipe_list;
 	
+	signal(SIGINT, SIG_IGN);
 	handle_input_output(data);
 	printf("fdin : %d, fdout: %d\n", data->fdin, data->fdout);
 	pipe_list = NULL;
 	generate_pipes(&pipe_list, data);
 	redir(data, &pipe_list);
+	signal_handler();
 }
