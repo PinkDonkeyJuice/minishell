@@ -24,50 +24,59 @@ void	update_pwd(t_data *data)
 		pwd->content = var_pwd;
 }
 
-void	exec_cd(t_data *data)
+char	*get_path_cd_options(t_data *data, char *path)
 {
 	t_env	*target;
-	char	*path;
 
 	target = NULL;
-	path = NULL;
-	if (data->n_commands > 1)
-		return ;
 	if (data->commands[1] != NULL && !ft_strcmp(data->commands[1], "-"))
 	{
 		target = search_var("OLDPWD", data);
 		if (!target)
-			return ;
+			return (NULL);
 		path = cont_of_var(target->content);
 		printf("Path is: %s\n", path);
-		if (!path)
-			return ;
 	}
-	else if (data->commands[1] != NULL)
-	{
-		if (data->commands[2])
-		{
-			printf("minishell: cd: too many arguments\n");
-			data->last_error = 127;
-			return ;
-		}
-		printf("Path is: %s\n", data->commands[1]);
-		path = data->commands[1];
-		if (errno == EACCES)
-			return ((void) printf("minishell: cd: permission denied: %s\n", data->commands[1]));
-		if (errno == ENOENT)
-			return ((void) printf("minishell: cd: no such file or directory\n"));
-	}
-	else
+	else if (data->commands[1] == NULL)
 	{
 		target = search_var("HOME", data);
 		if (!target)
-			return ;
+			return (NULL);
 		path = cont_of_var(target->content);
 		printf("Path is: %s\n", path);
-		if (!path)
-			return ;
 	}
+	return (path);
+}
+
+char	*get_path_cd(t_data *data, char *path)
+{
+	if (data->commands[2])
+	{
+		printf("minishell: cd: too many arguments\n");
+		data->last_error = 127;
+		return (NULL);
+	}
+	path = data->commands[1];
+	if (errno == EACCES)
+		return (printf("minishell: cd: permission denied: %s\n", data->commands[1]), path);
+	if (errno == ENOENT)
+		return (printf("minishell: cd: no such file or directory\n"), path);
+	return (path);
+}
+
+void	exec_cd(t_data *data)
+{
+	char	*path;
+
+	path = NULL;
+	if (data->n_commands > 1)
+		return ;
+	else if (data->commands[1] != NULL && ft_strcmp(data->commands[1], "-") != 0)
+		path = get_path_cd(data, path);
+	else
+		path = get_path_cd_options(data, path);
+	if (!path)
+		return ;
 	update_oldpwd(data, cont_of_var(search_var("PWD", data)->content));
 	chdir(path);
 	update_pwd(data);
