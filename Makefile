@@ -9,7 +9,6 @@ CFILES_EXEC = main.c\
     init.c\
     exec.c\
     pipes.c\
-    utils_lists.c\
 	operators.c\
 
 CFILES_PARSING = env_variables.c\

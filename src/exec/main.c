@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/23 15:49:22 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:32:17 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,28 @@ void	print_type(t_command *command_list)
 	}
 }
 
+void	read_input_main(t_data *data)
+{
+	while ((data->line = readline("$> ")) != NULL)
+	{
+		ft_add_history(data->line);
+		if (data->line[0] != '\0')
+		{
+			data->command_list = parse_line(data->line, data);
+			if (data->command_list == NULL)
+				continue ;
+			data->n_commands = count_pipes(data->command_list);
+			data->commands = get_commands(data->command_list, 0);
+  			print_commands(data->command_list);
+			print_type(data->command_list);
+			if (check_builtins_main(data) == 0 || data->n_commands != 1)
+				exec_commands(data);
+			if (data->heredoc_name)
+				unlink(data->heredoc_name);
+		}
+	}
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
@@ -125,25 +147,7 @@ int	main(int argc, char **argv, char **env)
 	data.env = env;
 	data.last_error = 0;
 	signal_handler();
-	while ((data.line = readline("$> ")) != NULL)
-	{
-		ft_add_history(data.line);
-		if (data.line[0] != '\0')
-		{
-			data.command_list = parse_line(data.line, &data);
-			if (data.command_list == NULL)
-				continue ;
-			data.n_commands = count_pipes(data.command_list);
-			data.commands = get_commands(data.command_list, 0);
-			printf("Command 0 is %s\n", data.commands[0]);
-  			print_commands(data.command_list);
-			print_type(data.command_list);
-			if (check_builtins_main(&data) == 0 || data.n_commands != 1)
-				exec_commands(&data);
-			if (data.heredoc_name)
-				unlink(data.heredoc_name);
-		}
-	}
+	read_input_main(&data);
 	if (data.line == NULL)
 		do_exit(&data);
 }
