@@ -6,7 +6,7 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/24 15:32:45 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/25 10:06:12 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	child_single_command(t_data *data, t_pipe **pipe_list, size_t i)
 	close(access_pipe(pipe_list, i)->p[1]);
 }
 
-void	child_proc(t_data *data, t_pipe **pipe_list, size_t i)
+void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 {
 		if (i == 0)
 			child_single_command(data, pipe_list, i);
@@ -179,7 +179,7 @@ void	handle_commands(t_data *data, t_pipe **pipe_list)
 	{
 		signal(SIGINT, SIG_DFL);
 		waitpid(parent, NULL, 0);
-		child_proc(data, pipe_list, i);
+		child_process(data, pipe_list, i);
 	}
 	if (parent > 0)
 		parent_process(data, pipe_list, i);

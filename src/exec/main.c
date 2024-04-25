@@ -6,7 +6,7 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/24 15:32:17 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/25 09:59:55 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*get_exec_path(char *command)
 	char	*try_path;
 
 	paths = ft_split(getenv("PATH"), ':');
-	//ft_putstr_fd(command, 1);
 	i = 0;
 	if (paths && command)
 	{
@@ -41,10 +40,7 @@ char	*get_exec_path(char *command)
 			if ((try_path = ft_strjoin(try_path, command)) == NULL)
 				return (NULL);
 			if (access(try_path, X_OK) == 0)
-			{
-				//ft_putstr_fd(try_path, 1);
 				return (try_path);
-			}
 			i++;
 		}
 	}

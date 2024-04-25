@@ -97,6 +97,8 @@ void	handle_input_output(t_data *data)
 		command = data->command_list[i].command;
 		if (data->command_list[i].type == TYPE_OPERATOR)
 		{
+			if (ft_strncmp(command, ">>", 2) == 0)
+				data->fdout = open(data->command_list[i + 1].command, O_WRONLY | O_APPEND | O_CREAT, 0644);
 			if (ft_strncmp(command, "<", 2) == 0)
 				if ((data->fdin = open(data->command_list[i + 1].command, O_RDONLY)) == -1)
 					return ;
@@ -107,9 +109,6 @@ void	handle_input_output(t_data *data)
 			}
 			if (ft_strncmp(command, ">", 2) == 0)
 				data->fdout = open(data->command_list[i + 1].command, O_RDWR | O_TRUNC | O_CREAT, 0644);
-			if (ft_strncmp(command, ">>", 2) == 0)
-				data->fdout = open(data->command_list[i + 1].command, O_WRONLY | O_APPEND | O_CREAT, 0644);
-
 		}
 	}
 }
