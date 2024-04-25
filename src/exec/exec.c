@@ -6,7 +6,7 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/25 10:06:12 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/25 10:37:54 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 		exec(data, i);
 }
 
-void	parent_process(t_data *data, t_pipe **pipe_list, size_t i)
+void	parent_process(t_data *data, t_pipe **pipe_list)
 {
 	close_all_pipes(data, pipe_list, -1, -1);
 	while (waitpid(-1, NULL, 0) != -1)
@@ -182,7 +182,7 @@ void	handle_commands(t_data *data, t_pipe **pipe_list)
 		child_process(data, pipe_list, i);
 	}
 	if (parent > 0)
-		parent_process(data, pipe_list, i);
+		parent_process(data, pipe_list);
 }
 
 size_t	count_pipes(t_command *command_list)
