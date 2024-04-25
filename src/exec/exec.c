@@ -6,7 +6,7 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/25 10:37:54 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/04/25 17:05:09 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char **get_commands(t_command *command_list, size_t i)
 
 	i_start = 0;
 	i_pipe = 0;
+	if (!command_list)
+		return (NULL);
 	while (i_pipe != i)
 	{
 		if (command_list[i_start].type == TYPE_PIPE)
@@ -80,7 +82,7 @@ char **get_commands(t_command *command_list, size_t i)
 	}
 	n = 0;
 	j = 0;
-	while (command_list[i_start + j].type != TYPE_PIPE && command_list[i_start + j].command != NULL)
+	while (command_list[i_start + j].command != NULL && command_list[i_start + j].type != TYPE_PIPE)
 	{
 		if (command_list[i_start + j].type != TYPE_OPERATOR && \
 			((i_start + j == 0) || command_list[i_start + j - 1].type != TYPE_OPERATOR))
