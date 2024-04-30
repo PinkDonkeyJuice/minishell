@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/30 14:36:45 by gyvergni          #+#    #+#             */
+/*   Updated: 2024/04/30 14:37:36 by gyvergni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	update_oldpwd(t_data *data, char *path_oldpwd)
 {
 	t_env	*oldpwd;
 	char	*var_oldpwd;
-	
+
 	var_oldpwd = ft_strjoin("OLDPWD=", path_oldpwd);
 	oldpwd = search_var("OLDPWD", data);
 	if (oldpwd != NULL)
@@ -58,7 +70,8 @@ char	*get_path_cd(t_data *data, char *path)
 	}
 	path = data->commands[1];
 	if (errno == EACCES)
-		return (printf("minishell: cd: permission denied: %s\n", data->commands[1]), path);
+		return (printf("minishell: cd: permission denied: %s\n", \
+			data->commands[1]), path);
 	if (errno == ENOENT)
 		return (printf("minishell: cd: no such file or directory\n"), path);
 	return (path);
@@ -71,7 +84,8 @@ void	exec_cd(t_data *data)
 	path = NULL;
 	if (data->n_commands > 1)
 		return ;
-	else if (data->commands[1] != NULL && ft_strcmp(data->commands[1], "-") != 0)
+	else if (data->commands[1] != NULL && \
+		ft_strcmp(data->commands[1], "-") != 0)
 		path = get_path_cd(data, path);
 	else
 		path = get_path_cd_options(data, path);

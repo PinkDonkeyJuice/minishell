@@ -6,12 +6,11 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:26:48 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/23 15:50:38 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/30 14:38:31 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	check_builtins_main(t_data *data)
 {
@@ -21,7 +20,7 @@ int	check_builtins_main(t_data *data)
 		return (exec_exit(data), 1);
 	if (!ft_strcmp(data->commands[0], "unset"))
 		return (exec_unset(data), 1);
- 	if (!ft_strcmp(data->commands[0], "export"))
+	if (!ft_strcmp(data->commands[0], "export"))
 		return (exec_export(data), 1);
 	if (!ft_strcmp(data->commands[0], "cd"))
 		return (exec_cd(data), 1);

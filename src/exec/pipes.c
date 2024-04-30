@@ -1,5 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipes.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/30 14:16:18 by gyvergni          #+#    #+#             */
+/*   Updated: 2024/04/30 15:19:13 by gyvergni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "minishell.h"
 
 void	add_back(t_pipe **lst, t_pipe *new)
 {
@@ -50,21 +61,21 @@ t_pipe	*access_pipe(t_pipe **pipe_list, size_t i)
 
 void	generate_pipes(t_pipe **pipe_list, t_data *data)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < data->n_commands - 1)
 	{
 		create_pipe(i, pipe_list);
-		//printf("Pipe %ld has fd in %d and fd out %d", pi->id, pi->p[0], pi->p[1]);
 		i++;
 	}
+	data->pipe_list = pipe_list;
 }
 
-void	close_all_pipes(t_data *data, t_pipe **pipe_list, size_t i, size_t j)
+void	close_pipes(t_data *data, t_pipe **pipe_list, size_t i, size_t j)
 {
-	size_t 	fd;
-	
+	size_t	fd;
+
 	fd = 0;
 	while (fd < data->n_commands - 1)
 	{

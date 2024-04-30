@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/30 14:40:20 by gyvergni          #+#    #+#             */
+/*   Updated: 2024/04/30 14:40:40 by gyvergni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -59,7 +70,8 @@ void	exec_exit(t_data *data)
 		do_exit(data);
 	else
 	{
-		if (data->command_list[1].command != NULL && is_num(data->command_list[1].command))
+		if (data->command_list[1].command != NULL && \
+			is_num(data->command_list[1].command))
 		{
 			if (data->command_list[2].command != NULL)
 			{

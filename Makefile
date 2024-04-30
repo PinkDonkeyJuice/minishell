@@ -3,13 +3,17 @@ RLINEFLAGS = -lreadline
 CFLAGS = -Werror -Wextra -I ./includes/ -g3
 
 CFILES_UTILS = ft_split.c\
-    libft.c
+    libft.c\
+	libft2.c\
+	error.c\
 
 CFILES_EXEC = main.c\
     init.c\
     exec.c\
     pipes.c\
 	operators.c\
+	commands.c\
+	signals.c\
 
 CFILES_PARSING = env_variables.c\
     parse_line.c\

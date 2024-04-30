@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:25:47 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/22 14:18:02 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/04/30 14:43:59 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	exec_unset(t_data *data)
 	t_env	*prev_node;
 
 	i = 1;
-	while ((var_def = data->commands[i]) != NULL)
+	var_def = data->commands[i];
+	while (var_def != NULL)
 	{
-		if ((to_delete = search_var(var_def, data)) != NULL)
+		to_delete = search_var(var_def, data);
+		if (to_delete != NULL)
 		{
 			prev_node = to_delete->previous;
 			prev_node->next = to_delete->next;
@@ -31,5 +33,6 @@ void	exec_unset(t_data *data)
 			free(to_delete);
 		}
 		i++;
+		var_def = data->commands[i];
 	}
 }
