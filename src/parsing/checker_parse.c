@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/25 14:03:24 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:03:01 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ void	new_line_len_base(char *line, int *i, int *len)
 	{
 		*len += 1;
 		*i += 1;
-		while (line[*i] != '\'')
+		/*toujours probleme a fix ici*/
+		while (line[*i] != '\'' && line[*i])
 		{
 			*i += 1;
 			*len += 1;
@@ -177,7 +178,8 @@ int	new_line_len(char *line, t_data *data)
 			new_line_len_var(line, &i, &len, data);
 			continue ;
 		}
-		i++;
+		if (line[i])
+			i++;
 	}
 	return (len);
 }
@@ -288,10 +290,13 @@ int	do_dollars(t_data *data, char *new_line, int *i, int *j)
 	return (0);
 }
 
-void	i_plusplus_j_plusplus(int *i, int *j)
+void	i_plusplus_j_plusplus(char *line, int *i, int *j)
 {
-	*i += 1;
-	*j += 1;
+	if (line[*i] != '\0')
+	{
+		*i += 1;
+		*j += 1;
+	}
 }
 
 int	check_var_real(char *line, char *new_line, t_data *data)
@@ -312,12 +317,11 @@ int	check_var_real(char *line, char *new_line, t_data *data)
 		}
 		else
 		{
-			if (do_dollars(data, new_line, &i, &j))
-				continue ;
+			do_dollars(data, new_line, &i, &j);
 			new_line[j] = line[i];
 		}
 		if (line[i] != '\'')
-			i_plusplus_j_plusplus(&i, &j);
+			i_plusplus_j_plusplus(line, &i, &j);
 	}
 	return (j);
 }
@@ -326,13 +330,17 @@ char	*check_var(char *line, t_data *data)
 {
 	char	*new_line;
 	int		j;
+	int		len;
 
+	len = new_line_len(line, data);
+	printf("%d\n", len);
 	j = 0;
-	new_line = malloc(sizeof(char) * (new_line_len(line, data) + 1));
+	new_line = malloc(sizeof(char) * (len + 1));
 	if (!new_line)
 		return (NULL);
 	j = check_var_real(line, new_line, data);
 	new_line[j] = '\0';
+	printf("%s\n", new_line);
 	free(line);
 	return (new_line);
 }
