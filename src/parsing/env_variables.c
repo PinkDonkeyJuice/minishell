@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_variables.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/25 14:01:21 by nchaize-          #+#    #+#             */
+/*   Updated: 2024/04/25 14:02:16 by nchaize-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
@@ -29,11 +41,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
-
 char	*handle_env_var(char *name)
 {
-	char *value;
+	char	*value;
 
-	value = ft_substr(getenv(name), ft_strlen(name) + 1, ft_strlen(getenv(name)));
+	value = ft_substr(getenv(name), ft_strlen(name) + 1,
+			ft_strlen(getenv(name)));
 	return (value);
 }
