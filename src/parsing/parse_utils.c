@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/25 14:04:51 by nchaize-          #+#    #+#             */
+/*   Updated: 2024/04/25 14:04:52 by nchaize-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	ft_isalnum(int c)
@@ -22,7 +34,7 @@ int	num_len(int num)
 	return (len);
 }
 
-int		len_tab(char **tab)
+int	len_tab(char **tab)
 {
 	int	count;
 

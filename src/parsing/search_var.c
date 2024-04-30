@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   search_var.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/25 13:57:18 by nchaize-          #+#    #+#             */
+/*   Updated: 2024/04/25 13:59:06 by nchaize-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -17,7 +28,7 @@ char	*cont_of_var(char *var)
 
 t_env	*search_var(char *namevar, t_data *data)
 {
-	int	i;
+	int		i;
 	t_env	*search;
 
 	i = 0;
@@ -25,9 +36,11 @@ t_env	*search_var(char *namevar, t_data *data)
 	while (search)
 	{
 		i = 0;
-		while (search->content[i] == namevar[i]) 
+		while (search->content[i] == namevar[i])
 		{
-			if (!ft_isalnum(namevar[i + 1]) && (search->content[i + 1] == '=' || search->content[i + 1] == '\0'))
+			if (!ft_isalnum(namevar[i + 1])
+				&& (search->content[i + 1] == '='
+					|| search->content[i + 1] == '\0'))
 				return (search);
 			i++;
 		}
