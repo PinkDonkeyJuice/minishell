@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:16:18 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/30 15:19:13 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:57:54 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,10 @@ void	close_pipes(t_data *data, t_pipe **pipe_list, size_t i, size_t j)
 	{
 		if (fd != j && fd != i)
 		{
-			close(access_pipe(pipe_list, fd)->p[0]);
-			close(access_pipe(pipe_list, fd)->p[1]);
+			if (close(access_pipe(pipe_list, fd)->p[0]))
+				error(data, "error closing pipe\n");
+			if (close(access_pipe(pipe_list, fd)->p[1]) == -1)
+				error(data, "error closing pipe\n");
 		}
 		fd++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/30 15:33:18 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:29:17 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,10 @@ char		*append_stock(char *buffer, char *stock);
 char		*ft_strstr(char *str, size_t start, size_t end);
 char		*sub_line(char *stock);
 void		ft_putstr_fd(char *s, int fd);
+
+void	close_safe( t_data *data, int fd);
+void	free_all(t_data *data);
+
 
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:49:27 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/30 15:00:46 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:27:34 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	read_input_heredoc(t_data *data)
 	{
 		if (ft_strcmp(line, data->delimiter) == 0)
 		{
-			close(data->fdin);
+			if (close(data->fdin) == -1)
+				error(data, "error closing file\n");
 			data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);
 			return ;
 		}
@@ -46,7 +47,8 @@ void	read_input_heredoc(t_data *data)
 		{
 			g_signal_handle = 0;
 			data->last_error = 130;
-			close(data->fdin);
+			if (close(data->fdin) == -1)
+				error(data, "error closing file\n");
 			data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);
 			return ((void) free(line));
 		}
@@ -55,6 +57,7 @@ void	read_input_heredoc(t_data *data)
 		ft_putstr_fd("\n", data->fdin);
 		line = readline("$> here_doc: ");
 	}
+	free(data->heredoc_name);
 }
 
 void	here_doc(t_data *data)
@@ -121,4 +124,6 @@ void	handle_input_output(t_data *data)
 	data->fdin = STDIN_FILENO;
 	while (data->command_list[++i].command)
 		handle_operator(data, i);
+	if (data->fdin == -1 || data->fdout == -1)
+		error(data, "failed to open file\n");
 }
