@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/30 16:03:01 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:17:11 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,29 @@ int	check_operator(char *line)
 
 void	new_line_len_base(char *line, int *i, int *len)
 {
-	if (line[*i] != '$' && line[*i] != '\'')
+	static int	g = 0;
+	
+	if (line[*i] == '\"' && g == 0)
+	{
+		g = 1;
+		*len += 1;
+		*i += 1;
+	}
+	if (line[*i] == '\"' && g == 1)
+	{
+		g = 0;
+		*len += 1;
+		if (line[*i + 1])
+			*i += 1;
+	}	
+	if (line[*i] != '$' && line[*i] != '\'' && line[*i] != '\"' && line[*i])
 		*len += 1;
 	if (line[*i] == '\'')
 	{
 		*len += 1;
+		if (g == 1)
+			return ;
 		*i += 1;
-		/*toujours probleme a fix ici*/
 		while (line[*i] != '\'' && line[*i])
 		{
 			*i += 1;
@@ -178,10 +194,35 @@ int	new_line_len(char *line, t_data *data)
 			new_line_len_var(line, &i, &len, data);
 			continue ;
 		}
-		if (line[i])
+		if (line[i] != '\0')
 			i++;
 	}
 	return (len);
+}
+
+int	check_in_quote(char *line, int i)
+{
+	int	j;
+	int	g;
+
+	j = 0;
+	g = 0;
+	while (line[j] && j != i)
+	{
+		if (line[j] == '\"' && g == 0)
+		{
+			g = 1;
+			j++;
+		}
+		if (line[j] == '\"' && g == 1)
+		{
+			g = 0;
+			j++;
+		}
+		if (line[j])
+			j++;
+	}
+	return (g);
 }
 
 void	check_var_sq(char *line, char *new_line, int *i, int *j)
@@ -189,6 +230,8 @@ void	check_var_sq(char *line, char *new_line, int *i, int *j)
 	new_line[*j] = line[*i];
 	*i += 1;
 	*j += 1;
+	if (check_in_quote(line, *i))
+		return ;
 	while (line[*i] != '\'' && line[*i])
 	{
 		new_line[*j] = line[*i];
@@ -201,7 +244,7 @@ void	check_var_sq(char *line, char *new_line, int *i, int *j)
 	return ;
 }
 
-void	check_var_dq(char *line, char *new_line, int *i, int *j)
+int	check_var_dq(char *line, char *new_line, int *i, int *j)
 {
 	new_line[*j] = line[*i];
 	*i += 1;
@@ -213,11 +256,11 @@ void	check_var_dq(char *line, char *new_line, int *i, int *j)
 		*j += 1;
 	}
 	if (line[*i] == '$')
-		return ;
+		return (1);
 	new_line[*j] = line[*i];
 	*i += 1;
 	*j += 1;
-	return ;
+	return (0);
 }
 
 void	not_an_env_var(t_data *data, char *new_line, int *i, int *j)
@@ -310,7 +353,7 @@ int	check_var_real(char *line, char *new_line, t_data *data)
 	{
 		if (line[i] == '\'')
 			check_var_sq(line, new_line, &i, &j);
-		else if (line[i] == '\"')
+		if (line[i] == '\"')
 		{
 			check_var_dq(line, new_line, &i, &j);
 			continue ;
@@ -320,7 +363,7 @@ int	check_var_real(char *line, char *new_line, t_data *data)
 			do_dollars(data, new_line, &i, &j);
 			new_line[j] = line[i];
 		}
-		if (line[i] != '\'')
+		if (line[i] != '\'' && line[i])
 			i_plusplus_j_plusplus(line, &i, &j);
 	}
 	return (j);
