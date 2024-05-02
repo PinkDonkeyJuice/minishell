@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:34:45 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/30 14:42:31 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:10:31 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ void	append_node(t_env **env, char *env_var)
 		return ;
 	node->next = NULL;
 	node->previous = NULL;
-	node->content = env_var;
+	node->content = ft_strdup(env_var);
+	if (node->content == NULL)
+		return ;
 	if (*env == NULL)
 		*env = node;
 	else

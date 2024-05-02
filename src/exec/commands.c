@@ -6,24 +6,44 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:23:11 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 13:07:15 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:17:59 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**free_commands(char **commands)
+void	free_commands(char **commands)
 {
 	size_t	i;
 
 	i = 0;
+	if (commands == NULL)
+		return ;
 	while (commands[i])
 	{
 		free(commands[i]);
 		i++;
 	}
 	free(commands);
-	return (NULL);
+	return ;
+}
+
+void	print_commands(char	**commands)
+{
+	size_t i;
+
+	i = 0;
+	if (commands == NULL)
+	{
+		printf("Commands is null");
+		return ;
+	}
+	while (commands[i])
+	{
+		printf("Command %zu is: %s\n", i, commands[i]);
+		i++;
+	}
+	printf("Command %zu is: %s\n", i, commands[i]);
 }
 
 char	**fill_commands(t_command *command_list, size_t i_start, size_t n)
@@ -43,7 +63,7 @@ char	**fill_commands(t_command *command_list, size_t i_start, size_t n)
 		{
 			commands[j] = ft_strdup(command_list[i_start + j].command);
 			if (!commands[j])
-				return (free_commands(commands));
+				return (free_commands(commands), NULL);
 			j++;
 		}
 		else
@@ -117,7 +137,7 @@ void	handle_commands(t_data *data, t_pipe **pipe_list)
 	if (parent == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		waitpid(parent, NULL, 0);
+		//waitpid(parent, NULL, 0);
 		child_process(data, pipe_list, i);
 	}
 	if (parent > 0)

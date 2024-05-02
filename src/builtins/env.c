@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:38:59 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/30 14:39:20 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:29:47 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,6 @@ void	exec_env(t_data *data)
 		printf("%s\n", print->content);
 		print = print->next;
 	}
+	free_commands(data->commands);
+	free_command_list(data->command_list);
 }

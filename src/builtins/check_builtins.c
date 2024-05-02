@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:26:48 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/01 16:11:00 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/02 13:32:22 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_builtins(t_data *data)
 	if (!ft_strcmp(data->commands[0], "echo"))
 		return (exec_echo(data), 1);
 	if (!ft_strcmp(data->commands[0], "pwd"))
-		return (exec_pwd(), 1);
+		return (exec_pwd(data), 1);
 	if (!ft_strcmp(data->commands[0], "export"))
 		return (exec_export(data), 1);
 	if (!ft_strcmp(data->commands[0], "unset"))

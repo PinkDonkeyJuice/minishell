@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 13:01:22 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:32:10 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ void	exec(t_data *data, size_t i)
 {
 	char	*path;
 
+	free_commands(data->commands);
 	data->commands = get_commands(data->command_list, i);
-	free_command_list(data->command_list);
 	if (data->commands == NULL)
 	{
 		printf("Memory allocation problem encountered during get_commands_\n");
 		exit(-1);
 	}
+	data->i_command = i;
 	if (check_builtins(data) == 0)
 	{
 		path = get_exec_path(data->commands[0]);
@@ -33,7 +34,7 @@ void	exec(t_data *data, size_t i)
 	exit(1);
 }
 
-void	child_single_command(t_data *data, t_pipe **pipe_list, size_t i)
+void	child_first_command(t_data *data, t_pipe **pipe_list, size_t i)
 {
 	if (data->n_commands == 1)
 	{
@@ -43,15 +44,15 @@ void	child_single_command(t_data *data, t_pipe **pipe_list, size_t i)
 	}
 	if (data->fdin != STDIN_FILENO)
 		dup2(data->fdin, STDIN_FILENO);
-	close_safe(data, access_pipe(pipe_list, i)->p[0]);
 	dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
-	close_safe(data, access_pipe(pipe_list, i)->p[1]);
+	close_safe(data, access_pipe(pipe_list, i)->p[0]);
+	//close_safe(data, access_pipe(pipe_list, i)->p[1]);
 }
 
 void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 {
 	if (i == 0)
-		child_single_command(data, pipe_list, i);
+		child_first_command(data, pipe_list, i);
 	else if (i == data->n_commands - 1)
 	{
 		if (data->fdout != STDOUT_FILENO)

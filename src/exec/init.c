@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:23:08 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/01 18:30:35 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/02 15:05:01 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@ void	init_data(t_data *data)
 	data->pipe_list = NULL;
 	data->env_c = NULL;
 	data->commands = NULL;
+	data->command_list = NULL;
+	data->i_command = 0;
 	return ;
 }

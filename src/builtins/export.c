@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/30 14:42:01 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:30:00 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,6 @@ void	exec_export(t_data *data)
 		i++;
 		var_def = data->commands[i];
 	}
+	free_commands(data->commands);
+	free_command_list(data->command_list);
 }

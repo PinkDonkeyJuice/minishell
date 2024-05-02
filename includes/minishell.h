@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 13:00:26 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:03:54 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_data
 {
 	int			fdin;
 	int			fdout;
+	size_t		i_command;
 	char		*heredoc_name;
 	char		*delimiter;
 	int			last_error;
@@ -173,7 +174,7 @@ int			is_cd(char *line);
 void		exec_cd(t_data *data);
 
 int			is_pwd(char *line);
-void		exec_pwd(void);
+void		exec_pwd(t_data *data);
 
 int			is_env(char *line);
 void		exec_env(t_data *data);
@@ -189,7 +190,7 @@ char		*check_var(char *line, t_data *data);
 
 void	error(t_data *data, char *err_msg);
 
-char	**free_commands(char **commands);
+void	free_commands(char **commands);
 
 void	free_pipes(t_pipe **pipe_list);
 
@@ -197,5 +198,10 @@ void	free_env(t_env	*env);
 
 void	free_command_list(t_command *command_list);
 
+void	free_all_comms(t_data *data);
+
+void	read_input_main(t_data *data);
+
+void	print_commands(char	**commands);
 
 #endif

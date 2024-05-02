@@ -6,11 +6,28 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 13:04:08 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:38:03 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	main(int argc, char **argv, char **env)
+{
+	t_data	data;
+
+	(void) argc;
+	(void) argv;
+	rl_event_hook = void_event;
+	init_data(&data);
+	init_env(env, &data);
+	data.env = env;
+	data.last_error = 0;
+	signal_handler();
+	read_input_main(&data);
+	if (data.line == NULL)
+		do_exit(&data);
+}
 
 char	*get_exec_path(char *command)
 {
@@ -76,26 +93,9 @@ void	read_input_main(t_data *data)
 				exec_commands(data);
 			if (data->heredoc_name)
 				unlink(data->heredoc_name);
-			free_commands(data->commands);
-			free_command_list(data->command_list);
+			print_commands(data->commands);
+			free_all_comms(data);
 		}
 		data->line = readline("$> ");
 	}
-}
-
-int	main(int argc, char **argv, char **env)
-{
-	t_data	data;
-
-	(void) argc;
-	(void) argv;
-	rl_event_hook = void_event;
-	init_data(&data);
-	init_env(env, &data);
-	data.env = env;
-	data.last_error = 0;
-	signal_handler();
-	read_input_main(&data);
-	if (data.line == NULL)
-		do_exit(&data);
 }
