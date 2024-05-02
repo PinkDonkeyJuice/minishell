@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/04/29 12:26:51 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:51:02 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ int	len_of_arg(char *line)
 	return (count);
 }
 
-static void	free_all(t_command *to_free, int i_words)
+static void	free_parsing(t_command *to_free, int i_words)
 {
 	while (i_words >= 0)
 	{
@@ -276,7 +276,7 @@ t_command	*parse_line(char *line, t_data *data)
 	{
 		parsed[j] = write_string(&line[i], len_of_arg(&line[i]));
 		if (!parsed[j].command)
-			return (free_all(parsed, j), NULL);
+			return (free_parsing(parsed, j), NULL);
 		i += len_to_next(&line[i], 0);
 		j++;
 	}

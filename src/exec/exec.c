@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/01 18:27:00 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/02 13:01:22 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exec(t_data *data, size_t i)
 	char	*path;
 
 	data->commands = get_commands(data->command_list, i);
+	free_command_list(data->command_list);
 	if (data->commands == NULL)
 	{
 		printf("Memory allocation problem encountered during get_commands_\n");
@@ -75,6 +76,7 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 	while (waitpid(-1, NULL, 0) != -1)
 	{
 	}
+	free_pipes(data->pipe_list);
 }
 
 size_t	count_pipes(t_command *command_list)

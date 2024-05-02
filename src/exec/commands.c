@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:23:11 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/30 14:17:58 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:07:15 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	**free_commands(char **commands)
 		free(commands[i]);
 		i++;
 	}
+	free(commands);
 	return (NULL);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/01 18:29:17 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/02 13:00:26 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,12 @@ char		*check_var(char *line, t_data *data);
 void	error(t_data *data, char *err_msg);
 
 char	**free_commands(char **commands);
+
+void	free_pipes(t_pipe **pipe_list);
+
+void	free_env(t_env	*env);
+
+void	free_command_list(t_command *command_list);
+
 
 #endif

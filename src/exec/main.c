@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/30 15:33:16 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:04:08 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	read_input_main(t_data *data)
 				exec_commands(data);
 			if (data->heredoc_name)
 				unlink(data->heredoc_name);
+			free_commands(data->commands);
+			free_command_list(data->command_list);
 		}
 		data->line = readline("$> ");
 	}

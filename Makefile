@@ -6,6 +6,7 @@ CFILES_UTILS = ft_split.c\
     libft.c\
 	libft2.c\
 	error.c\
+	free.c\
 
 CFILES_EXEC = main.c\
     init.c\
