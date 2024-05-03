@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 13:57:18 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/02 13:17:30 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:01:04 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ t_env	*search_var(char *namevar, t_data *data)
 	while (search)
 	{
 		i = 0;
-		while (search->content[i] == namevar[i])
+		while (search->content[i] == namevar[i] && namevar[i])
 		{
-			if (!ft_isalnum(namevar[i + 1])
+			if ((!ft_isalnum(namevar[i + 1]) && namevar[i + 1] != '_')
 				&& (search->content[i + 1] == '='
 					|| search->content[i + 1] == '\0'))
 				return (search);

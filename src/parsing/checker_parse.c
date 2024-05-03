@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/02 13:30:54 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:59:58 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	closed_quotes(char *line, int *g1, int *g2)
 			*g2 = 0;
 		if (line[i] == '\"' && *g1 == 1 && *g2 == 0)
 			*g1 = 0;
-		i++;
+		if (line[i])
+			i++;
 	}
 }
 
@@ -48,7 +49,7 @@ int	check_closed_quotes(char *line)
 	if (g1 == 0 && g2 == 0)
 		return (1);
 	else
-		return (0);
+		return (printf("minishell: syntax error\n"), 0);
 }
 
 void	op_in_quotes(char *line, int *i)
@@ -250,6 +251,8 @@ int	check_var_dq(char *line, char *new_line, int *i, int *j)
 	new_line[*j] = line[*i];
 	*i += 1;
 	*j += 1;
+	if (!line[*i])
+		return (0);
 	while (line[*i] != '\"' && line[*i] && line[*i] != '$')
 	{
 		new_line[*j] = line[*i];
@@ -298,7 +301,7 @@ void	fill_var(t_data *data, char *new_line, int *i, int *j)
 	if (search != NULL)
 	{
 		content = cont_of_var(search->content);
-		while (*content)
+		while (*content != '\0')
 		{
 			new_line[*j] = *content;
 			if (new_line[*j] == '\"' || new_line[*j] == '\''
@@ -309,7 +312,7 @@ void	fill_var(t_data *data, char *new_line, int *i, int *j)
 			*j += 1;
 		}
 	}
-	while (ft_isalnum(data->line[*i]) && data->line[*i])
+	while ((ft_isalnum(data->line[*i]) || data->line[*i] == '_') && data->line[*i])
 		*i += 1;
 	if (search == NULL && (data->line[*i] == ' ' || data->line[*i] == '\0'))
 	{
@@ -364,7 +367,7 @@ int	check_var_real(char *line, char *new_line, t_data *data)
 			do_dollars(data, new_line, &i, &j);
 			new_line[j] = line[i];
 		}
-		if (line[i] != '\'' && line[i])
+		if (line[i])
 			i_plusplus_j_plusplus(line, &i, &j);
 	}
 	return (j);
@@ -377,14 +380,12 @@ char	*check_var(char *line, t_data *data)
 	int		len;
 
 	len = new_line_len(line, data);
-	printf("%d\n", len);
 	j = 0;
 	new_line = malloc(sizeof(char) * (len + 1));
 	if (!new_line)
 		return (NULL);
 	j = check_var_real(line, new_line, data);
 	new_line[j] = '\0';
-	printf("%s\n", new_line);
 	free(line);
 	return (new_line);
 }

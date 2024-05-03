@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/02 12:51:02 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:00:50 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -238,6 +239,8 @@ t_command	write_string(char *line, int len)
 	j = 0;
 	send.type = 0;
 	send.command = malloc(sizeof(char) * len + 1);
+	if (!send.command)
+		return (send);
 	while (line[i] == ' ')
 		i++;
 	while (j < len)
