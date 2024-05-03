@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 15:32:10 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:36:40 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	exec(t_data *data, size_t i)
 
 void	child_first_command(t_data *data, t_pipe **pipe_list, size_t i)
 {
+	write(1, "a\n", 2);
 	if (data->n_commands == 1)
 	{
 		dup2(data->fdin, STDIN_FILENO);
@@ -45,8 +46,6 @@ void	child_first_command(t_data *data, t_pipe **pipe_list, size_t i)
 	if (data->fdin != STDIN_FILENO)
 		dup2(data->fdin, STDIN_FILENO);
 	dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
-	close_safe(data, access_pipe(pipe_list, i)->p[0]);
-	//close_safe(data, access_pipe(pipe_list, i)->p[1]);
 }
 
 void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
@@ -55,19 +54,18 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 		child_first_command(data, pipe_list, i);
 	else if (i == data->n_commands - 1)
 	{
+		write(1, "c\n", 2);
 		if (data->fdout != STDOUT_FILENO)
 			dup2(data->fdout, STDOUT_FILENO);
 		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
-		close_safe(data, access_pipe(pipe_list, i - 1)->p[1]);
 	}
 	else
 	{
-		close_safe(data, access_pipe(pipe_list, i - 1)->p[1]);
+		write(1, "b\n", 2);
 		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
-		close_safe(data, access_pipe(pipe_list, i)->p[0]);
 		dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
-		close_safe(data, access_pipe(pipe_list, i)->p[1]);
 	}
+	close_pipes(data, pipe_list, -1, -1);
 	exec(data, i);
 }
 

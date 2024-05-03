@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/02 13:30:00 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:45:11 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	exec_export(t_data *data)
 	t_env	*to_replace;	
 
 	i = 1;
+	if (data->commands == NULL)
+		return ;
 	if (!data->commands[1])
 		exec_env(data);
 	var_def = data->commands[i];
@@ -32,6 +34,4 @@ void	exec_export(t_data *data)
 		i++;
 		var_def = data->commands[i];
 	}
-	free_commands(data->commands);
-	free_command_list(data->command_list);
 }
