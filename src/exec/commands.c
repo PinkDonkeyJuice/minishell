@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:23:11 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/03 11:32:17 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:54:43 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_commands(char **commands)
 	size_t	i;
 
 	i = 0;
-	if (commands == NULL)
+	if (!commands)
 		return ;
 	while (commands[i])
 	{

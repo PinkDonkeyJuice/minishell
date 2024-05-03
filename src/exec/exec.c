@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/03 11:36:40 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:26:29 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void	exec(t_data *data, size_t i)
 	data->i_command = i;
 	if (check_builtins(data) == 0)
 	{
-		path = get_exec_path(data->commands[0]);
+		path = get_exec_path(data->commands[0], data);
+		if (!path)
+			error(data, "An error has occured\n");
 		if (data->fdin != STDIN_FILENO)
 			close_safe(data, data->fdin);
 		execve(path, data->commands, data->env);
@@ -36,7 +38,6 @@ void	exec(t_data *data, size_t i)
 
 void	child_first_command(t_data *data, t_pipe **pipe_list, size_t i)
 {
-	write(1, "a\n", 2);
 	if (data->n_commands == 1)
 	{
 		dup2(data->fdin, STDIN_FILENO);
@@ -54,14 +55,12 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 		child_first_command(data, pipe_list, i);
 	else if (i == data->n_commands - 1)
 	{
-		write(1, "c\n", 2);
 		if (data->fdout != STDOUT_FILENO)
 			dup2(data->fdout, STDOUT_FILENO);
 		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
 	}
 	else
 	{
-		write(1, "b\n", 2);
 		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
 		dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
 	}
@@ -69,11 +68,27 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 	exec(data, i);
 }
 
+void    mark_status(int pid, int status, t_data *data)
+{
+    if (pid <= 0)
+        return ;
+    data->last_error = WEXITSTATUS(status);
+    if (WTERMSIG(status) == SIGQUIT)
+        data->last_error = 131;
+    if (WTERMSIG(status) == SIGINT)
+        data->last_error = 130;
+}
+
 void	parent_process(t_data *data, t_pipe **pipe_list)
 {
+	int	status;
+	int	pid;
+
 	close_pipes(data, pipe_list, -1, -1);
-	while (waitpid(-1, NULL, 0) != -1)
+	while (waitpid(-1, &status, 0) != -1)
 	{
+		pid = waitpid(-1, &status, 0);
+		mark_status(pid, status, data);
 	}
 	free_pipes(data->pipe_list);
 }
@@ -85,6 +100,8 @@ size_t	count_pipes(t_command *command_list)
 
 	n = 1;
 	i = 0;
+	if (command_list == NULL)
+		return (0);
 	while (command_list[i].command != NULL)
 	{
 		if (command_list[i].type == TYPE_PIPE)

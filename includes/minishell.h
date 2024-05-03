@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 15:03:54 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:26:21 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void		exec(t_data *data, size_t i);
 void		redir(t_data *data, t_pipe **pipe_list);
 void		exec_commands(t_data *data);
 void		generate_pipes(t_pipe **pipe_list, t_data *data);
-char		*get_exec_path(char *line);
+char		*get_exec_path(char *command, t_data *data);
 size_t		commands_len(char **commands);
 void		create_pipe(size_t i, t_pipe **pipe_list);
 t_pipe		*access_pipe(t_pipe **pipe_list, size_t i);

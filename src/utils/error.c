@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:55:09 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 12:59:19 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:06:41 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ void	close_safe( t_data *data, int fd)
 
 void	error(t_data *data, char *err_msg)
 {
-	free(data->line);
-	free_commands(data->commands);
-	free_env(data->env_c);
-	free_pipes(data->pipe_list);
-	ft_putstr_fd(err_msg, 2);	
+	free_all(data);
+	ft_putstr_fd(err_msg, 2);
+	exit(errno);	
 }

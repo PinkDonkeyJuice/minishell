@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/03 11:56:53 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:25:17 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,18 @@ int	main(int argc, char **argv, char **env)
 		do_exit(&data);
 }
 
-char	*get_exec_path(char *command)
+char	*get_exec_path(char *command, t_data *data)
 {
 	int		i;
 	char	**paths;
 	char	*try_path;
 
 	paths = ft_split(getenv("PATH"), ':');
+	if (!paths)
+	{	
+		data->last_error = 1;
+		return (NULL);
+	}
 	try_path = NULL;
 	i = 0;
 	if (paths && command)
@@ -54,7 +59,11 @@ char	*get_exec_path(char *command)
 			i++;
 		}
 	}
-	return (command);
+	if (ft_strncmp("./", command, 2))
+		return (command);
+	printf("Command not found\n");
+	data->last_error = 127;
+	return (NULL);
 }
 
 size_t	commands_len(char **commands)
@@ -82,14 +91,13 @@ void	read_input_main(t_data *data)
 		if (data->line[0] != '\0')
 		{
 			data->command_list = parse_line(data->line, data);
-			if (data->command_list == NULL)
+			data->n_commands = count_pipes(data->command_list);
+			data->commands = get_commands(data->command_list, 0);
+			if (data->commands == NULL || data->command_list == NULL)
 			{
 				data->line = readline("$> ");
 				continue ;
 			}
-			data->n_commands = count_pipes(data->command_list);
-			data->commands = get_commands(data->command_list, 0);
-			//Peut return NULL
 			if (check_builtins_main(data) == 0 || data->n_commands != 1)
 				exec_commands(data);
 			if (data->heredoc_name)

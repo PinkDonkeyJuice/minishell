@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:52:38 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 16:11:06 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:54:30 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_command_list(t_command *command_list)
 	size_t		i;
 
 	i = 0;
-	if (command_list == NULL)
+	if (!command_list)
 		return ;
 	while (command_list[i].command)
 	{
@@ -71,8 +71,8 @@ void	free_all_comms(t_data *data)
 void	free_all(t_data *data)
 {
 	free_commands(data->commands);
-	if (data->n_commands == 1 || data->i_command == data->n_commands)
-		free_command_list(data->command_list);
+	//if (data->n_commands == 1 || data->i_command == data->n_commands)
+	free_command_list(data->command_list);
 	if (data->n_commands > 1)
 		free_pipes(data->pipe_list);
 	free_env(data->env_c);
