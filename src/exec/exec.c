@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/03 15:21:28 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/05 19:52:34 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ void	exec(t_data *data, size_t i)
 			close_safe(data, data->fdin);
 		execve(path, data->commands, data->env);
 	}
+	if (data->env_c)
+		free_env(data->env_c);
+	free_pipes(data->pipe_list);
 	exit(1);
 }
 

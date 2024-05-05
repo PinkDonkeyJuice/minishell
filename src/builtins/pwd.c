@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:42:26 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 13:33:26 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/05 19:59:39 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void	exec_pwd(t_data *data)
 		printf("%s\n", buf);
 	else
 		perror("Pwd: ");
-	free_all(data);
+	free_all_comms(data);
 }

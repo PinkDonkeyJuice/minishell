@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:52:38 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/03 12:54:30 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/05 19:29:06 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@ void	free_env(t_env	*env)
 	if (!env)
 		return ;
 	node = env;
-	while (node && node->content != NULL)
+	while (node)
 	{
 		next = node->next;
 		free(node->content);
 		free(node);
 		node = next;
 	}
-	//free(env);
 }
 
 void	free_pipes(t_pipe **pipe_list)
