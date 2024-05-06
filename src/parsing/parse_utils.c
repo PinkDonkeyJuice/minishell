@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:04:51 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/06 15:02:29 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:41:26 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,18 @@ int	len_tab(char **tab)
 void	change_last_error(t_data *data, int i)
 {
 	data->last_error = i;
+}
+
+int	last_check(t_command *parsed)
+{
+	int	i;
+
+	i = 0;
+	while (parsed[i].command)
+	{
+		if (parsed[i].type = TYPE_OPERATOR && !parsed[i + 1].command)
+			return (0);
+		i++;
+	}
+	return (1);
 }
