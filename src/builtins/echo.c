@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:38:43 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 14:18:06 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/05 19:56:38 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void	exec_echo(t_data *data)
 	}
 	if (newl == true)
 		printf("\n");
-	free_all(data);
+	free_all_comms(data);
 }

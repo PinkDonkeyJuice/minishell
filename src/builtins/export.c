@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/03 11:45:11 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/05 20:37:00 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ void	exec_export(t_data *data)
 	t_env	*to_replace;	
 
 	i = 1;
-	if (data->commands == NULL)
+	if (data->commands == NULL || data->commands[0] == NULL)
 		return ;
 	if (!data->commands[1])
+	{
 		exec_env(data);
+		return ;
+	}
 	var_def = data->commands[i];
 	while (var_def != NULL && data->n_commands == 1)
 	{

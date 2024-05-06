@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/03 14:26:29 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/05 19:52:34 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ void	exec(t_data *data, size_t i)
 			close_safe(data, data->fdin);
 		execve(path, data->commands, data->env);
 	}
+	if (data->env_c)
+		free_env(data->env_c);
+	free_pipes(data->pipe_list);
 	exit(1);
 }
 
@@ -68,15 +71,24 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 	exec(data, i);
 }
 
-void    mark_status(int pid, int status, t_data *data)
+void mark_status(int status, t_data *data)
 {
-    if (pid <= 0)
-        return ;
-    data->last_error = WEXITSTATUS(status);
-    if (WTERMSIG(status) == SIGQUIT)
-        data->last_error = 131;
-    if (WTERMSIG(status) == SIGINT)
-        data->last_error = 130;
+	if (WIFEXITED(status))
+	{
+		data->last_error = WEXITSTATUS(status);
+	}
+	else if (WIFSIGNALED(status))
+	{
+		int term_sig = WTERMSIG(status);
+		if (term_sig == SIGQUIT)
+		{
+			data->last_error = 131;
+		}
+		else if (term_sig == SIGINT)
+		{
+			data->last_error = 130;
+		}
+	}
 }
 
 void	parent_process(t_data *data, t_pipe **pipe_list)
@@ -87,8 +99,7 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 	close_pipes(data, pipe_list, -1, -1);
 	while (waitpid(-1, &status, 0) != -1)
 	{
-		pid = waitpid(-1, &status, 0);
-		mark_status(pid, status, data);
+		mark_status(status, data);
 	}
 	free_pipes(data->pipe_list);
 }
