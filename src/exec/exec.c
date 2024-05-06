@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/06 16:06:28 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:12:57 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ void	exec(t_data *data, size_t i)
 			error(data, NULL);
 		if (data->fdin != STDIN_FILENO)
 			close_safe(data, data->fdin);
-		close_safe(data, access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
-		write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1], &(data->last_error), sizeof(int));
-		close_safe(data, access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
+		if (i == data->n_commands - 1)
+		{
+			close_safe(data, access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
+			write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1], &(data->last_error), 1);
+			close_safe(data, access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
+		}
 		execve(path, data->commands, data->env);
 	}
 	if (data->env_c)
@@ -74,7 +77,7 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 	if (i != data->n_commands - 1)
 		close_pipes(data, pipe_list, -1, -1);
 	else
-		close_pipes(data, pipe_list, data->n_commands, -1);
+		close_pipes(data, pipe_list, data->n_commands - 1, -1);
 	exec(data, i);
 }
 
