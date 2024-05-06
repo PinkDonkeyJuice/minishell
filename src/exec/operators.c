@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:49:27 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/01 18:27:34 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/06 13:55:31 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

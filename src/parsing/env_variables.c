@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:01:21 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/03 12:00:15 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:02:31 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
-char	*handle_env_var(char *name)
-{
-	char	*value;
-
-	value = ft_substr(getenv(name), ft_strlen(name) + 1,
-			ft_strlen(getenv(name)));
-	/*peut return NULL*/		
-	return (value);
-}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/05 19:52:34 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/06 15:07:40 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ void	exec(t_data *data, size_t i)
 	data->i_command = i;
 	if (check_builtins(data) == 0)
 	{
+		data->last_error = 0;
 		path = get_exec_path(data->commands[0], data);
 		if (!path)
-			error(data, "An error has occured\n");
+			error(data, NULL);
 		if (data->fdin != STDIN_FILENO)
 			close_safe(data, data->fdin);
+		close_safe(data, access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
+		write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1], &(data->last_error), sizeof(int));
+		close_safe(data, access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
 		execve(path, data->commands, data->env);
 	}
 	if (data->env_c)
@@ -67,17 +71,21 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
 		dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
 	}
-	close_pipes(data, pipe_list, -1, -1);
+	if (i != data->n_commands - 1)
+		close_pipes(data, pipe_list, -1, -1);
+	else
+		close_pipes(data, pipe_list, data->n_commands, -1);
 	exec(data, i);
 }
 
 void mark_status(int status, t_data *data)
 {
-	if (WIFEXITED(status))
+/* 	if (WIFEXITED(status))
 	{
+		write(1, "c\n", 2);
 		data->last_error = WEXITSTATUS(status);
-	}
-	else if (WIFSIGNALED(status))
+	} */
+	if (WIFSIGNALED(status))
 	{
 		int term_sig = WTERMSIG(status);
 		if (term_sig == SIGQUIT)
@@ -95,12 +103,18 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 {
 	int	status;
 	int	pid;
+	//int last_error;
 
-	close_pipes(data, pipe_list, -1, -1);
 	while (waitpid(-1, &status, 0) != -1)
 	{
 		mark_status(status, data);
 	}
+	close_safe(data, access_pipe(pipe_list, data->n_commands - 1)->p[1]);
+	if (read((access_pipe(pipe_list, data->n_commands - 1)->p[0]), &(data->last_error), sizeof(int)) == -1)
+		return ;
+	//data->last_error = (int)last_error;
+	printf("Last error %d\n", data->last_error);
+	close_pipes(data, pipe_list, -1, -1);
 	free_pipes(data->pipe_list);
 }
 
