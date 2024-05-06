@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/03 13:26:21 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:05:14 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ char		**get_args(char const *s, char c);
 t_command	*parse_line(char *line, t_data *data);
 int			checker(char **line, t_data *data);
 t_command	*finish_parsing(t_command *parsed);
+int			last_check(t_command *parsed);
 
 t_env		*search_var(char *namevar, t_data *data);
 
