@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:49:27 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/01 18:27:34 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/06 15:28:30 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ char	*expand_line(char *line, t_data *data)
 	return (line);
 }
 
+void	signal_handler_is_sigint(t_data *data)
+{
+	g_signal_handle = 0;
+	data->last_error = 130;
+	if (close(data->fdin) == -1)
+		error(data, "error closing file\n");
+	data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);
+}
+
 void	read_input_heredoc(t_data *data)
 {
 	char	*line;
@@ -45,11 +54,7 @@ void	read_input_heredoc(t_data *data)
 		}
 		if (g_signal_handle == SIGINT)
 		{
-			g_signal_handle = 0;
-			data->last_error = 130;
-			if (close(data->fdin) == -1)
-				error(data, "error closing file\n");
-			data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);
+			signal_handler_is_sigint(data);
 			return ((void) free(line));
 		}
 		line = expand_line(line, data);

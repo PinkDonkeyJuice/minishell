@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:01:21 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/03 12:00:15 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:20:33 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*handle_env_var(char *name)
 	char	*value;
 
 	value = ft_substr(getenv(name), ft_strlen(name) + 1,
-			ft_strlen(getenv(name)));
-	/*peut return NULL*/		
+			ft_strlen(getenv(name)));		
 	return (value);
 }
