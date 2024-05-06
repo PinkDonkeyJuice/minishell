@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/03 12:00:50 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:38:51 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ void	count_args_utils(char *line, int i, int *count)
 		*count += 1;
 	if (line[i] == '|' && line[i + 1] != ' ' && line[i + 1] && i != 0)
 		*count += 1;
-	if (line[i] == '<' && line[i + 1] != '<' && i != 0)
+	if (line[i] == '<' && line[i + 1] != '<')
 		*count += 1;
 	if (line[i] == '<' && line[i + 1] != '<'
-		&& line[i + 1] != ' ' && line[i + 1] && i != 0)
+		&& line[i + 1] != ' ' && line[i + 1])
 		*count += 1;
-	if (line[i] == '>' && line[i + 1] != '>' && i != 0)
+	if (line[i] == '>' && line[i + 1] != '>')
 		*count += 1;
 	if (line[i] == '>' && line[i + 1] != '>'
-		&& line[i + 1] != ' ' && line[i + 1] && i != 0)
+		&& line[i + 1] != ' ' && line[i + 1])
 		*count += 1;
 }
 
@@ -284,5 +284,7 @@ t_command	*parse_line(char *line, t_data *data)
 		j++;
 	}
 	parsed[j].command = NULL;
+	if (!last_check(parsed))
+		return (free(line), NULL);
 	return ((free(line), finish_parsing(parsed)));
 }
