@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:23:11 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/03 12:54:43 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/06 11:43:02 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	exec_commands(t_data *data)
 
 	signal(SIGINT, SIG_IGN);
 	handle_input_output(data);
-	printf("fdin : %d, fdout: %d\n", data->fdin, data->fdout);
 	pipe_list = NULL;
 	generate_pipes(&pipe_list, data);
 	handle_commands(data, &pipe_list);
@@ -137,7 +136,7 @@ void	handle_commands(t_data *data, t_pipe **pipe_list)
 	if (parent == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		//waitpid(parent, NULL, 0);
+		signal(SIGQUIT, SIG_DFL);
 		child_process(data, pipe_list, i);
 	}
 	if (parent > 0)

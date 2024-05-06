@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/03 13:25:17 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:18:55 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*get_exec_path(char *command, t_data *data)
 	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
 	{	
+		write(1,"b\n", 2);
 		data->last_error = 1;
 		return (NULL);
 	}
@@ -59,9 +60,9 @@ char	*get_exec_path(char *command, t_data *data)
 			i++;
 		}
 	}
-	if (ft_strncmp("./", command, 2))
+	if (!ft_strncmp("./", command, 2))
 		return (command);
-	printf("Command not found\n");
+	printf("Command not found: %s\n", command);
 	data->last_error = 127;
 	return (NULL);
 }
@@ -102,7 +103,6 @@ void	read_input_main(t_data *data)
 				exec_commands(data);
 			if (data->heredoc_name)
 				unlink(data->heredoc_name);
-			//print_commands(data->commands);
 			free_all_comms(data);
 		}
 		data->line = readline("$> ");

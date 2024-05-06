@@ -14,4 +14,4 @@ valgrind
 norme
 gestion d'erreur
 - init_env
-- 
+- echo $>

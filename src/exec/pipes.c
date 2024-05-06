@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:16:18 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/01 16:57:54 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/06 13:59:13 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	generate_pipes(t_pipe **pipe_list, t_data *data)
 		create_pipe(i, pipe_list);
 		i++;
 	}
+	create_pipe(i, pipe_list);
 	data->pipe_list = pipe_list;
 }
 
