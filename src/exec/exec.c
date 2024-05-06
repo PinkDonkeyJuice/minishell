@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/06 15:07:40 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:06:28 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,19 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 {
 	int	status;
 	int	pid;
-	//int last_error;
+	int last_error;
 
 	while (waitpid(-1, &status, 0) != -1)
 	{
 		mark_status(status, data);
 	}
 	close_safe(data, access_pipe(pipe_list, data->n_commands - 1)->p[1]);
-	if (read((access_pipe(pipe_list, data->n_commands - 1)->p[0]), &(data->last_error), sizeof(int)) == -1)
+	if (read((access_pipe(pipe_list, data->n_commands - 1)->p[0]), &(last_error), sizeof(int)) == -1)
 		return ;
-	//data->last_error = (int)last_error;
-	printf("Last error %d\n", data->last_error);
-	close_pipes(data, pipe_list, -1, -1);
+	close_safe(data, access_pipe(pipe_list, data->n_commands - 1)->p[0]);
+	data->last_error = (int)last_error;
+	printf("Last error = %d\nData->last_error = %d\n", last_error, data->last_error);
+	close_pipes(data, pipe_list, data->n_commands - 1, -1);
 	free_pipes(data->pipe_list);
 }
 

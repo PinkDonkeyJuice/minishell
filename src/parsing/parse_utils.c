@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:04:51 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/06 15:41:26 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:51:40 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	last_check(t_command *parsed)
 	i = 0;
 	while (parsed[i].command)
 	{
-		if (parsed[i].type = TYPE_OPERATOR && !parsed[i + 1].command)
+		if (parsed[i].type == TYPE_OPERATOR && !parsed[i + 1].command)
 			return (0);
 		i++;
 	}

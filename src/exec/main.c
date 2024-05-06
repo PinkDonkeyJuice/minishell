@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/06 12:18:55 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:52:07 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	read_input_main(t_data *data)
 			data->commands = get_commands(data->command_list, 0);
 			if (data->commands == NULL || data->command_list == NULL)
 			{
+				write(1, "b\n", 2);
 				data->line = readline("$> ");
 				continue ;
 			}

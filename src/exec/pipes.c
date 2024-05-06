@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:16:18 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/06 13:59:13 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:03:45 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ void	close_pipes(t_data *data, t_pipe **pipe_list, size_t i, size_t j)
 	size_t	fd;
 
 	fd = 0;
-	while (fd < data->n_commands - 1)
+	while (fd < data->n_commands)
 	{
 		if (fd != j && fd != i)
 		{
-			if (close(access_pipe(pipe_list, fd)->p[0]))
+			if (close(access_pipe(pipe_list, fd)->p[0]) == -1)
 				error(data, "error closing pipe\n");
 			if (close(access_pipe(pipe_list, fd)->p[1]) == -1)
 				error(data, "error closing pipe\n");
