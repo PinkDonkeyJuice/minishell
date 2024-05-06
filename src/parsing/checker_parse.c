@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_parse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/03 13:14:44 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/06 10:39:05 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,10 @@ void	new_line_len_varnum(char *line, int *i, int *len, t_data *data)
 	{
 		*len += num_len(data->last_error);
 		*i += 1;
+	}
+	else if (line[*i + 1] != '?' && !ft_isalnum(line[*i + 1]))
+	{
+		*len += 1;
 	}
 	*i += 1;
 }
@@ -365,7 +369,8 @@ int	check_var_real(char *line, char *new_line, t_data *data)
 		else
 		{
 			do_dollars(data, new_line, &i, &j);
-			new_line[j] = line[i];
+			if (line[i])
+				new_line[j] = line[i];
 		}
 		if (line[i])
 			i_plusplus_j_plusplus(line, &i, &j);
