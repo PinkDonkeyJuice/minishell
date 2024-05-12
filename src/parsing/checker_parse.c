@@ -112,11 +112,29 @@ int	check_operator(char *line)
 	return (1);
 }
 
+void	new_line_len_base_utils(char *line, int *i, int *len, int *g)
+{
+	if (line[*i] == '\"' && *g == 0)
+        {
+                *g = 1;
+                *len += 1;
+                *i += 1;
+        }
+        if (line[*i] == '\"' && *g == 1)
+        {
+                *g = 0;
+                *len += 1;
+                if (line[*i + 1])
+                        *i += 1;
+        }
+}
+
 void	new_line_len_base(char *line, int *i, int *len)
 {
 	static int	g = 0;
 	
-	if (line[*i] == '\"' && g == 0)
+	new_line_len_base_utils(line, i, len, &g);
+	/*if (line[*i] == '\"' && g == 0)
 	{
 		g = 1;
 		*len += 1;
@@ -128,7 +146,7 @@ void	new_line_len_base(char *line, int *i, int *len)
 		*len += 1;
 		if (line[*i + 1])
 			*i += 1;
-	}	
+	}*/
 	if (line[*i] != '$' && line[*i] != '\'' && line[*i] != '\"' && line[*i])
 		*len += 1;
 	if (line[*i] == '\'')

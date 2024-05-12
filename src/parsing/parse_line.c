@@ -229,6 +229,14 @@ t_command	end_string(t_command send, int j)
 	return (send);
 }
 
+void	write_type(t_command *send, int j)
+{
+	if (send->command[j] == '<' || send->command[j] == '>')
+		send->type = TYPE_OPERATOR;
+	if (send->command[j] == '|')
+        	send->type = TYPE_PIPE;
+}
+
 t_command	write_string(char *line, int len)
 {
 	int			i;
@@ -249,10 +257,7 @@ t_command	write_string(char *line, int len)
 		if (line[i] != '\"' && line[i] != '\'')
 		{
 			send.command[j] = line[i];
-			if (send.command[j] == '<' || send.command[j] == '>')
-				send.type = TYPE_OPERATOR;
-			if (send.command[j] == '|')
-				send.type = TYPE_PIPE;
+			write_type(&send, j);
 			j++;
 		}
 		i++;
