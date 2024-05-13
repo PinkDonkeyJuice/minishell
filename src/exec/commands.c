@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:23:11 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/06 11:43:02 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:02:10 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_commands(char **commands)
 
 void	print_commands(char	**commands)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (commands == NULL)

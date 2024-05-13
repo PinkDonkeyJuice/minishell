@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/06 15:51:51 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:42:27 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -234,7 +233,7 @@ void	write_type(t_command *send, int j)
 	if (send->command[j] == '<' || send->command[j] == '>')
 		send->type = TYPE_OPERATOR;
 	if (send->command[j] == '|')
-        	send->type = TYPE_PIPE;
+		send->type = TYPE_PIPE;
 }
 
 t_command	write_string(char *line, int len)

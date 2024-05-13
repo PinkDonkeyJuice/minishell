@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/06 15:52:07 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:29:15 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data);
 	init_env(env, &data);
 	data.env = env;
-	data.last_error = 0;
 	signal_handler();
 	read_input_main(&data);
 	if (data.line == NULL)
@@ -37,8 +36,7 @@ char	*get_exec_path(char *command, t_data *data)
 
 	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
-	{	
-		write(1,"b\n", 2);
+	{
 		data->last_error = 1;
 		return (NULL);
 	}
@@ -60,6 +58,7 @@ char	*get_exec_path(char *command, t_data *data)
 			i++;
 		}
 	}
+	/*norm a faire et trypath a free peut etre*/
 	if (!ft_strncmp("./", command, 2))
 		return (command);
 	printf("Command not found: %s\n", command);

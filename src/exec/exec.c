@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/06 16:12:57 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:26:45 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	do_no_commands(void)
+{
+	printf("Memory allocation problem encountered during get_commands_\n");
+	exit(-1);
+}
+
+void	exec_utils(t_data *data)
+{
+	//changer le nom de la fonction pour mieux correspondre a son utilité
+	close_safe(data,
+		access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
+	write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1],
+		&(data->last_error), 1);
+	close_safe(data,
+		access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
+}
 
 void	exec(t_data *data, size_t i)
 {
@@ -19,10 +36,7 @@ void	exec(t_data *data, size_t i)
 	free_commands(data->commands);
 	data->commands = get_commands(data->command_list, i);
 	if (data->commands == NULL)
-	{
-		printf("Memory allocation problem encountered during get_commands_\n");
-		exit(-1);
-	}
+		do_no_commands();
 	data->i_command = i;
 	if (check_builtins(data) == 0)
 	{
@@ -33,11 +47,7 @@ void	exec(t_data *data, size_t i)
 		if (data->fdin != STDIN_FILENO)
 			close_safe(data, data->fdin);
 		if (i == data->n_commands - 1)
-		{
-			close_safe(data, access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
-			write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1], &(data->last_error), 1);
-			close_safe(data, access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
-		}
+			exec_utils(data);
 		execve(path, data->commands, data->env);
 	}
 	if (data->env_c)
@@ -81,8 +91,10 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 	exec(data, i);
 }
 
-void mark_status(int status, t_data *data)
+void	mark_status(int status, t_data *data)
 {
+	int	term_sig;
+
 /* 	if (WIFEXITED(status))
 	{
 		write(1, "c\n", 2);
@@ -90,7 +102,7 @@ void mark_status(int status, t_data *data)
 	} */
 	if (WIFSIGNALED(status))
 	{
-		int term_sig = WTERMSIG(status);
+		term_sig = WTERMSIG(status);
 		if (term_sig == SIGQUIT)
 		{
 			data->last_error = 131;
@@ -106,18 +118,20 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 {
 	int	status;
 	int	pid;
-	int last_error;
+	int	last_error;
 
 	while (waitpid(-1, &status, 0) != -1)
 	{
 		mark_status(status, data);
 	}
 	close_safe(data, access_pipe(pipe_list, data->n_commands - 1)->p[1]);
-	if (read((access_pipe(pipe_list, data->n_commands - 1)->p[0]), &(last_error), sizeof(int)) == -1)
+	if (read((access_pipe(pipe_list, data->n_commands - 1)->p[0]),
+			&(last_error), sizeof(int)) == -1)
 		return ;
 	close_safe(data, access_pipe(pipe_list, data->n_commands - 1)->p[0]);
 	data->last_error = (int)last_error;
-	printf("Last error = %d\nData->last_error = %d\n", last_error, data->last_error);
+	printf("Last error = %d\nData->last_error = %d\n",
+		last_error, data->last_error);
 	close_pipes(data, pipe_list, data->n_commands - 1, -1);
 	free_pipes(data->pipe_list);
 }

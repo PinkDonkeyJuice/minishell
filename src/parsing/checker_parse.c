@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_parse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/06 15:02:43 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:40:30 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,38 +115,25 @@ int	check_operator(char *line)
 void	new_line_len_base_utils(char *line, int *i, int *len, int *g)
 {
 	if (line[*i] == '\"' && *g == 0)
-        {
-                *g = 1;
-                *len += 1;
-                *i += 1;
-        }
-        if (line[*i] == '\"' && *g == 1)
-        {
-                *g = 0;
-                *len += 1;
-                if (line[*i + 1])
-                        *i += 1;
-        }
+	{
+		*g = 1;
+		*len += 1;
+		*i += 1;
+	}
+	if (line[*i] == '\"' && *g == 1)
+	{
+		*g = 0;
+		*len += 1;
+		if (line[*i + 1])
+			*i += 1;
+	}
 }
 
 void	new_line_len_base(char *line, int *i, int *len)
 {
 	static int	g = 0;
-	
+
 	new_line_len_base_utils(line, i, len, &g);
-	/*if (line[*i] == '\"' && g == 0)
-	{
-		g = 1;
-		*len += 1;
-		*i += 1;
-	}
-	if (line[*i] == '\"' && g == 1)
-	{
-		g = 0;
-		*len += 1;
-		if (line[*i + 1])
-			*i += 1;
-	}*/
 	if (line[*i] != '$' && line[*i] != '\'' && line[*i] != '\"' && line[*i])
 		*len += 1;
 	if (line[*i] == '\'')
@@ -310,6 +297,15 @@ void	not_an_env_var(t_data *data, char *new_line, int *i, int *j)
 	return ;
 }
 
+int	is_very_specific(char c_new_line)
+{
+	if (c_new_line == '\"' || c_new_line == '\''
+		|| c_new_line == '|' || c_new_line == '<'
+		|| c_new_line == '>')
+		return (1);
+	return (0);
+}
+
 void	fill_var(t_data *data, char *new_line, int *i, int *j)
 {
 	char	*content;
@@ -322,15 +318,14 @@ void	fill_var(t_data *data, char *new_line, int *i, int *j)
 		while (*content != '\0')
 		{
 			new_line[*j] = *content;
-			if (new_line[*j] == '\"' || new_line[*j] == '\''
-				|| new_line[*j] == '|' || new_line[*j] == '<'
-				|| new_line[*j] == '>')
+			if (is_very_specific(new_line[*j]))
 				new_line[*j] *= -1;
 			content++;
 			*j += 1;
 		}
 	}
-	while ((ft_isalnum(data->line[*i]) || data->line[*i] == '_') && data->line[*i])
+	while ((ft_isalnum(data->line[*i]) || data->line[*i] == '_')
+		&& data->line[*i])
 		*i += 1;
 	if (search == NULL && (data->line[*i] == ' ' || data->line[*i] == '\0'))
 	{

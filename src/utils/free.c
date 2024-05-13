@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:52:38 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/05 19:29:06 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/13 14:42:58 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_env(t_env	*env)
 {
-	t_env 	*node;
+	t_env	*node;
 	t_env	*next;
 
 	if (!env)
