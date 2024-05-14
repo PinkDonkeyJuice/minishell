@@ -28,24 +28,6 @@ void	free_commands(char **commands)
 	return ;
 }
 
-void	print_commands(char	**commands)
-{
-	size_t	i;
-
-	i = 0;
-	if (commands == NULL)
-	{
-		printf("Commands is null");
-		return ;
-	}
-	while (commands[i])
-	{
-		printf("Command %zu is: %s\n", i, commands[i]);
-		i++;
-	}
-	printf("Command %zu is: %s\n", i, commands[i]);
-}
-
 char	**fill_commands(t_command *command_list, size_t i_start, size_t n)
 {
 	char	**commands;

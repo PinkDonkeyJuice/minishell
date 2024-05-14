@@ -11,8 +11,11 @@ CFILES_UTILS = ft_split.c\
 CFILES_EXEC = main.c\
     init.c\
     exec.c\
+	exec_process.c\
+	heredoc.c\
     pipes.c\
 	operators.c\
+	path.c\
 	commands.c\
 	signals.c\
 
@@ -21,7 +24,16 @@ CFILES_PARSING = env_variables.c\
     ft_itoa.c\
     parse_utils.c\
     checker_parse.c\
+	checker_finishparsing.c\
+	checker_newlinelen.c\
+	checker_parse_utils.c\
+	checker_operator.c\
+	checker_quotes.c\
     search_var.c\
+	parse_line_args.c\
+	parse_line_len.c\
+	parse_line_lentonext.c\
+	parse_line_utils.c\
 
 CFILES_BUILTINS = cd.c\
 	env.c\
