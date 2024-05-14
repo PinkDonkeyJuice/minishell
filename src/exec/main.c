@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/13 14:29:15 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:24:18 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*get_exec_path(char *command, t_data *data)
 			if (try_path != NULL)
 				try_path = ft_strjoin(try_path, command);
 			if (!try_path)
-				return (NULL);
+				return (NULL);/*last error a 127 ici surement*/
 			if (access(try_path, X_OK) == 0)
 				return (try_path);
 			i++;

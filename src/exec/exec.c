@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/13 14:26:45 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/14 12:00:13 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 	int	status;
 	int	pid;
 	int	last_error;
-
+	
+	last_error = 0;
 	while (waitpid(-1, &status, 0) != -1)
 	{
 		mark_status(status, data);
