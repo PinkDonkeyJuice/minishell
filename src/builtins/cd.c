@@ -84,6 +84,14 @@ void	exec_cd(t_data *data)
 	path = NULL;
 	if (data->n_commands > 1)
 		return ;
+	if (data->commands[2] != NULL)
+	{
+		data->last_error = 1;
+		printf("Error: too many arguments to function call\n");
+		free_commands(data->commands);
+		free_command_list(data->command_list);
+		return ;
+	}
 	else if (data->commands[1] != NULL && \
 		ft_strcmp(data->commands[1], "-") != 0)
 		path = get_path_cd(data, path);

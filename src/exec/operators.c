@@ -107,7 +107,7 @@ void	handle_operator(t_data *data, size_t i)
 		{
 			data->fdin = open(data->command_list[i + 1].command, O_RDONLY);
 			if (data->fdin == -1)
-				return ;
+				return /* (void) (data->last_error = 1) */;
 		}
 		if (ft_strncmp(command, "<<", 2) == 0)
 		{
@@ -120,7 +120,7 @@ void	handle_operator(t_data *data, size_t i)
 	}
 }
 
-void	handle_input_output(t_data *data)
+int	handle_input_output(t_data *data)
 {
 	size_t	i;
 
@@ -130,5 +130,10 @@ void	handle_input_output(t_data *data)
 	while (data->command_list[++i].command)
 		handle_operator(data, i);
 	if (data->fdin == -1 || data->fdout == -1)
-		error(data, "failed to open file\n");
+	{
+		ft_putstr_fd("failed to open file\n", 2);
+		data->last_error = 1;
+		return (-1);
+	}
+	return (0);
 }

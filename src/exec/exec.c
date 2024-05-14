@@ -18,16 +18,19 @@ void	do_no_commands(void)
 	exit(-1);
 }
 
-void	exec_utils(t_data *data)
+void	redir_lasterror(t_data *data, size_t i)
 {
-	//changer le nom de la fonction pour mieux correspondre a son utilité
-	close_safe(data,
-		access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
-	write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1],
-		&(data->last_error), 1);
-	close_safe(data,
-		access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
+	if (is_builtin(data) == 0)
+		close_safe(data,
+			access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
+	if (i == data->n_commands - 1)
+		write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1],
+			&(data->last_error), sizeof(int));
+	if (is_builtin(data) == 0)
+		close_safe(data,
+			access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
 }
+
 
 void	exec(t_data *data, size_t i)
 {
@@ -40,16 +43,13 @@ void	exec(t_data *data, size_t i)
 	data->i_command = i;
 	if (check_builtins(data) == 0)
 	{
-		data->last_error = 0;
 		path = get_exec_path(data->commands[0], data);
-		if (!path)
-			error(data, NULL);
 		if (data->fdin != STDIN_FILENO)
 			close_safe(data, data->fdin);
-		if (i == data->n_commands - 1)
-			exec_utils(data);
+		redir_lasterror(data, i);
 		execve(path, data->commands, data->env);
 	}
+	redir_lasterror(data, i);
 	if (data->env_c)
 		free_env(data->env_c);
 	free_pipes(data->pipe_list);
@@ -71,6 +71,7 @@ void	child_first_command(t_data *data, t_pipe **pipe_list, size_t i)
 
 void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 {
+	data->last_error = 0;
 	if (i == 0)
 		child_first_command(data, pipe_list, i);
 	else if (i == data->n_commands - 1)
@@ -84,22 +85,18 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
 		dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
 	}
-	if (i != data->n_commands - 1)
-		close_pipes(data, pipe_list, -1, -1);
-	else
-		close_pipes(data, pipe_list, data->n_commands - 1, -1);
+	close_pipes(data, pipe_list, data->n_commands - 1, -1);
 	exec(data, i);
 }
 
-void	mark_status(int status, t_data *data)
+void	mark_status(int status, t_data *data, bool *forcequit)
 {
 	int	term_sig;
 
-/* 	if (WIFEXITED(status))
-	{
-		write(1, "c\n", 2);
-		data->last_error = WEXITSTATUS(status);
-	} */
+	printf("Status : %d\n Exit status : %d\n\n", status, WEXITSTATUS(status));
+	data->last_error = WEXITSTATUS(status);
+	if (WEXITSTATUS(status) != 0 && is_builtin(data) == 0)
+		*forcequit = true;
 	if (WIFSIGNALED(status))
 	{
 		term_sig = WTERMSIG(status);
@@ -111,6 +108,7 @@ void	mark_status(int status, t_data *data)
 		{
 			data->last_error = 130;
 		}
+		*forcequit = true;
 	}
 }
 
@@ -119,21 +117,24 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 	int	status;
 	int	pid;
 	int	last_error;
+	bool	forcequit;
 	
 	last_error = 0;
+	forcequit = false;
+	close_pipes(data, pipe_list, data->n_commands - 1, -1);
 	while (waitpid(-1, &status, 0) != -1)
 	{
-		mark_status(status, data);
+		mark_status(status, data, &forcequit);
 	}
 	close_safe(data, access_pipe(pipe_list, data->n_commands - 1)->p[1]);
 	if (read((access_pipe(pipe_list, data->n_commands - 1)->p[0]),
 			&(last_error), sizeof(int)) == -1)
 		return ;
 	close_safe(data, access_pipe(pipe_list, data->n_commands - 1)->p[0]);
-	data->last_error = (int)last_error;
+	if (forcequit == false)
+		data->last_error = (int)last_error;
 	printf("Last error = %d\nData->last_error = %d\n",
 		last_error, data->last_error);
-	close_pipes(data, pipe_list, data->n_commands - 1, -1);
 	free_pipes(data->pipe_list);
 }
 

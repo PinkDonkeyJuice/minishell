@@ -111,7 +111,7 @@ size_t		count_pipes(t_command *command_list);
 
 char		*ft_strnstr(const char *big, const char *little, size_t len);
 
-void		handle_input_output(t_data *data);
+int		handle_input_output(t_data *data);
 
 int			ft_strcmp(const char *s1, const char *s2);
 
@@ -204,5 +204,7 @@ void	free_all_comms(t_data *data);
 void	read_input_main(t_data *data);
 
 void	print_commands(char	**commands);
+
+int	is_builtin(t_data *data);
 
 #endif

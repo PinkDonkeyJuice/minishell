@@ -107,7 +107,8 @@ void	exec_commands(t_data *data)
 	t_pipe	*pipe_list;
 
 	signal(SIGINT, SIG_IGN);
-	handle_input_output(data);
+	if (handle_input_output(data) == -1)
+		return ;
 	pipe_list = NULL;
 	generate_pipes(&pipe_list, data);
 	handle_commands(data, &pipe_list);

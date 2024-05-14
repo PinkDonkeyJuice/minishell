@@ -27,6 +27,25 @@ int	check_builtins_main(t_data *data)
 	return (0);
 }
 
+int	is_builtin(t_data *data)
+{
+	if (!ft_strcmp(data->commands[0], "cd"))
+		return (1);
+	if (!ft_strcmp(data->commands[0], "echo"))
+		return (1);
+	if (!ft_strcmp(data->commands[0], "pwd"))
+		return (1);
+	if (!ft_strcmp(data->commands[0], "export"))
+		return (1);
+	if (!ft_strcmp(data->commands[0], "unset"))
+		return (1);
+	if (!ft_strcmp(data->commands[0], "env"))
+		return (1);
+	if (!ft_strcmp(data->commands[0], "exit"))
+		return (1);
+	return (0);
+}
+
 int	check_builtins(t_data *data)
 {
 	if (!ft_strcmp(data->commands[0], "cd"))

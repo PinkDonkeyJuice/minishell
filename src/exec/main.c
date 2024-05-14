@@ -36,10 +36,7 @@ char	*get_exec_path(char *command, t_data *data)
 
 	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
-	{
-		data->last_error = 1;
-		return (NULL);
-	}
+		return (data->last_error = 1, NULL);
 	try_path = NULL;
 	i = 0;
 	if (paths && command)
@@ -56,11 +53,15 @@ char	*get_exec_path(char *command, t_data *data)
 			if (access(try_path, X_OK) == 0)
 				return (try_path);
 			i++;
+			free(try_path);
 		}
 	}
-	/*norm a faire et trypath a free peut etre*/
 	if (!ft_strncmp("./", command, 2))
+	{
+		if (access(command, X_OK) != 0)
+			data->last_error = 126;
 		return (command);
+	}
 	printf("Command not found: %s\n", command);
 	data->last_error = 127;
 	return (NULL);
@@ -95,7 +96,6 @@ void	read_input_main(t_data *data)
 			data->commands = get_commands(data->command_list, 0);
 			if (data->commands == NULL || data->command_list == NULL)
 			{
-				write(1, "b\n", 2);
 				data->line = readline("$> ");
 				continue ;
 			}
