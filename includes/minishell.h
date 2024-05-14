@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/14 18:16:40 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:54:55 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ void		here_doc(t_data *data);
 void		child_first_command(t_data *data, t_pipe **pipe_list, size_t i);
 void		child_process(t_data *data, t_pipe **pipe_list, size_t i);
 void		parent_process(t_data *data, t_pipe **pipe_list);
+
+void		signal_handler_is_sigint(t_data *data);
+char		*expand_line(char *line, t_data *data);
+
+void		mark_status(int status, t_data *data, bool *forcequit);
 
 size_t		end_line(char *str);
 char		*clean(char *str);

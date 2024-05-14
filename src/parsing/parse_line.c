@@ -6,21 +6,11 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/14 18:13:19 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:56:40 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_parsing(t_command *to_free, int i_words)
-{
-	while (i_words >= 0)
-	{
-		free(to_free[i_words].command);
-		i_words--;
-	}
-	free(to_free);
-}
 
 void	write_string_utils(char *line, t_command send, int *i, int *j)
 {

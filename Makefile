@@ -12,7 +12,7 @@ CFILES_EXEC = main.c\
     init.c\
     exec.c\
 	exec_process.c\
-	heredoc.c\
+	operators_utils.c\
     pipes.c\
 	operators.c\
 	path.c\
@@ -33,7 +33,6 @@ CFILES_PARSING = env_variables.c\
 	parse_line_args.c\
 	parse_line_len.c\
 	parse_line_lentonext.c\
-	parse_line_utils.c\
 
 CFILES_BUILTINS = cd.c\
 	env.c\
