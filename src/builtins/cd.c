@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:36:45 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 16:06:30 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/15 01:55:03 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	update_oldpwd(t_data *data, char *path_oldpwd)
 	var_oldpwd = ft_strjoin("OLDPWD=", path_oldpwd);
 	oldpwd = search_var("OLDPWD", data);
 	if (oldpwd != NULL)
+	{
+		free(oldpwd->content);
 		oldpwd->content = var_oldpwd;
+	}
 }
 
 void	update_pwd(t_data *data)
@@ -33,7 +36,10 @@ void	update_pwd(t_data *data)
 		var_pwd = ft_strjoin("PWD=", buf);
 	pwd = search_var("PWD", data);
 	if (pwd)
+	{
+		free(pwd->content);
 		pwd->content = var_pwd;
+	}
 }
 
 char	*get_path_cd_options(t_data *data, char *path)

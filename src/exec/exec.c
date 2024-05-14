@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/14 17:10:20 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/15 01:39:46 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	do_no_commands(void)
 
 void	redir_lasterror(t_data *data, size_t i)
 {
-	if (is_builtin(data) == 0 && data->n_commands > 1)
+	if (data->n_commands > 1)
 		close_safe(data,
 			access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
 	if (i == data->n_commands - 1)
 		write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1],
 			&(data->last_error), sizeof(int));
-	if (is_builtin(data) == 0 && data->n_commands > 1)
+	if (data->n_commands > 1)
 		close_safe(data,
 			access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
 }
@@ -47,6 +47,8 @@ void	exec(t_data *data, size_t i)
 		if (data->fdin != STDIN_FILENO)
 			close_safe(data, data->fdin);
 		redir_lasterror(data, i);
+		if (path == NULL)
+			error(data, "path not found\n");
 		execve(path, data->commands, data->env);
 	}
 	redir_lasterror(data, i);

@@ -6,7 +6,7 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:25:47 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/05 20:02:58 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/15 01:50:10 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	exec_unset(t_data *data)
 			prev_node->next = to_delete->next;
 			if (to_delete->next != NULL)
 				to_delete->next->previous = prev_node;
+			free(to_delete->content);
 			free(to_delete);
 		}
 		i++;

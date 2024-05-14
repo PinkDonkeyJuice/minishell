@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:26:48 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/02 13:32:22 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/15 01:17:40 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	check_builtins_main(t_data *data)
 
 int	is_builtin(t_data *data)
 {
+	if (data->commands == NULL || data->commands[0] == NULL)
+		return (0);
 	if (!ft_strcmp(data->commands[0], "cd"))
 		return (1);
 	if (!ft_strcmp(data->commands[0], "echo"))
