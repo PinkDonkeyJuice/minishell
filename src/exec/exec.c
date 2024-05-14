@@ -20,13 +20,13 @@ void	do_no_commands(void)
 
 void	redir_lasterror(t_data *data, size_t i)
 {
-	if (is_builtin(data) == 0)
+	if (is_builtin(data) == 0 && data->n_commands > 1)
 		close_safe(data,
 			access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
 	if (i == data->n_commands - 1)
 		write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1],
 			&(data->last_error), sizeof(int));
-	if (is_builtin(data) == 0)
+	if (is_builtin(data) == 0 && data->n_commands > 1)
 		close_safe(data,
 			access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
 }
@@ -94,9 +94,8 @@ void	mark_status(int status, t_data *data, bool *forcequit)
 	int	term_sig;
 
 	printf("Status : %d\n Exit status : %d\n\n", status, WEXITSTATUS(status));
-	data->last_error = WEXITSTATUS(status);
 	if (WEXITSTATUS(status) != 0 && is_builtin(data) == 0)
-		*forcequit = true;
+		data->last_error = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 	{
 		term_sig = WTERMSIG(status);
