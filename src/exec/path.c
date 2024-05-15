@@ -14,8 +14,8 @@
 
 char	*create_path(char *command, char *path)
 {
-	char *try_path;
-	char *buffer;
+	char	*try_path;
+	char	*buffer;
 
 	try_path = NULL;
 	try_path = ft_strdup(path);
@@ -36,7 +36,7 @@ char	*create_path(char *command, char *path)
 	return (try_path);
 }
 
-char *get_exec_path_return(t_data *data, char *command)
+char	*get_exec_path_return(t_data *data, char *command)
 {
 	if (!ft_strncmp("./", command, 2))
 	{
@@ -51,7 +51,7 @@ char *get_exec_path_return(t_data *data, char *command)
 
 void	free_table(char **table)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (table[i])

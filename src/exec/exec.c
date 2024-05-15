@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/15 01:39:46 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/15 10:24:25 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	redir_lasterror(t_data *data, size_t i)
 		close_safe(data,
 			access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
 }
-
 
 void	exec(t_data *data, size_t i)
 {
@@ -62,7 +61,6 @@ void	mark_status(int status, t_data *data, bool *forcequit)
 {
 	int	term_sig;
 
-	//printf("Status : %d\n Exit status : %d\n\n", status, WEXITSTATUS(status));
 	if (WEXITSTATUS(status) != 0 && is_builtin(data) == 0)
 		data->last_error = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))

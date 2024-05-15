@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:52:38 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/13 14:42:58 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/15 10:18:57 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	free_all_comms(t_data *data)
 void	free_all(t_data *data)
 {
 	free_commands(data->commands);
-	//if (data->n_commands == 1 || data->i_command == data->n_commands)
 	free_command_list(data->command_list);
 	if (data->n_commands > 1)
 		free_pipes(data->pipe_list);

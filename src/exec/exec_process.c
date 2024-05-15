@@ -47,11 +47,11 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 
 void	parent_process(t_data *data, t_pipe **pipe_list)
 {
-	int	status;
-	int	pid;
-	int	last_error;
+	int		status;
+	int		pid;
+	int		last_error;
 	bool	forcequit;
-	
+
 	last_error = 0;
 	forcequit = false;
 	close_pipes(data, pipe_list, data->n_commands - 1, -1);
@@ -66,7 +66,5 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 	close_safe(data, access_pipe(pipe_list, data->n_commands - 1)->p[0]);
 	if (forcequit == false)
 		data->last_error = (int)last_error;
-	/*printf("Last error = %d\nData->last_error = %d\n",
-		last_error, data->last_error);*/
 	free_pipes(data->pipe_list);
 }
