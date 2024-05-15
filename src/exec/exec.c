@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/15 10:24:25 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:31:06 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	exec(t_data *data, size_t i)
 			close_safe(data, data->fdin);
 		redir_lasterror(data, i);
 		if (path == NULL)
-			error(data, "path not found\n");
+			error(data, NULL);
 		execve(path, data->commands, data->env);
 	}
 	redir_lasterror(data, i);

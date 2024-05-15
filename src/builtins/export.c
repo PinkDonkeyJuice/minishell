@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/15 01:50:24 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/15 13:55:05 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_export(t_data *data)
+{
+	t_env	*print;
+
+	print = data->env_c;
+	while (print)
+	{
+		printf("declare -x ");
+		printf("%s\n", print->content);
+		print = print->next;
+	}
+	if (data->n_commands > 1)
+	{
+		free_commands(data->commands);
+		free_command_list(data->command_list);
+	}
+}
 
 void	exec_export(t_data *data)
 {
@@ -23,7 +41,7 @@ void	exec_export(t_data *data)
 		return ;
 	if (!data->commands[1])
 	{
-		exec_env(data);
+		print_export(data);
 		return ;
 	}
 	var_def = data->commands[i];

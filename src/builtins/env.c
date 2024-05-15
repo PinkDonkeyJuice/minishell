@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:38:59 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/05 20:01:31 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/15 13:57:32 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ void	exec_env(t_data *data)
 		printf("%s\n", print->content);
 		print = print->next;
 	}
-	if (data->n_commands > 1)
-	{
-		free_commands(data->commands);
-		free_command_list(data->command_list);
-	}
+	free_commands(data->commands);
+	free_command_list(data->command_list);
 }

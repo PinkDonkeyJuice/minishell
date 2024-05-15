@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:36:45 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/15 01:55:03 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/15 14:05:57 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,12 @@ char	*get_path_cd_options(t_data *data, char *path)
 	t_env	*target;
 
 	target = NULL;
-	if (data->commands[1] != NULL && !ft_strcmp(data->commands[1], "-"))
-	{
-		target = search_var("OLDPWD", data);
-		if (!target)
-			return (NULL);
-		path = cont_of_var(target->content);
-		printf("Path is: %s\n", path);
-	}
-	else if (data->commands[1] == NULL)
+	if (data->commands[1] == NULL)
 	{
 		target = search_var("HOME", data);
 		if (!target)
 			return (NULL);
 		path = cont_of_var(target->content);
-		printf("Path is: %s\n", path);
 	}
 	return (path);
 }
@@ -90,22 +81,23 @@ void	exec_cd(t_data *data)
 	path = NULL;
 	if (data->n_commands > 1)
 		return ;
-	if (data->commands[2] != NULL)
-	{
-		data->last_error = 1;
-		printf("Error: too many arguments to function call\n");
-		free_commands(data->commands);
-		free_command_list(data->command_list);
-		return ;
-	}
-	else if (data->commands[1] != NULL && \
-		ft_strcmp(data->commands[1], "-") != 0)
+	if (data->commands[1] && data->commands[2] != NULL)
+		return (data->last_error = 1,
+			(void) printf("Error: too many arguments to function call\n"));
+	else if (data->commands[1] != NULL)
 		path = get_path_cd(data, path);
-	else
+	else if (data->commands[1] == NULL)
 		path = get_path_cd_options(data, path);
 	if (!path)
 		return ;
+	if (access(path, F_OK) == -1)
+		return (data->last_error = 2,
+			(void) printf("minishell: cd: no such file or directory\n"));
+	if (access(path, R_OK) == -1)
+		return (data->last_error = 1,
+			(void) printf("minishell: cd: permission denied\n"));
 	update_oldpwd(data, cont_of_var(search_var("PWD", data)->content));
-	chdir(path);
+	if (path)
+		chdir(path);
 	update_pwd(data);
 }

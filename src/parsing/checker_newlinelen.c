@@ -75,6 +75,8 @@ void	new_line_len_varnum(char *line, int *i, int *len, t_data *data)
 		*len += num_len(data->last_error);
 		*i += 1;
 	}
+	else
+		*len += 1;
 	*i += 1;
 }
 
