@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/16 10:41:52 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:36:07 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ void	read_input_main(t_data *data)
 		{
 			data->command_list = parse_line(data->line, data);
 			data->n_commands = count_pipes(data->command_list);
+			if (data->n_commands == 0)
+			{
+				free_command_list(data->command_list);
+				data->line = readline("$> ");
+				continue ;
+			}
 			data->commands = get_commands(data->command_list, 0);
 			if (data->commands == NULL || data->command_list == NULL)
 			{

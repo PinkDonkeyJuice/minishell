@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/16 11:35:19 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:38:27 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	print_export(t_data *data)
 		printf("%s\n", print->content);
 		print = print->next;
 	}
-	if (data->n_commands > 1)
+/* 	if (data->n_commands > 1)
 	{
 		free_commands(data->commands);
 		free_command_list(data->command_list);
-	}
+	} */
 }
 
 void	exec_export(t_data *data)
@@ -48,8 +48,8 @@ void	exec_export(t_data *data)
 	while (var_def != NULL && data->n_commands == 1)
 	{
 		to_replace = search_var(var_def, data);
-		printf("%s\n", to_replace->content);
-		printf("%s\n", var_def);
+/* 		printf("%s\n", to_replace->content);
+		printf("%s\n", var_def); */
 		if (to_replace != NULL)
 			to_replace->content = var_def;
 		else

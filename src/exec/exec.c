@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/15 13:31:06 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:29:02 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,14 @@ size_t	count_pipes(t_command *command_list)
 	while (command_list[i].command != NULL)
 	{
 		if (command_list[i].type == TYPE_PIPE)
+		{
+			if (command_list[i + 1].command == NULL)
+			{
+				printf("Missing command after pipe\n");
+				return (0);
+			}
 			n++;
+		}
 		i++;
 	}
 	return (n);
