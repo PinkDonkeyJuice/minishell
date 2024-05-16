@@ -6,7 +6,7 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/16 18:34:54 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/16 18:44:43 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	exec(t_data *data, size_t i)
 		if (new_env == NULL)
 			do_exit(data);
 		execve(path, data->commands, new_env);
+		
 	}
 	redir_lasterror(data, i);
 	free_pipes(data->pipe_list);
