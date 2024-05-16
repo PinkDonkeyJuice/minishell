@@ -6,7 +6,7 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/16 13:29:02 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/16 18:34:54 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,46 @@ void	redir_lasterror(t_data *data, size_t i)
 			access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
 }
 
+size_t	count_env_var(t_data *data)
+{
+	size_t	n;
+	t_env	*node;
+
+	n = 0;
+	node = data->env_c;
+	while (node && node->content)
+	{
+		n++;
+		node = node->next;
+	}
+	return (n);
+}
+
+char	**recreate_env(t_data *data)
+{
+	char **new_env;
+	size_t	i;
+	t_env	*node;
+
+	new_env = malloc(sizeof(char *) * (count_env_var(data) + 1));
+	if (!new_env)
+		return (NULL);
+	i = 0;
+	node = data->env_c;
+	while (node && node->content)
+	{
+		new_env[i] = ft_strdup(node->content);
+		node = node->next;
+		i++;
+	}
+	new_env[i] = NULL;
+	return (new_env);
+}
+
 void	exec(t_data *data, size_t i)
 {
 	char	*path;
+	char	**new_env;
 
 	free_commands(data->commands);
 	data->commands = get_commands(data->command_list, i);
@@ -48,11 +85,12 @@ void	exec(t_data *data, size_t i)
 		redir_lasterror(data, i);
 		if (path == NULL)
 			error(data, NULL);
-		execve(path, data->commands, data->env);
+		new_env = recreate_env(data);
+		if (new_env == NULL)
+			do_exit(data);
+		execve(path, data->commands, new_env);
 	}
 	redir_lasterror(data, i);
-	if (data->env_c)
-		free_env(data->env_c);
 	free_pipes(data->pipe_list);
 	exit(1);
 }

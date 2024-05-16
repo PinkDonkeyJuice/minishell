@@ -6,7 +6,7 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/16 13:38:27 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/16 17:42:11 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,17 @@ void	print_export(t_data *data)
 		printf("%s\n", print->content);
 		print = print->next;
 	}
-/* 	if (data->n_commands > 1)
+	if (data->n_commands > 1)
 	{
 		free_commands(data->commands);
 		free_command_list(data->command_list);
-	} */
+	}
+}
+
+void	replace_var(t_env *to_replace, char *var_def)
+{
+	free(to_replace->content);
+	to_replace->content = ft_strdup(var_def);
 }
 
 void	exec_export(t_data *data)
@@ -48,10 +54,8 @@ void	exec_export(t_data *data)
 	while (var_def != NULL && data->n_commands == 1)
 	{
 		to_replace = search_var(var_def, data);
-/* 		printf("%s\n", to_replace->content);
-		printf("%s\n", var_def); */
 		if (to_replace != NULL)
-			to_replace->content = var_def;
+			replace_var(to_replace, var_def);
 		else
 			append_node(&(data->env_c), var_def);
 		i++;

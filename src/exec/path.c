@@ -62,14 +62,38 @@ void	free_table(char **table)
 	free(table);
 }
 
+char	**get_env(t_data *data)
+{
+	t_env *path;
+	size_t	i;
+	char	*path_content;
+	char **paths;
+
+	i = 5;
+	path = search_var("PATH=", data);
+	path_content = malloc(sizeof(char) * (ft_strlen(path->content) - 4));
+	if (path_content == NULL)
+		return (NULL);
+	while (path->content[i])
+	{
+		path_content[i - 5] = path->content[i];
+		i++;
+	}
+	path_content[i - 5] = 0;
+	paths = ft_split(path_content, ':');
+	if (!paths)
+		return (NULL);
+	free(path_content);
+	return (paths);
+}
+
 char	*get_exec_path(char *command, t_data *data)
 {
 	int		i;
 	char	**paths;
 	char	*try_path;
 
-	paths = ft_split(getenv("PATH"), ':');
-	/*ici changer comment recupere le path dans notre environement*/
+	paths = get_env(data);
 	if (!paths)
 		return (data->last_error = 1, NULL);
 	try_path = NULL;
