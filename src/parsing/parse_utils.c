@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:04:51 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/06 15:51:40 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:49:10 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	last_check(t_command *parsed)
 	while (parsed[i].command)
 	{
 		if (parsed[i].type == TYPE_OPERATOR && !parsed[i + 1].command)
-			return (0);
+			return (printf("minishell: Syntax error\n"), 0);
 		i++;
 	}
 	return (1);
