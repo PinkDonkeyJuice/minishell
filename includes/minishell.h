@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/14 18:54:55 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:46:10 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,27 +186,22 @@ int			new_line_len(char *line, t_data *data);
 
 char		**ft_split(char const *s, char c);
 
-int			is_exit(char *line);
 void		exec_exit(t_data *data);
 void		do_exit(t_data *data);
+void		do_exit_end(t_data *data);
 
 t_env		*find_last_node(t_env *env);
 void		append_node(t_env **env, char *env_var);
 void		init_env(char **env, t_data *data);
 
-int			is_echo(char *line);
 void		exec_echo(t_data *data);
 
-int			is_cd(char *line);
 void		exec_cd(t_data *data);
 
-int			is_pwd(char *line);
 void		exec_pwd(t_data *data);
 
-int			is_env(char *line);
 void		exec_env(t_data *data);
 
-int			is_export(char *line);
 void		exec_export(t_data *data);
 
 void		ft_bzero(void *s, size_t n);

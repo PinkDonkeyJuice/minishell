@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/15 13:55:05 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/16 11:35:19 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	exec_export(t_data *data)
 	while (var_def != NULL && data->n_commands == 1)
 	{
 		to_replace = search_var(var_def, data);
+		printf("%s\n", to_replace->content);
+		printf("%s\n", var_def);
 		if (to_replace != NULL)
 			to_replace->content = var_def;
 		else

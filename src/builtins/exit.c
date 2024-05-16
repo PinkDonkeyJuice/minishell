@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:40:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/14 11:01:20 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:42:09 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ int	exit_atoi(const char *str)
 	if (sign == -1)
 		return (256 - (int) nb);
 	return ((int) nb);
+}
+
+void	do_exit_end(t_data *data)
+{
+	printf("exit\n");
+	exit(data->last_error);
 }
 
 void	do_exit(t_data *data)

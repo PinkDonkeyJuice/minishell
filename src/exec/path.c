@@ -69,6 +69,7 @@ char	*get_exec_path(char *command, t_data *data)
 	char	*try_path;
 
 	paths = ft_split(getenv("PATH"), ':');
+	/*ici changer comment recupere le path dans notre environement*/
 	if (!paths)
 		return (data->last_error = 1, NULL);
 	try_path = NULL;

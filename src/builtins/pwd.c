@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:42:26 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/05 19:59:39 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/16 11:09:09 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@ void	exec_pwd(t_data *data)
 {
 	char	buf[PATH_MAX];
 
-	if (data->commands[1] != NULL)
-	{
-		data->last_error = 1;
-		printf("Error: too many arguments to function call\n");
-		free_commands(data->commands);
-		free_command_list(data->command_list);
-		return ;
-	}
 	if (getcwd(buf, PATH_MAX))
 		printf("%s\n", buf);
 	else

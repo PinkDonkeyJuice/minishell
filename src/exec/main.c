@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/14 17:20:23 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:41:52 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **env)
 	signal_handler();
 	read_input_main(&data);
 	if (data.line == NULL)
-		do_exit(&data);
+		do_exit_end(&data);
 }
 
 size_t	commands_len(char **commands)
