@@ -9,6 +9,7 @@ CFILES_UTILS = ft_split.c\
 	free.c\
 
 CFILES_EXEC = main.c\
+	main_utils.c\
     init.c\
     exec.c\
 	exec_process.c\

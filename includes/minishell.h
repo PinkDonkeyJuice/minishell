@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/16 10:46:10 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:05:48 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ char		*append_stock(char *buffer, char *stock);
 char		*ft_strstr(char *str, size_t start, size_t end);
 char		*sub_line(char *stock);
 void		ft_putstr_fd(char *s, int fd);
+
+void	read_input_main_utils(t_data *data);
 
 void		close_safe( t_data *data, int fd);
 void		free_all(t_data *data);

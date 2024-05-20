@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/16 13:36:07 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/20 13:05:22 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ void	read_input_main(t_data *data)
 				data->line = readline("$> ");
 				continue ;
 			}
-			if (check_builtins_main(data) == 0 || data->n_commands != 1)
-				exec_commands(data);
-			if (data->heredoc_name)
-				unlink(data->heredoc_name);
+			read_input_main_utils(data);
 			free_all_comms(data);
 		}
 		data->line = readline("$> ");
