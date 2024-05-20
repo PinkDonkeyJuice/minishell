@@ -64,10 +64,10 @@ void	free_table(char **table)
 
 char	**get_env(t_data *data)
 {
-	t_env *path;
+	t_env	*path;
 	size_t	i;
 	char	*path_content;
-	char **paths;
+	char	**paths;
 
 	i = 5;
 	path = search_var("PATH=", data);

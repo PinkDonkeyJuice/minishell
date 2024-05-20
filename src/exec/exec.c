@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/16 18:44:43 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/20 13:31:25 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ size_t	count_env_var(t_data *data)
 
 char	**recreate_env(t_data *data)
 {
-	char **new_env;
+	char	**new_env;
 	size_t	i;
 	t_env	*node;
 
@@ -89,7 +89,6 @@ void	exec(t_data *data, size_t i)
 		if (new_env == NULL)
 			do_exit(data);
 		execve(path, data->commands, new_env);
-		
 	}
 	redir_lasterror(data, i);
 	free_pipes(data->pipe_list);
