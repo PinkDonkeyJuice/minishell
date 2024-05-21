@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/21 12:20:58 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:09:45 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	out_of_bound(char *line)
 	int	i;
 
 	i = 0;
+	if (line == NULL)
+		return (0);
 	while (line[i] != '\0')
 	{
 		if (line[i] < 0)
