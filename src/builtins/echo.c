@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:38:43 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/16 11:05:43 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:39:16 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	exec_echo(t_data *data)
 		return ;
 	}
 	newl = true;
-	if (data->commands[1] && is_dash_n(data->commands[1]))
+	while (data->commands[i] && is_dash_n(data->commands[i]))
 	{
 		newl = false;
 		i++;

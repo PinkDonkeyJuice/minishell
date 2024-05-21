@@ -68,3 +68,49 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 		data->last_error = (int)last_error;
 	free_pipes(data->pipe_list);
 }
+
+void	mark_status(int status, t_data *data, bool *forcequit)
+{
+	int	term_sig;
+
+	if (WEXITSTATUS(status) != 0 && is_builtin(data) == 0)
+		data->last_error = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		term_sig = WTERMSIG(status);
+		if (term_sig == SIGQUIT)
+		{
+			data->last_error = 131;
+		}
+		else if (term_sig == SIGINT)
+		{
+			data->last_error = 130;
+		}
+		*forcequit = true;
+	}
+}
+
+size_t	count_pipes(t_command *command_list)
+{
+	size_t	n;
+	size_t	i;
+
+	n = 1;
+	i = 0;
+	if (command_list == NULL)
+		return (0);
+	while (command_list[i].command != NULL)
+	{
+		if (command_list[i].type == TYPE_PIPE)
+		{
+			if (command_list[i + 1].command == NULL)
+			{
+				printf("Missing command after pipe\n");
+				return (0);
+			}
+			n++;
+		}
+		i++;
+	}
+	return (n);
+}
