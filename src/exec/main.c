@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/20 13:05:22 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/21 12:20:58 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,25 @@ void	ft_add_history(char *line)
 		add_history(line);
 }
 
+int	out_of_bound(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] < 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	read_input_main(t_data *data)
 {
 	data->line = readline("$> ");
+	if (out_of_bound(data->line))
+		exit(1);
 	while (data->line != NULL)
 	{
 		ft_add_history(data->line);
