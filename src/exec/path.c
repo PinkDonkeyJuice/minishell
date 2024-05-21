@@ -38,6 +38,8 @@ char	*create_path(char *command, char *path)
 
 char	*get_exec_path_return(t_data *data, char *command)
 {
+	if (command == NULL)
+		return (NULL);
 	if (!ft_strncmp("./", command, 2))
 	{
 		if (access(command, X_OK) != 0)

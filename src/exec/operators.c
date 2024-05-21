@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/14 18:50:17 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:02:12 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,12 @@ void	read_input_heredoc(t_data *data)
 		ft_putstr_fd("\n", data->fdin);
 		line = readline("$> here_doc: ");
 	}
-	free(data->heredoc_name);
+	if (line == NULL)
+	{
+		printf("warning: here_doc ended with EOF\n");
+		/* unlink(data->heredoc_name);
+		free(data->heredoc_name); */
+	}
 }
 
 void	here_doc(t_data *data)
@@ -54,6 +59,7 @@ void	here_doc(t_data *data)
 	{
 		number = ft_itoa(i);
 		data->heredoc_name = ft_strjoin("./.heredoc_", number);
+		free(number);
 		if (access(data->heredoc_name, F_OK) == -1)
 		{
 			data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);

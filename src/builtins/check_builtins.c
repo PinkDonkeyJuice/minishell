@@ -6,7 +6,7 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:26:48 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/15 01:17:40 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/21 15:33:51 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	is_builtin(t_data *data)
 
 int	check_builtins(t_data *data)
 {
+	if (data->commands == NULL || data->commands[0] == NULL)
+		return (0);
 	if (!ft_strcmp(data->commands[0], "cd"))
 		return (exec_cd(data), 1);
 	if (!ft_strcmp(data->commands[0], "echo"))
