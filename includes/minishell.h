@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/20 13:34:53 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:43:06 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@ int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		**get_commands(t_command *cl, size_t i);
 
 size_t		count_pipes(t_command *command_list);
+
+void		init_commands(t_data *data);
+void		no_commands(t_data *data);
 
 char		*ft_strnstr(const char *big, const char *little, size_t len);
 

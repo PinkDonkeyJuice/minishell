@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/21 16:02:12 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/22 12:53:59 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,8 @@ void	read_input_heredoc(t_data *data)
 		line = readline("$> here_doc: ");
 	}
 	if (line == NULL)
-	{
-		printf("warning: here_doc ended with EOF\n");
-		/* unlink(data->heredoc_name);
-		free(data->heredoc_name); */
-	}
+		printf("warning: here_doc ended with EOF (wanted \'%s\')\n",
+			data->delimiter);
 }
 
 void	here_doc(t_data *data)
