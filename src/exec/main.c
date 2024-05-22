@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/22 13:42:26 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:45:49 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,10 @@ void	read_input_main(t_data *data)
 		ft_add_history(data->line);
 		if (data->line[0] != '\0')
 		{
-			data->command_list = parse_line(data->line, data);
-			data->n_commands = count_pipes(data->command_list);
+			init_commands(data);
 			if (data->n_commands == 0)
 			{
-				free_command_list(data->command_list);
-				data->line = readline("$> ");
+				no_commands(data);
 				continue ;
 			}
 			data->commands = get_commands(data->command_list, 0);
