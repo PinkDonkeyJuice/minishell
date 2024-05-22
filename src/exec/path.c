@@ -56,6 +56,8 @@ void	free_table(char **table)
 	size_t	i;
 
 	i = 0;
+	if (table == NULL || table[0] == NULL)
+		return ;
 	while (table[i])
 	{
 		free(table[i]);
@@ -73,6 +75,8 @@ char	**get_env(t_data *data)
 
 	i = 5;
 	path = search_var("PATH=", data);
+	if (path == NULL || path->content == NULL)
+		return (NULL);
 	path_content = malloc(sizeof(char) * (ft_strlen(path->content) - 4));
 	if (path_content == NULL)
 		return (NULL);
@@ -96,8 +100,6 @@ char	*get_exec_path(char *command, t_data *data)
 	char	*try_path;
 
 	paths = get_env(data);
-	if (!paths)
-		return (data->last_error = 1, NULL);
 	try_path = NULL;
 	i = 0;
 	if (paths && command)
