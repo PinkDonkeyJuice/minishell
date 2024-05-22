@@ -6,51 +6,51 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/20 13:23:07 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:29:15 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fill_var(t_data *data, char *new_line, int *i, int *j)
+void	fill_var(t_data *data, char *line, char *new_line, t_parse *c)
 {
 	char	*content;
 	t_env	*search;
 
-	search = search_var(&(data->line[*i]), data);
+	search = search_var(&(line[c->i]), data);
 	if (search != NULL)
 	{
 		content = cont_of_var(search->content);
 		while (*content != '\0')
 		{
-			new_line[*j] = *content;
-			if (is_very_specific(new_line[*j]))
-				new_line[*j] *= -1;
+			new_line[c->j] = *content;
+			if (is_very_specific(new_line[c->j]))
+				new_line[c->j] *= -1;
 			content++;
-			*j += 1;
+			c->j += 1;
 		}
 	}
-	while ((ft_isalnum(data->line[*i]) || data->line[*i] == '_')
-		&& data->line[*i])
-		*i += 1;
-	if (search == NULL && (data->line[*i] == ' ' || data->line[*i] == '\0'))
+	while ((ft_isalnum(line[c->i]) || line[c->i] == '_')
+		&& line[c->i])
+		c->i += 1;
+	if (search == NULL && (line[c->i] == ' ' || line[c->i] == '\0'))
 	{
-		new_line[*j] = -32;
-		*j += 1;
+		new_line[c->j] = -32;
+		c->j += 1;
 	}
 }
 
-int	do_dollars(t_data *data, char *new_line, int *i, int *j)
+int	do_dollars(t_data *data, char *line, char *new_line, t_parse *c)
 {
-	if (data->line[*i] == '$')
+	if (line[c->i] == '$')
 	{
-		if (!ft_isalnum(data->line[*i + 1]))
+		if (!ft_isalnum(line[c->i + 1]))
 		{
-			not_an_env_var(data, new_line, i, j);
+			not_an_env_var(data, new_line, &(c->i), &(c->j));
 			return (1);
 		}
-		*i += 1;
-		fill_var(data, new_line, i, j);
+		c->i += 1;
+		fill_var(data, line, new_line, c);
 		return (1);
 	}
 	return (0);
@@ -58,29 +58,28 @@ int	do_dollars(t_data *data, char *new_line, int *i, int *j)
 
 int	check_var_real(char *line, char *new_line, t_data *data)
 {
-	int	i;
-	int	j;
+	t_parse	c;
 
-	i = 0;
-	j = 0;
-	while (line[i])
+	c.i = 0;
+	c.j = 0;
+	while (line[c.i])
 	{
-		if (line[i] == '\'')
-			check_var_sq(line, new_line, &i, &j);
-		if (line[i] == '\"')
+		if (line[c.i] == '\'')
+			check_var_sq(line, new_line, &(c.i), &(c.j));
+		if (line[c.i] == '\"')
 		{
-			check_var_dq(line, new_line, &i, &j);
+			check_var_dq(line, new_line, &(c.i), &(c.j));
 			continue ;
 		}
 		else
 		{
-			do_dollars(data, new_line, &i, &j);
-			new_line[j] = line[i];
+			do_dollars(data, line, new_line, &c);
+			new_line[c.j] = line[c.i];
 		}
-		if (line[i])
-			i_plusplus_j_plusplus(line, &i, &j);
+		if (line[c.i])
+			i_plusplus_j_plusplus(line, &(c.i), &(c.j));
 	}
-	return (j);
+	return (c.j);
 }
 
 char	*check_var(char *line, t_data *data)

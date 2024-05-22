@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/22 13:43:06 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:18:12 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ typedef struct s_command
 	char	*command;
 	int		type;
 }				t_command;
+
+typedef struct s_parse
+{
+	int	i;
+	int	j;
+}				t_parse;
 
 typedef struct s_data
 {
@@ -166,7 +172,6 @@ char		**get_args(char const *s, char c);
 int			count_args(char *line);
 
 t_command	*parse_line(char *line, t_data *data);
-int			checker(char **line, t_data *data);
 t_command	*finish_parsing(t_command *parsed);
 int			last_check(t_command *parsed);
 int			new_line_len(char *line, t_data *data);
