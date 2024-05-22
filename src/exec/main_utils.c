@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:58:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/22 13:55:07 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:09:35 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@ void	read_input_main_utils(t_data *data)
 
 	if (check_builtins_main(data) == 0 || data->n_commands != 1)
 		exec_commands(data);
-	if (data->heredoc_name != NULL)
+	else
 	{
-		unlink(data->heredoc_name);
-		free(data->heredoc_name);
-		data->heredoc_name = NULL;
+		free_pipes(data->pipe_list);
 	}
 }
 

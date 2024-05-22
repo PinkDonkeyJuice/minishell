@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/22 12:53:59 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:48:53 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	here_doc(t_data *data)
 	while (!stop)
 	{
 		number = ft_itoa(i);
+		free(data->heredoc_name);
 		data->heredoc_name = ft_strjoin("./.heredoc_", number);
 		free(number);
 		if (access(data->heredoc_name, F_OK) == -1)
@@ -70,6 +71,8 @@ void	here_doc(t_data *data)
 		i++;
 	}
 	read_input_heredoc(data);
+	unlink(data->heredoc_name);
+	free(data->heredoc_name);
 }
 
 void	signal_handler_is_sigint(t_data *data)

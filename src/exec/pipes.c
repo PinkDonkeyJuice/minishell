@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:16:18 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/06 16:03:45 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:53:20 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	generate_pipes(t_pipe **pipe_list, t_data *data)
 	size_t	i;
 
 	i = 0;
+	printf("n commands = %zu\ni = %zu\n", data->n_commands, i);
 	while (i < data->n_commands - 1)
 	{
 		create_pipe(i, pipe_list);
