@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/22 14:18:12 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:47:56 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ void		not_an_env_var(t_data *data, char *new_line, int *i, int *j);
 int			check_var_dq(char *line, char *new_line, int *i, int *j);
 void		check_var_sq(char *line, char *new_line, int *i, int *j);
 int			check_in_quote(char *line, int i);
+
+int		check_pipes(char *line);
 
 int			check_closed_quotes(char *line);
 int			check_operator(char *line);

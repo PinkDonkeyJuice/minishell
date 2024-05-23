@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/23 11:42:39 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:49:09 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ int	checker(char **line, t_data *data)
 	if (!check_closed_quotes(*line))
 		return (0);
 	if (!check_operator(*line))
+		return (0);
+	if (!check_pipes(*line))
 		return (0);
 	*line = check_var(*line, data);
 	if (!(*line))
