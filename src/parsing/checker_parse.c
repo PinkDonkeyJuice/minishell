@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/22 14:29:15 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:42:39 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	do_dollars(t_data *data, char *line, char *new_line, t_parse *c)
 {
 	if (line[c->i] == '$')
 	{
-		if (!ft_isalnum(line[c->i + 1]))
+		if (!ft_isalnum(line[c->i + 1]) && line[c->i + 1] != '_')
 		{
 			not_an_env_var(data, new_line, &(c->i), &(c->j));
 			return (1);

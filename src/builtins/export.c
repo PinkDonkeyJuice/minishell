@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/16 17:42:11 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/23 13:28:19 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,22 @@ void	replace_var(t_env *to_replace, char *var_def)
 	to_replace->content = ft_strdup(var_def);
 }
 
+int	is_valid(char *var)
+{
+	int	i;
+
+	i = 0;
+	while (var[i])
+	{
+		if (((var[i] >= '0' && var[i] <= '9') || var[i] == '=') && i == 0)
+			return (0);
+		if (!ft_isalnum(var[i]) && var[i] != '_' && var[i] != '=')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	exec_export(t_data *data)
 {
 	int		i;
@@ -46,18 +62,21 @@ void	exec_export(t_data *data)
 	if (data->commands == NULL || data->commands[0] == NULL)
 		return ;
 	if (!data->commands[1])
-	{
-		print_export(data);
-		return ;
-	}
+		return (print_export(data));
 	var_def = data->commands[i];
 	while (var_def != NULL && data->n_commands == 1)
 	{
-		to_replace = search_var(var_def, data);
-		if (to_replace != NULL)
-			replace_var(to_replace, var_def);
+		if (!is_valid(data->commands[i]))
+			printf("minishell: export: '%s': not a valid identifier\n",
+				data->commands[i]);
 		else
-			append_node(&(data->env_c), var_def);
+		{
+			to_replace = search_var(var_def, data);
+			if (to_replace != NULL)
+				replace_var(to_replace, var_def);
+			else
+				append_node(&(data->env_c), var_def);
+		}
 		i++;
 		var_def = data->commands[i];
 	}

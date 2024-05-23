@@ -94,7 +94,7 @@ int	new_line_len(char *line, t_data *data)
 		new_line_len_base(line, &i, &len);
 		if (line[i] == '$')
 		{
-			if (!ft_isalnum(line[i + 1]))
+			if (!ft_isalnum(line[i + 1]) && line[i + 1] != '_')
 			{
 				new_line_len_varnum(line, &i, &len, data);
 				continue ;

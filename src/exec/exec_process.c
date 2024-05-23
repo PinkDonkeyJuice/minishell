@@ -80,14 +80,14 @@ void	mark_status(int status, t_data *data, bool *forcequit)
 		term_sig = WTERMSIG(status);
 		if (term_sig == SIGQUIT)
 		{
-			write(2, "Quit (core dumped)", 19);
+			write(2, "Quit (core dumped)\n", 20);
 			data->last_error = 131;
 		}
 		else if (term_sig == SIGINT)
 		{
+			write(2, "\n", 1);
 			data->last_error = 130;
 		}
-		write(2, "\n", 1);
 		*forcequit = true;
 	}
 }
