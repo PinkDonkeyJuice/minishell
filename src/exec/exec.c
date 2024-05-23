@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/23 13:08:28 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:34:19 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	exec(t_data *data, size_t i)
 			do_exit(data);
 		execve(path, data->commands, new_env);
 	}
+	else
+		free_env(data->env_c);
 	redir_lasterror(data, i);
 	exit(1);
 }
