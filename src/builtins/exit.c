@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:40:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/16 10:42:09 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:02:29 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	exit_atoi(const char *str)
 void	do_exit_end(t_data *data)
 {
 	printf("exit\n");
+	free_env(data->env_c);
 	exit(data->last_error);
 }
 

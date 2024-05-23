@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:36:45 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/15 14:05:57 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:03:54 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	update_pwd(t_data *data)
 
 	if (getcwd(buf, PATH_MAX))
 		var_pwd = ft_strjoin("PWD=", buf);
+	else 
+		var_pwd = NULL;
 	pwd = search_var("PWD", data);
 	if (pwd)
 	{
@@ -77,6 +79,7 @@ char	*get_path_cd(t_data *data, char *path)
 void	exec_cd(t_data *data)
 {
 	char	*path;
+	t_env	*var_old;
 
 	path = NULL;
 	if (data->n_commands > 1)
@@ -88,6 +91,7 @@ void	exec_cd(t_data *data)
 		path = get_path_cd(data, path);
 	else if (data->commands[1] == NULL)
 		path = get_path_cd_options(data, path);
+	printf("Path is : %s\n", path);
 	if (!path)
 		return ;
 	if (access(path, F_OK) == -1)
@@ -96,7 +100,13 @@ void	exec_cd(t_data *data)
 	if (access(path, R_OK) == -1)
 		return (data->last_error = 1,
 			(void) printf("minishell: cd: permission denied\n"));
-	update_oldpwd(data, cont_of_var(search_var("PWD", data)->content));
+	var_old = search_var("PWD", data);
+	if (var_old == NULL)
+	{
+		printf("Unable to access directory\n");
+		return ;
+	}
+	update_oldpwd(data, cont_of_var(var_old->content));
 	if (path)
 		chdir(path);
 	update_pwd(data);

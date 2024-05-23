@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:23:08 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/13 14:17:24 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:46:11 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ void	init_data(t_data *data)
 	data->command_list = NULL;
 	data->i_command = 0;
 	data->last_error = 0;
+	data->pipe_list = NULL;
 	return ;
 }

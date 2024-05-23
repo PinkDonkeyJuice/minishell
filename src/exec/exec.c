@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/21 14:36:03 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/23 13:08:28 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	redir_lasterror(t_data *data, size_t i)
 	if (data->n_commands > 1)
 		close_safe(data,
 			access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
+	if (i == data->n_commands - 1)
+		free_pipes(data->pipe_list);
 }
 
 size_t	count_env_var(t_data *data)
@@ -91,6 +93,5 @@ void	exec(t_data *data, size_t i)
 		execve(path, data->commands, new_env);
 	}
 	redir_lasterror(data, i);
-	free_pipes(data->pipe_list);
 	exit(1);
 }
