@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/23 14:47:56 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:28:00 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ int			check_var_dq(char *line, char *new_line, int *i, int *j);
 void		check_var_sq(char *line, char *new_line, int *i, int *j);
 int			check_in_quote(char *line, int i);
 
-int		check_pipes(char *line);
+int			check_pipes(char *line);
 
 int			check_closed_quotes(char *line);
 int			check_operator(char *line);
@@ -239,5 +239,11 @@ void		read_input_main(t_data *data);
 void		print_commands(char	**commands);
 
 int			is_builtin(t_data *data);
+
+char		*make_path(t_data *data, char *path);
+
+char		*get_path_cd_options(t_data *data, char *path);
+
+char		*get_path_cd(t_data *data, char *path);
 
 #endif

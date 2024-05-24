@@ -6,13 +6,19 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/22 14:48:53 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:30:40 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_signal_handle;
+
+void	handle_sign_heredoc(t_data *data, char *line)
+{
+	signal_handler_is_sigint(data);
+	free(line);
+}
 
 void	read_input_heredoc(t_data *data)
 {
@@ -29,13 +35,11 @@ void	read_input_heredoc(t_data *data)
 			return ;
 		}
 		if (g_signal_handle == SIGINT)
-		{
-			signal_handler_is_sigint(data);
-			return ((void) free(line));
-		}
+			return (handle_sign_heredoc(data, line));
 		line = expand_line(line, data);
 		ft_putstr_fd(line, data->fdin);
 		ft_putstr_fd("\n", data->fdin);
+		free(line);
 		line = readline("$> here_doc: ");
 	}
 	if (line == NULL)

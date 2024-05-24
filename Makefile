@@ -37,6 +37,7 @@ CFILES_PARSING = env_variables.c\
 	parse_line_lentonext.c\
 
 CFILES_BUILTINS = cd.c\
+	cd_path.c\
 	env.c\
 	exit.c\
 	pwd.c\

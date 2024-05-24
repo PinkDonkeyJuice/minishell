@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/23 13:28:19 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:25:18 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,15 @@ int	is_valid(char *var)
 	return (1);
 }
 
+void	export_var(t_env **to_replace, char **var_def, t_data *data)
+{
+	*to_replace = search_var(*var_def, data);
+	if (*to_replace != NULL)
+		replace_var(*to_replace, *var_def);
+	else
+		append_node(&(data->env_c), *var_def);
+}
+
 void	exec_export(t_data *data)
 {
 	int		i;
@@ -70,13 +79,7 @@ void	exec_export(t_data *data)
 			printf("minishell: export: '%s': not a valid identifier\n",
 				data->commands[i]);
 		else
-		{
-			to_replace = search_var(var_def, data);
-			if (to_replace != NULL)
-				replace_var(to_replace, var_def);
-			else
-				append_node(&(data->env_c), var_def);
-		}
+			export_var(&to_replace, &var_def, data);
 		i++;
 		var_def = data->commands[i];
 	}

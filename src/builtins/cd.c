@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:36:45 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/23 14:03:54 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:16:21 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	update_pwd(t_data *data)
 
 	if (getcwd(buf, PATH_MAX))
 		var_pwd = ft_strjoin("PWD=", buf);
-	else 
+	else
 		var_pwd = NULL;
 	pwd = search_var("PWD", data);
 	if (pwd)
@@ -44,54 +44,13 @@ void	update_pwd(t_data *data)
 	}
 }
 
-char	*get_path_cd_options(t_data *data, char *path)
-{
-	t_env	*target;
-
-	target = NULL;
-	if (data->commands[1] == NULL)
-	{
-		target = search_var("HOME", data);
-		if (!target)
-			return (NULL);
-		path = cont_of_var(target->content);
-	}
-	return (path);
-}
-
-char	*get_path_cd(t_data *data, char *path)
-{
-	if (data->commands[2])
-	{
-		printf("minishell: cd: too many arguments\n");
-		data->last_error = 127;
-		return (NULL);
-	}
-	path = data->commands[1];
-	if (errno == EACCES)
-		return (printf("minishell: cd: permission denied: %s\n", \
-			data->commands[1]), path);
-	if (errno == ENOENT)
-		return (printf("minishell: cd: no such file or directory\n"), path);
-	return (path);
-}
-
 void	exec_cd(t_data *data)
 {
 	char	*path;
 	t_env	*var_old;
 
 	path = NULL;
-	if (data->n_commands > 1)
-		return ;
-	if (data->commands[1] && data->commands[2] != NULL)
-		return (data->last_error = 1,
-			(void) printf("Error: too many arguments to function call\n"));
-	else if (data->commands[1] != NULL)
-		path = get_path_cd(data, path);
-	else if (data->commands[1] == NULL)
-		path = get_path_cd_options(data, path);
-	printf("Path is : %s\n", path);
+	path = make_path(data, path);
 	if (!path)
 		return ;
 	if (access(path, F_OK) == -1)
