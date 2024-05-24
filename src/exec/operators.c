@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/24 11:40:50 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:58:47 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	here_doc(t_data *data)
 	read_input_heredoc(data);
 	unlink(data->heredoc_name);
 	free(data->heredoc_name);
+	data->heredoc_name = NULL;
 }
 
 void	signal_handler_is_sigint(t_data *data)
