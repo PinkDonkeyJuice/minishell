@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/24 11:40:41 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:46:33 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,5 +247,7 @@ char		*make_path(t_data *data, char *path);
 char		*get_path_cd_options(t_data *data, char *path);
 
 char		*get_path_cd(t_data *data, char *path);
+
+void	hook_pipe_signal(void);
 
 #endif

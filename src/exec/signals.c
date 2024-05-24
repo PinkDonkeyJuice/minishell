@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:45:15 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/04/30 14:50:49 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:47:18 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	signal_handler(void)
 {
 	struct sigaction	sa;
 
+	hook_pipe_signal();
 	signal(SIGQUIT, SIG_IGN);
 	ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = handle_sigint;
