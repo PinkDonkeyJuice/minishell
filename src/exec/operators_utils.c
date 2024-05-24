@@ -26,3 +26,19 @@ char	*expand_line(char *line, t_data *data)
 	}
 	return (line);
 }
+
+void	no_access_heredoc(t_data *data)
+{
+	data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);
+	if (data->fdin == -1)
+	{
+		free(data->heredoc_name);
+		error(data, "error opening heredoc input file\n");
+	}
+}
+
+void	handle_sign_heredoc(t_data *data, char *line)
+{
+	signal_handler_is_sigint(data);
+	free(line);
+}

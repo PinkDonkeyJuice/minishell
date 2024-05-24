@@ -3,22 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/24 11:30:40 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:40:50 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_signal_handle;
-
-void	handle_sign_heredoc(t_data *data, char *line)
-{
-	signal_handler_is_sigint(data);
-	free(line);
-}
 
 void	read_input_heredoc(t_data *data)
 {
@@ -64,12 +58,7 @@ void	here_doc(t_data *data)
 		free(number);
 		if (access(data->heredoc_name, F_OK) == -1)
 		{
-			data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);
-			if (data->fdin == -1)
-			{
-				free(data->heredoc_name);
-				error(data, "error opening heredoc input file\n");
-			}
+			no_access_heredoc(data);
 			stop = true;
 		}
 		i++;

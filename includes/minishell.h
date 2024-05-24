@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/24 11:28:00 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:40:41 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,10 @@ void		child_process(t_data *data, t_pipe **pipe_list, size_t i);
 int			void_event(void);
 
 void		here_doc_sigint(int sig);
-
+void		no_access_heredoc(t_data *data);
 int			heredoc_signal_handler(void);
+void		signal_handler_is_sigint(t_data *data);
+void		handle_sign_heredoc(t_data *data, char *line);
 
 void		ft_putchar_fd(char c, int fd);
 
