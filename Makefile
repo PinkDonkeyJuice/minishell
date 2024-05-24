@@ -19,6 +19,7 @@ CFILES_EXEC = main.c\
 	path.c\
 	commands.c\
 	signals.c\
+	pipe_signal.c\
 
 CFILES_PARSING = env_variables.c\
     parse_line.c\

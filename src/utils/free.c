@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:52:38 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/23 12:58:44 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:23:36 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_env(t_env	*env)
 	t_env	*node;
 	t_env	*next;
 
-	if (!env)
+	if (env == NULL)
 		return ;
 	node = env;
 	while (node)
