@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/23 14:49:09 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:29:19 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	fill_var(t_data *data, char *line, char *new_line, t_parse *c)
 		c->i += 1;
 	if (search == NULL && (line[c->i] == ' ' || line[c->i] == '\0'))
 	{
-		new_line[c->j] = -32;
+		new_line[c->j] = -11;
 		c->j += 1;
 	}
 }

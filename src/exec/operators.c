@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/24 14:46:35 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:38:35 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	read_input_heredoc(t_data *data)
 	while (line != NULL)
 	{
 		line = expand_line(line, data);
-		if (ft_strcmp(line, data->delimiter) == 0
-			|| (!ft_strcmp(line, " ") && !ft_strlen(data->delimiter)))
+		if (ft_strcmp(line, data->delimiter) == 0)
 		{
 			if (close(data->fdin) == -1)
 				error(data, "error closing file\n");

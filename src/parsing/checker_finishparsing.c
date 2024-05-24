@@ -26,7 +26,7 @@ t_command	*finish_parsing(t_command *parsed)
 		{
 			if (parsed[i].command[j] < 0)
 			{
-				if (parsed[i].command[j] == -32)
+				if (parsed[i].command[j] == -11)
 					parsed[i].command[j] = 0;
 				parsed[i].command[j] *= -1;
 			}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:38:43 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/21 14:39:16 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/24 16:37:47 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	exec_echo(t_data *data)
 	while (data->commands[i])
 	{
 		printf("%s", data->commands[i]);
-		if (data->commands[i + 1])
+		if (data->commands[i + 1] && data->commands[i + 1][0] != '\0'
+			&& data->commands[i][0] != '\0')
 			printf(" ");
 		i++;
 	}

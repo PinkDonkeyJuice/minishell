@@ -106,7 +106,7 @@ int	is_very_specific(char c_new_line)
 {
 	if (c_new_line == '\"' || c_new_line == '\''
 		|| c_new_line == '|' || c_new_line == '<'
-		|| c_new_line == '>')
+		|| c_new_line == '>' || c_new_line == ' ')
 		return (1);
 	return (0);
 }

@@ -20,6 +20,8 @@ char	*expand_line(char *line, t_data *data)
 	line = check_var(line, data);
 	while (line[i])
 	{
+		if (line[i] == -11)
+			line[i] = 0;
 		if (line[i] < 0)
 			line[i] *= -1;
 		i++;
