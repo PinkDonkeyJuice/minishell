@@ -1,6 +1,6 @@
 NAME = minishell
 RLINEFLAGS = -lreadline
-CFLAGS = -Werror -Wextra -I ./includes/ -g3
+CFLAGS = -Wall -Werror -Wextra -I ./includes/ -g3
 
 CFILES_UTILS = ft_split.c\
     libft.c\
