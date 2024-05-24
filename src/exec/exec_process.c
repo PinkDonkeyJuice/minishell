@@ -48,7 +48,6 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 void	parent_process(t_data *data, t_pipe **pipe_list)
 {
 	int		status;
-	int		pid;
 	int		last_error;
 	bool	forcequit;
 

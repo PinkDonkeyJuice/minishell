@@ -84,8 +84,6 @@ int	new_line_len(char *line, t_data *data)
 {
 	int		len;
 	int		i;
-	t_env	*search;
-	char	*content;
 
 	len = 0;
 	i = 0;

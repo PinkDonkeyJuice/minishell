@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:25:47 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/15 01:50:10 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/24 16:18:20 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+size_t	env_len(t_env *env_c)
+{
+	size_t	len;
+	t_env	*node;
+	
+	len = 0;
+	node = env_c;
+	while (node)
+	{
+		len++;
+		node = node->next;
+	}
+	return (len);
+}
 
 void	exec_unset(t_data *data)
 {
@@ -30,6 +45,8 @@ void	exec_unset(t_data *data)
 			prev_node->next = to_delete->next;
 			if (to_delete->next != NULL)
 				to_delete->next->previous = prev_node;
+			if (env_len(data->env_c) == 1)
+				data->env_c = NULL;
 			free(to_delete->content);
 			free(to_delete);
 		}
