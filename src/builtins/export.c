@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/24 11:25:18 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:06:17 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	is_valid(char *var)
 	i = 0;
 	while (var[i])
 	{
+		if (var[i] != '=')
+			return (1);
 		if (((var[i] >= '0' && var[i] <= '9') || var[i] == '=') && i == 0)
 			return (0);
 		if (!ft_isalnum(var[i]) && var[i] != '_' && var[i] != '=')

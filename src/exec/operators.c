@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/24 11:58:47 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:46:35 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	read_input_heredoc(t_data *data)
 	line = readline("$> here_doc: ");
 	while (line != NULL)
 	{
-		if (ft_strcmp(line, data->delimiter) == 0)
+		line = expand_line(line, data);
+		if (ft_strcmp(line, data->delimiter) == 0
+			|| (!ft_strcmp(line, " ") && !ft_strlen(data->delimiter)))
 		{
 			if (close(data->fdin) == -1)
 				error(data, "error closing file\n");
@@ -30,7 +32,6 @@ void	read_input_heredoc(t_data *data)
 		}
 		if (g_signal_handle == SIGINT)
 			return (handle_sign_heredoc(data, line));
-		line = expand_line(line, data);
 		ft_putstr_fd(line, data->fdin);
 		ft_putstr_fd("\n", data->fdin);
 		free(line);
