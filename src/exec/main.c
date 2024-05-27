@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/22 13:45:49 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:05:30 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	read_input_main(t_data *data)
 				data->line = readline("$> ");
 				continue ;
 			}
+			write(1, "a\n", 2);
 			read_input_main_utils(data);
 			free_all_comms(data);
 		}

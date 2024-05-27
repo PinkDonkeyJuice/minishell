@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/24 16:06:17 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:14:21 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,22 @@
 void	print_export(t_data *data)
 {
 	t_env	*print;
+	size_t	i;
 
+	i = 0;
 	print = data->env_c;
 	while (print)
 	{
-		printf("declare -x ");
-		printf("%s\n", print->content);
+		ft_putstr_fd("declare -x ", 1);
+		while (print->content[i])
+		{
+			ft_putchar_fd(print->content[i], 1);
+			if (print->content[i] == '=')
+				ft_putchar_fd('"', 1);
+			i++;
+		}
+		ft_putstr_fd("'"'\n", 2);
 		print = print->next;
-	}
-	if (data->n_commands > 1)
-	{
-		free_commands(data->commands);
-		free_command_list(data->command_list);
 	}
 }
 
