@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/27 14:03:34 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:28:03 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_data
 	t_env		*env_c;
 	char		**env;
 	t_pipe		**pipe_list;
+	size_t		n_pipe_fdin;
 }				t_data;
 
 size_t		ft_strlen(const char *str);

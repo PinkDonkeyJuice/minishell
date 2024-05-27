@@ -20,7 +20,7 @@ void	child_first_command(t_data *data, t_pipe **pipe_list, size_t i)
 		dup2(data->fdout, STDOUT_FILENO);
 		exec(data, i);
 	}
-	if (data->fdin != STDIN_FILENO)
+	if (data->fdin != STDIN_FILENO && data->n_pipe_fdin == 0)
 		dup2(data->fdin, STDIN_FILENO);
 	dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
 }
@@ -34,11 +34,17 @@ void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 	{
 		if (data->fdout != STDOUT_FILENO)
 			dup2(data->fdout, STDOUT_FILENO);
-		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
+		if (data->fdin != STDIN_FILENO && i == data->n_pipe_fdin)
+			dup2(data->fdin, STDIN_FILENO);
+		else
+			dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
 	}
 	else
 	{
-		dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
+		if (data->fdin != STDIN_FILENO && i == data->n_pipe_fdin)
+			dup2(data->fdin, STDIN_FILENO);
+		else
+			dup2(access_pipe(pipe_list, i - 1)->p[0], STDIN_FILENO);
 		dup2(access_pipe(pipe_list, i)->p[1], STDOUT_FILENO);
 	}
 	close_pipes(data, pipe_list, data->n_commands - 1, -1);

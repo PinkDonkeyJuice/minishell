@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/24 16:38:35 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:42:02 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ void	handle_operator(t_data *data, size_t i)
 		if (ft_strncmp(command, ">>", 2) == 0)
 			data->fdout = open(data->command_list[i + 1].command, \
 				O_WRONLY | O_APPEND | O_CREAT, 0644);
+		if (ft_strncmp(command, ">", 2) == 0)
+			data->fdout = open(data->command_list[i + 1].command, \
+				O_RDWR | O_TRUNC | O_CREAT, 0644);
 		if (ft_strncmp(command, "<", 2) == 0)
 		{
 			data->fdin = open(data->command_list[i + 1].command, O_RDONLY);
@@ -99,9 +102,7 @@ void	handle_operator(t_data *data, size_t i)
 			data->delimiter = data->command_list[i + 1].command;
 			here_doc(data);
 		}
-		if (ft_strncmp(command, ">", 2) == 0)
-			data->fdout = open(data->command_list[i + 1].command, \
-				O_RDWR | O_TRUNC | O_CREAT, 0644);
+		printf("Fdin is : %d\n", data->fdin);
 	}
 }
 
@@ -109,11 +110,17 @@ int	handle_input_output(t_data *data)
 {
 	size_t	i;
 
+	data->n_pipe_fdin = 0;
 	i = -1;
 	data->fdout = STDOUT_FILENO;
 	data->fdin = STDIN_FILENO;
 	while (data->command_list[++i].command)
+	{
+		if (data->command_list[i].type == TYPE_PIPE)
+			data->n_pipe_fdin++;
+		printf("N pipe fdin is : %zu\n", data->n_pipe_fdin);
 		handle_operator(data, i);
+	}
 	if (data->fdin == -1 || data->fdout == -1)
 	{
 		ft_putstr_fd("failed to open file\n", 2);
