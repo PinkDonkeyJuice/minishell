@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:45:13 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/24 11:41:45 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:12:14 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ int	check_pipes(char *line)
 	p = 0;
 	while (line[i])
 	{
+		if (line[i] == '|' && i == 0)
+			return (
+				printf("minishell: syntax error near unexpected token \'|\'\n"),
+				0);
 		pipe_in_quotes(line, &i);
 		pipe_checker(line, &i, &p);
 		if (line[i] == '|' && p == 1)

@@ -22,7 +22,8 @@ void	count_args_utils(char *line, int i, int *count)
 	}
 	if (line[i] == '|' && i != 0)
 		*count += 1;
-	if (line[i] == '|' && line[i + 1] != ' ' && line[i + 1] && i != 0)
+	if (line[i] == '|' && line[i + 1] != ' ' && line[i + 1] && i != 0
+		&& line[i + 1] != '<' && line[i + 1] != '>')
 		*count += 1;
 	if (line[i] == '<' && line[i + 1] != '<')
 		*count += 1;
