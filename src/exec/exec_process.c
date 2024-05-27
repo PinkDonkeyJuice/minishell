@@ -73,7 +73,10 @@ void	mark_status(int status, t_data *data, bool *forcequit)
 	int	term_sig;
 
 	if (WEXITSTATUS(status) != 0 && is_builtin(data) == 0)
+	{
 		data->last_error = WEXITSTATUS(status);
+		*forcequit = true;
+	}
 	if (WIFSIGNALED(status))
 	{
 		term_sig = WTERMSIG(status);

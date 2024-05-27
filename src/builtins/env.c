@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:38:59 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/21 14:35:17 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/27 14:06:07 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	exec_env(t_data *data)
 	{
 		data->last_error = 1;
 		printf("Error: too many arguments to function call\n");
-		free_commands(data->commands);
-		free_command_list(data->command_list);
 		return ;
 	}
 	print = data->env_c;
@@ -45,6 +43,4 @@ void	exec_env(t_data *data)
 			printf("%s\n", print->content);
 		print = print->next;
 	}
-	free_commands(data->commands);
-	free_command_list(data->command_list);
 }

@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/23 14:34:19 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:57:00 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,8 @@ void	exec(t_data *data, size_t i)
 	else
 		free_env(data->env_c);
 	redir_lasterror(data, i);
+	if (i != data->n_commands - 1)
+		free_pipes(data->pipe_list);
+	free_all_comms(data);
 	exit(1);
 }

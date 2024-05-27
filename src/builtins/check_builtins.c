@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:26:48 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/21 15:33:51 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/27 14:03:52 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_builtins_main(t_data *data)
 	if (!ft_strcmp(data->commands[0], "unset"))
 		return (exec_unset(data), 1);
 	if (!ft_strcmp(data->commands[0], "export"))
-		return (exec_export(data), 1);
+		return (exec_export(data, 1), 1);
 	if (!ft_strcmp(data->commands[0], "cd"))
 		return (exec_cd(data), 1);
 	return (0);
@@ -48,6 +48,21 @@ int	is_builtin(t_data *data)
 	return (0);
 }
 
+int	is_builtin_main(t_data *data)
+{
+	if (data->commands == NULL || data->commands[0] == NULL)
+		return (0);
+	if (!ft_strcmp(data->commands[0], "cd"))
+		return (1);
+	if (!ft_strcmp(data->commands[0], "export"))
+		return (1);
+	if (!ft_strcmp(data->commands[0], "unset"))
+		return (1);
+	if (!ft_strcmp(data->commands[0], "exit"))
+		return (1);
+	return (0);
+}
+
 int	check_builtins(t_data *data)
 {
 	if (data->commands == NULL || data->commands[0] == NULL)
@@ -59,7 +74,7 @@ int	check_builtins(t_data *data)
 	if (!ft_strcmp(data->commands[0], "pwd"))
 		return (exec_pwd(data), 1);
 	if (!ft_strcmp(data->commands[0], "export"))
-		return (exec_export(data), 1);
+		return (exec_export(data, 0), 1);
 	if (!ft_strcmp(data->commands[0], "unset"))
 		return (exec_unset(data), 1);
 	if (!ft_strcmp(data->commands[0], "env"))

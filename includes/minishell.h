@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/24 16:46:33 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:03:34 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ void		exec_pwd(t_data *data);
 
 void		exec_env(t_data *data);
 
-void		exec_export(t_data *data);
+void		exec_export(t_data *data, bool is_main);
 
 void		ft_bzero(void *s, size_t n);
 
@@ -249,5 +249,7 @@ char		*get_path_cd_options(t_data *data, char *path);
 char		*get_path_cd(t_data *data, char *path);
 
 void	hook_pipe_signal(void);
+
+int		is_builtin_main(t_data *data);
 
 #endif

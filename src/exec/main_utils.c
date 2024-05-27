@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:58:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/24 16:19:22 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:54:13 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	read_input_main_utils(t_data *data)
 {
-	if (check_builtins_main(data) == 0 || data->n_commands != 1)
+	if (is_builtin_main(data) == 1 && data->n_commands == 1)
+		check_builtins_main(data);
+	else
 		exec_commands(data);
 }
 

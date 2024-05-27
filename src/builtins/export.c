@@ -6,21 +6,35 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/27 13:14:21 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:04:20 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		search_equal(char *string)
+{
+	size_t	i;
+
+	i = 0;
+	while (string[i])
+	{
+		if (string[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 void	print_export(t_data *data)
 {
 	t_env	*print;
 	size_t	i;
 
-	i = 0;
 	print = data->env_c;
 	while (print)
 	{
+		i = 0;
 		ft_putstr_fd("declare -x ", 1);
 		while (print->content[i])
 		{
@@ -29,13 +43,17 @@ void	print_export(t_data *data)
 				ft_putchar_fd('"', 1);
 			i++;
 		}
-		ft_putstr_fd("'"'\n", 2);
+		if (search_equal(print->content) == 1)
+			ft_putchar_fd('"', 1);
+		ft_putchar_fd('\n', 1);
 		print = print->next;
 	}
 }
 
 void	replace_var(t_env *to_replace, char *var_def)
 {
+	if (search_equal(var_def) == 0 && search_equal(to_replace->content) == 1)
+		return ;
 	free(to_replace->content);
 	to_replace->content = ft_strdup(var_def);
 }
@@ -67,16 +85,18 @@ void	export_var(t_env **to_replace, char **var_def, t_data *data)
 		append_node(&(data->env_c), *var_def);
 }
 
-void	exec_export(t_data *data)
+void	exec_export(t_data *data, bool is_main)
 {
 	int		i;
 	char	*var_def;
 	t_env	*to_replace;	
 
 	i = 1;
+	
 	if (data->commands == NULL || data->commands[0] == NULL)
 		return ;
-	if (!data->commands[1])
+	if (!data->commands[1] && ((!is_main && data->n_commands > 1)
+		|| (is_main && data->n_commands == 1)))
 		return (print_export(data));
 	var_def = data->commands[i];
 	while (var_def != NULL && data->n_commands == 1)
