@@ -82,7 +82,6 @@ void	read_input_main(t_data *data)
 				data->line = readline("$> ");
 				continue ;
 			}
-			write(1, "a\n", 2);
 			read_input_main_utils(data);
 			free_all_comms(data);
 		}
