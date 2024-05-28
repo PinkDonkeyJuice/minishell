@@ -102,7 +102,6 @@ void	handle_operator(t_data *data, size_t i)
 			data->delimiter = data->command_list[i + 1].command;
 			here_doc(data);
 		}
-		printf("Fdin is : %d\n", data->fdin);
 	}
 }
 
