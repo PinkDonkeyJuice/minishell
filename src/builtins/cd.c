@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:36:45 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/28 13:07:35 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:39:15 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,23 @@ void	update_pwd(t_data *data)
 	}
 }
 
-void	var_old_null(char *var_old_content)
+char	*var_old_null(void)
 {
-	var_old_content = NULL;
 	printf("Unable to access directory\n");
+	return (NULL);
+}
+
+void	check_directory(t_data *data, char *path)
+{
+	if (access(path, F_OK) == -1)
+		return (data->last_error = 2,
+			(void) printf("minishell: cd: no such file or directory\n"));
+	if (access(path, X_OK) == -1)
+		return (data->last_error = 1,
+			(void) printf("minishell: cd: not a directory\n"));
+	if (access(path, R_OK) == -1)
+		return (data->last_error = 1,
+			(void) printf("minishell: cd: permission denied\n"));
 }
 
 void	exec_cd(t_data *data)
@@ -61,15 +74,10 @@ void	exec_cd(t_data *data)
 	path = make_path(data, path);
 	if (!path)
 		return ;
-	if (access(path, F_OK) == -1)
-		return (data->last_error = 2,
-			(void) printf("minishell: cd: no such file or directory\n"));
-	if (access(path, R_OK) == -1)
-		return (data->last_error = 1,
-			(void) printf("minishell: cd: permission denied\n"));
+	check_directory(data, path);
 	var_old = search_var("PWD", data);
 	if (var_old == NULL)
-		var_old_null(var_old_content);
+		var_old_content = var_old_null();
 	else
 		var_old_content = var_old->content;
 	update_oldpwd(data, cont_of_var(var_old_content));

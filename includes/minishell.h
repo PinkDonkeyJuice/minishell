@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/28 13:11:05 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:30:12 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,9 +253,13 @@ void		hook_pipe_signal(void);
 
 int			is_builtin_main(t_data *data);
 
-void		no_path(t_data *data, int i);
+void		no_path(t_data *data, size_t i);
 void		was_builtins(t_data *data, size_t i);
 
 int			search_equal(char *string);
+
+void		exec_real(t_data *data, size_t i);
+char		**recreate_env(t_data *data);
+void		redir_lasterror(t_data *data, size_t i);
 
 #endif
