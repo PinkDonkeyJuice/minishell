@@ -64,7 +64,6 @@ void	generate_pipes(t_pipe **pipe_list, t_data *data)
 	size_t	i;
 
 	i = 0;
-	printf("n commands = %zu\ni = %zu\n", data->n_commands, i);
 	while (i < data->n_commands - 1)
 	{
 		create_pipe(i, pipe_list);

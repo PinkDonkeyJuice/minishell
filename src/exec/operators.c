@@ -118,7 +118,6 @@ int	handle_input_output(t_data *data)
 	{
 		if (data->command_list[i].type == TYPE_PIPE)
 			data->n_pipe_fdin++;
-		printf("N pipe fdin is : %zu\n", data->n_pipe_fdin);
 		handle_operator(data, i);
 	}
 	if (data->fdin == -1 || data->fdout == -1)
