@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:36:45 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/27 15:43:47 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:07:35 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ void	update_pwd(t_data *data)
 	}
 }
 
+void	var_old_null(char *var_old_content)
+{
+	var_old_content = NULL;
+	printf("Unable to access directory\n");
+}
+
 void	exec_cd(t_data *data)
 {
 	char	*path;
@@ -63,12 +69,9 @@ void	exec_cd(t_data *data)
 			(void) printf("minishell: cd: permission denied\n"));
 	var_old = search_var("PWD", data);
 	if (var_old == NULL)
-	{
-		var_old_content = NULL;
-		printf("Unable to access directory\n");
-	}
+		var_old_null(var_old_content);
 	else
-		var_old_content = var_old->content; 
+		var_old_content = var_old->content;
 	update_oldpwd(data, cont_of_var(var_old_content));
 	if (path)
 		chdir(path);

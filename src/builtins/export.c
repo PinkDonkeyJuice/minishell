@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/27 14:04:20 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:06:42 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		search_equal(char *string)
-{
-	size_t	i;
-
-	i = 0;
-	while (string[i])
-	{
-		if (string[i] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void	print_export(t_data *data)
 {
@@ -92,11 +78,10 @@ void	exec_export(t_data *data, bool is_main)
 	t_env	*to_replace;	
 
 	i = 1;
-	
 	if (data->commands == NULL || data->commands[0] == NULL)
 		return ;
 	if (!data->commands[1] && ((!is_main && data->n_commands > 1)
-		|| (is_main && data->n_commands == 1)))
+			|| (is_main && data->n_commands == 1)))
 		return (print_export(data));
 	var_def = data->commands[i];
 	while (var_def != NULL && data->n_commands == 1)

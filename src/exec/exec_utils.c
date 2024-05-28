@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_signal.c                                      :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 16:43:44 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/28 12:01:22 by nchaize-         ###   ########.fr       */
+/*   Created: 2024/05/28 12:04:19 by nchaize-          #+#    #+#             */
+/*   Updated: 2024/05/28 12:07:05 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_pipe_signal(int signum)
+void	no_path(t_data *data, size_t i)
 {
-	(void)signum;
+	free_env(data->env_c);
+	if (i != data->n_commands - 1)
+		free_pipes(data->pipe_list);
+	exit(127);
 }
 
-void	hook_pipe_signal(void)
+void	was_builtins(t_data *data, size_t i)
 {
-	struct sigaction	sig;
-
-	sigemptyset(&sig.sa_mask);
-	sig.sa_flags = SA_RESTART;
-	sig.sa_handler = handle_pipe_signal;
-	if (sigaction(SIGPIPE, &sig, NULL) == -1)
-		perror("sigaction");
+	free_env(data->env_c);
+	redir_lasterror(data, i);
 }

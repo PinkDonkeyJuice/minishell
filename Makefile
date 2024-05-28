@@ -12,6 +12,7 @@ CFILES_EXEC = main.c\
 	main_utils.c\
     init.c\
     exec.c\
+	exec_utils.c\
 	exec_process.c\
 	operators_utils.c\
     pipes.c\
@@ -45,6 +46,7 @@ CFILES_BUILTINS = cd.c\
 	echo.c\
 	init_env.c\
 	export.c\
+	export_utils.c\
 	unset.c\
 	check_builtins.c\
 

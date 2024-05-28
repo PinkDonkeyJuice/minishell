@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/27 14:28:03 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:11:05 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,8 +249,13 @@ char		*get_path_cd_options(t_data *data, char *path);
 
 char		*get_path_cd(t_data *data, char *path);
 
-void	hook_pipe_signal(void);
+void		hook_pipe_signal(void);
 
-int		is_builtin_main(t_data *data);
+int			is_builtin_main(t_data *data);
+
+void		no_path(t_data *data, int i);
+void		was_builtins(t_data *data, size_t i);
+
+int			search_equal(char *string);
 
 #endif

@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   libft2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:46:38 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/06 11:45:32 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:47:31 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
 
 void	ft_putstr_fd(char *s, int fd)
 {

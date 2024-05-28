@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:25:47 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/24 16:32:02 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:52:10 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ size_t	env_len(t_env *env_c)
 {
 	size_t	len;
 	t_env	*node;
-	
+
 	len = 0;
 	node = env_c;
 	while (node)
@@ -25,6 +25,12 @@ size_t	env_len(t_env *env_c)
 		node = node->next;
 	}
 	return (len);
+}
+
+void	free_to_delete(t_env *to_delete)
+{
+	free(to_delete->content);
+	free(to_delete);
 }
 
 void	exec_unset(t_data *data)
@@ -49,8 +55,7 @@ void	exec_unset(t_data *data)
 			printf("env size = %zu\n", env_len(data->env_c));
 			if (prev_node == NULL)
 				data->env_c = to_delete->next;
-			free(to_delete->content);
-			free(to_delete);
+			free_to_delete(to_delete);
 		}
 		i++;
 		var_def = data->commands[i];
