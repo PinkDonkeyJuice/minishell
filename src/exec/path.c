@@ -40,13 +40,9 @@ char	*get_exec_path_return(t_data *data, char *command)
 {
 	if (command == NULL)
 		return (NULL);
-	if (!ft_strncmp("./", command, 2))
-	{
-		if (access(command, X_OK) != 0)
-			data->last_error = 127;
-		return (command);
-	}
-	printf("Command not found: %s\n", command);
+	ft_putstr_fd("Command not found: ", 2);
+	ft_putstr_fd(command, 2);
+	ft_putstr_fd("\n", 2);
 	data->last_error = 127;
 	return (NULL);
 }
@@ -99,6 +95,9 @@ char	*get_exec_path(char *command, t_data *data)
 	char	**paths;
 	char	*try_path;
 
+	if (command != NULL)
+		if (access(command, X_OK) == 0)
+			return (command);
 	paths = get_env(data);
 	try_path = NULL;
 	i = 0;
@@ -115,5 +114,6 @@ char	*get_exec_path(char *command, t_data *data)
 			free(try_path);
 		}
 	}
+	data->last_error = 127;
 	return (free_table(paths), get_exec_path_return(data, command));
 }

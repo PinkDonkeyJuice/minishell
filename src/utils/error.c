@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:55:09 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/13 14:43:22 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:54:47 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	close_safe( t_data *data, int fd)
 
 void	error(t_data *data, char *err_msg)
 {
-	free_all(data);
+	free_all_comms(data);
 	ft_putstr_fd(err_msg, 2);
 	exit(errno);
 }

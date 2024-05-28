@@ -6,7 +6,7 @@
 /*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/27 13:57:00 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:59:40 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,22 @@ void	exec(t_data *data, size_t i)
 			close_safe(data, data->fdin);
 		redir_lasterror(data, i);
 		if (path == NULL)
-			error(data, NULL);
+		{
+			free_env(data->env_c);
+			if (i != data->n_commands - 1)
+				free_pipes(data->pipe_list);
+			exit(127);
+		}
 		new_env = recreate_env(data);
 		if (new_env == NULL)
-			do_exit(data);
+			error(data, "Memory allocation failure\n");
 		execve(path, data->commands, new_env);
 	}
 	else
+	{
 		free_env(data->env_c);
-	redir_lasterror(data, i);
+		redir_lasterror(data, i);
+	}
 	if (i != data->n_commands - 1)
 		free_pipes(data->pipe_list);
 	free_all_comms(data);
