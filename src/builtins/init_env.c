@@ -6,7 +6,7 @@
 /*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:34:45 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/29 16:10:02 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/29 16:22:57 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	append_node(t_env **env, char *env_var)
 	node->modifiable = true;
 	if (env_var && env_var[0] == '_')
 		node->modifiable = false;
-	printf("Env_var is : %s       modifiable?: %d\n", env_var, node->modifiable);
 }
 
 void	init_env(char **env, t_data *data)
