@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:25:47 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/28 12:52:10 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:20:00 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	exec_unset(t_data *data)
 	while (var_def != NULL)
 	{
 		to_delete = search_var(var_def, data);
-		if (to_delete != NULL)
+		if (to_delete != NULL && to_delete->modifiable == true)
 		{
 			prev_node = to_delete->previous;
 			if (prev_node != NULL)

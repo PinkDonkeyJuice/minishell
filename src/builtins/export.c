@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/28 13:06:42 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:19:40 by pinkdonkeyj      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	is_valid(char *var)
 void	export_var(t_env **to_replace, char **var_def, t_data *data)
 {
 	*to_replace = search_var(*var_def, data);
+	if (*to_replace != NULL && (*to_replace)->modifiable == false)
+		return ;
 	if (*to_replace != NULL)
 		replace_var(*to_replace, *var_def);
 	else

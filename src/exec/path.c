@@ -38,12 +38,12 @@ char	*create_path(char *command, char *path)
 
 char	*get_exec_path_return(t_data *data, char *command)
 {
-	if (command == NULL)
-		return (NULL);
-	ft_putstr_fd("Command not found: ", 2);
-	ft_putstr_fd(command, 2);
-	ft_putstr_fd("\n", 2);
+	dup2(2, STDOUT_FILENO);
+	printf("Command not found: %s\n", command);
+	free_commands(data->commands);
+	free_command_list(data->command_list);
 	data->last_error = 127;
+	dup2(1, STDOUT_FILENO);
 	return (NULL);
 }
 
@@ -101,7 +101,7 @@ char	*get_exec_path(char *command, t_data *data)
 	paths = get_env(data);
 	try_path = NULL;
 	i = 0;
-	if (paths && command)
+	if (paths && command && command[0] != '\0')
 	{
 		while (paths[i])
 		{
