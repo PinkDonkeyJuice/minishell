@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/24 16:29:19 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:19:40 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,11 @@ int	do_dollars(t_data *data, char *line, char *new_line, t_parse *c)
 int	check_var_real(char *line, char *new_line, t_data *data)
 {
 	t_parse	c;
+	int		h;
 
 	c.i = 0;
 	c.j = 0;
+	h = 0;
 	while (line[c.i])
 	{
 		if (line[c.i] == '\'')
@@ -73,11 +75,11 @@ int	check_var_real(char *line, char *new_line, t_data *data)
 		}
 		else
 		{
-			do_dollars(data, line, new_line, &c);
+			if (h == 0)
+				do_dollars(data, line, new_line, &c);
 			new_line[c.j] = line[c.i];
 		}
-		if (line[c.i])
-			i_plusplus_j_plusplus(line, &(c.i), &(c.j));
+		finish_check_var(line, new_line, &c, &h);
 	}
 	return (c.j);
 }

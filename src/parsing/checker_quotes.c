@@ -54,7 +54,7 @@ int	check_closed_quotes(char *line)
 
 void	i_plusplus_j_plusplus(char *line, int *i, int *j)
 {
-	if (line[*i] != '\0' && line[*i] != '$')
+	if (line[*i] != '\0')
 	{
 		*i += 1;
 		*j += 1;

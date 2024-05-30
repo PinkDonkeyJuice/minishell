@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:23:11 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/22 12:50:25 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:53:04 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ char	**fill_commands(t_command *command_list, size_t i_start, size_t n)
 	j = 0;
 	while (j != n)
 	{
-		if (command_list[i_start + j].type != TYPE_OPERATOR && \
-			((i_start + j == 0) || \
-				command_list[i_start + j - 1].type != TYPE_OPERATOR))
+		if (command_list[i_start + j].type != TYPE_OPERATOR
+			&& ((i_start + j == 0)
+				|| command_list[i_start + j - 1].type != TYPE_OPERATOR))
 		{
 			commands[j] = ft_strdup(command_list[i_start + j].command);
 			if (!commands[j])

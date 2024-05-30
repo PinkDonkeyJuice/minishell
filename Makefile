@@ -30,6 +30,7 @@ CFILES_PARSING = env_variables.c\
 	checker_finishparsing.c\
 	checker_newlinelen.c\
 	checker_parse_utils.c\
+	checker_parse_utils2.c\
 	checker_operator.c\
 	checker_quotes.c\
 	checker_pipes.c\
