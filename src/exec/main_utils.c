@@ -31,3 +31,13 @@ void	no_commands(t_data *data)
 	free_command_list(data->command_list);
 	data->line = readline("$> ");
 }
+
+size_t	commands_len(char **commands)
+{
+	size_t	i;
+
+	i = 0;
+	while (commands[i])
+		i++;
+	return (i);
+}

@@ -28,15 +28,6 @@ int	main(int argc, char **argv, char **env)
 		do_exit_end(&data);
 }
 
-size_t	commands_len(char **commands)
-{
-	size_t	i;
-
-	i = 0;
-	while (commands[i])
-		i++;
-	return (i);
-}
 
 void	ft_add_history(char *line)
 {
@@ -58,6 +49,15 @@ int	out_of_bound(char *line)
 		i++;
 	}
 	return (0);
+}
+
+void	reset_input_main(t_data *data)
+{
+	if (data->fdin != STDIN_FILENO && data->fdin != -1)
+		close(data->fdin);
+	if (data->fdout != STDOUT_FILENO && data->fdout != -1)
+		close(data->fdout);
+	data->line = readline("$> ");
 }
 
 void	read_input_main(t_data *data)
@@ -85,6 +85,6 @@ void	read_input_main(t_data *data)
 			read_input_main_utils(data);
 			free_all_comms(data);
 		}
-		data->line = readline("$> ");
+		reset_input_main(data);
 	}
 }

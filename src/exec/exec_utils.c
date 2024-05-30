@@ -17,7 +17,9 @@ void	no_path(t_data *data, size_t i)
 	free_env(data->env_c);
 	if (i != data->n_commands - 1)
 		free_pipes(data->pipe_list);
-	exit(127);
+/* 	if (data->commands == NULL || data->commands[0] == NULL)
+		exit(0);
+	exit(127); */
 }
 
 void	was_builtins(t_data *data, size_t i)
@@ -36,7 +38,14 @@ void	exec_real(t_data *data, size_t i)
 		close_safe(data, data->fdin);
 	redir_lasterror(data, i);
 	if (path == NULL)
-		no_path(data, i);
+	{
+		free_env(data->env_c);
+		if (i != data->n_commands - 1)
+			free_pipes(data->pipe_list);
+		if (data->commands == NULL || data->commands[0] == NULL)
+			exit(0);
+		exit(127);
+	}
 	new_env = recreate_env(data);
 	if (new_env == NULL)
 		error(data, "Memory allocation failure\n");
