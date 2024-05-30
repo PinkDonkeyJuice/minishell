@@ -12,6 +12,20 @@
 
 #include "minishell.h"
 
+int	is_heredoc(char *line, char *new_line, t_parse *c, int *h)
+{
+	new_line[c->j] = line[c->i];
+	c->i += 1;
+	c->j += 1;
+	if (line[c->i] == '<')
+	{
+		new_line[c->j] = line[c->i];
+		*h = 1;
+		return (1);
+	}
+	return (0);
+}
+
 void	op_in_quotes(char *line, int *i)
 {
 	if (line[*i] == '\"')

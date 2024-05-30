@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/29 16:07:09 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/05/30 14:17:54 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,9 @@ int			check_in_quote(char *line, int i);
 
 int			check_pipes(char *line);
 
+void		finish_check_var(char *line, char *new_line, t_parse *c, int *h);
+
+int			is_heredoc(char *line, char *new_line, t_parse *c, int *h);
 int			check_closed_quotes(char *line);
 int			check_operator(char *line);
 int			new_line_len(char *line, t_data *data);
