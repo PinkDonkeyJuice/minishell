@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/30 14:17:54 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:55:34 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,6 @@ int			check_builtins(t_data *data);
 int			checker(char **line, t_data *data);
 int			ft_isalnum(int c);
 int			len_tab(char **tab);
-void		change_last_error(t_data *data, int i);
 int			num_len(int num);
 
 char		*ft_itoa(int n);
@@ -268,6 +267,7 @@ void		exec_real(t_data *data, size_t i);
 char		**recreate_env(t_data *data);
 void		redir_lasterror(t_data *data, size_t i);
 
-size_t	commands_len(char **commands);
+size_t		commands_len(char **commands);
+void		start_child_process(t_data *data, t_pipe **pipe_list, size_t i);
 
 #endif

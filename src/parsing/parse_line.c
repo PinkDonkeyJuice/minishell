@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:47:29 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/22 14:06:43 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:52:01 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_command	*parse_line(char *line, t_data *data)
 	i = 0;
 	j = 0;
 	if (!checker(&line, data))
-		return (change_last_error(data, 2), NULL);
+		return (data->last_error = 2, NULL);
 	args = count_args(line);
 	parsed = malloc(sizeof(t_command) * (args + 1));
 	if (!parsed)

@@ -81,28 +81,28 @@ void	mark_status(int status, t_data *data, bool *forcequit, pid_t pid)
 {
 	int	term_sig;
 
-	if (pid == data->last_pid)
+	if (WEXITSTATUS(status) != 0 && is_builtin(data) == 0
+		&& pid == data->last_pid)
 	{
-		if (WEXITSTATUS(status) != 0 && is_builtin(data) == 0)
+		data->last_error = WEXITSTATUS(status);
+		*forcequit = true;
+	}
+	if (WIFSIGNALED(status))
+	{
+		term_sig = WTERMSIG(status);
+		if (term_sig == SIGQUIT && pid == data->last_pid)
 		{
-			data->last_error = WEXITSTATUS(status);
-			*forcequit = true;
+			write(2, "Quit (core dumped)\n", 20);
+			data->last_error = 131;
 		}
-		if (WIFSIGNALED(status))
+		else if (term_sig == SIGINT)
 		{
-			term_sig = WTERMSIG(status);
-			if (term_sig == SIGQUIT)
-			{
-				write(2, "Quit (core dumped)\n", 20);
-				data->last_error = 131;
-			}
-			else if (term_sig == SIGINT)
-			{
-				write(2, "\n", 1);
+			write(2, "\n", 1);
+			if (pid == data->last_pid)
 				data->last_error = 130;
-			}
-			*forcequit = true;
 		}
+		if (pid == data->last_pid)
+			*forcequit = true;
 	}
 }
 

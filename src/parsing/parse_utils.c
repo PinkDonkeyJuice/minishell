@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:04:51 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/16 13:49:10 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:55:37 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,6 @@ int	len_tab(char **tab)
 	while (tab[count] != NULL)
 		count++;
 	return (count);
-}
-
-void	change_last_error(t_data *data, int i)
-{
-	data->last_error = i;
 }
 
 int	last_check(t_command *parsed)

@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:23:11 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/30 13:53:04 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:22:38 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,7 @@ void	handle_commands(t_data *data, t_pipe **pipe_list)
 		}
 	}
 	if (parent == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		child_process(data, pipe_list, i);
-	}
+		start_child_process(data, pipe_list, i);
 	if (parent > 0)
 		parent_process(data, pipe_list);
 }

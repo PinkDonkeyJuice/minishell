@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:04:19 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/31 11:36:05 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:22:00 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	start_child_process(t_data *data, t_pipe **pipe_list, size_t i)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	child_process(data, pipe_list, i);
+}
 
 void	no_path(t_data *data, size_t i)
 {

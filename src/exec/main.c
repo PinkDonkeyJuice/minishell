@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/31 11:49:44 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:00:04 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	main(int argc, char **argv, char **env)
 	init_env(env, &data);
 	data.env = env;
 	signal_handler();
+	data.line = readline("$> ");
 	read_input_main(&data);
 	if (data.line == NULL)
 		do_exit_end(&data);
 }
-
 
 void	ft_add_history(char *line)
 {
@@ -62,7 +62,6 @@ void	reset_input_main(t_data *data)
 
 void	read_input_main(t_data *data)
 {
-	data->line = readline("$> ");
 	if (out_of_bound(data->line))
 		exit(1);
 	while (data->line != NULL)
@@ -71,8 +70,8 @@ void	read_input_main(t_data *data)
 		if (data->line[0] != '\0')
 		{
 			init_commands(data);
-			if (data->n_commands == 0 || data->command_list[0].command == NULL ||
-				data->command_list[0].command[0] == '\0')
+			if (data->n_commands == 0 || data->command_list[0].command == NULL
+				|| data->command_list[0].command[0] == '\0')
 			{
 				no_commands(data);
 				continue ;

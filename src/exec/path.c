@@ -36,7 +36,7 @@ char	*create_path(char *command, char *path)
 	return (try_path);
 }
 
-char	*get_exec_path_return(t_data *data, char *command)
+char	*pathreturn(t_data *data, char *command)
 {
 	dup2(2, STDOUT_FILENO);
 	printf("Command not found: %s\n", command);
@@ -99,23 +99,21 @@ char	*get_exec_path(char *command, t_data *data)
 	if (command == NULL)
 		return (NULL);
 	else if (access(command, X_OK) == 0)
-			return (command);
+		return (command);
 	paths = get_env(data);
 	try_path = NULL;
-	i = 0;
+	i = -1;
 	if (paths && command && command[0] != '\0')
 	{
-		while (paths[i])
+		while (paths[++i])
 		{
 			try_path = create_path(command, paths[i]);
 			if (!try_path)
 				return (free_table(paths), NULL);
 			if (access(try_path, X_OK) == 0)
 				return (free_table(paths), try_path);
-			i++;
 			free(try_path);
 		}
 	}
-	data->last_error = 127;
-	return (free_table(paths), get_exec_path_return(data, command));
+	return (free_table(paths), pathreturn(data, command));
 }
