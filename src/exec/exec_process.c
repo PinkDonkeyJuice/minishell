@@ -56,14 +56,19 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 	int		status;
 	int		last_error;
 	bool	forcequit;
+	pid_t	pid;
 
 	last_error = 0;
 	forcequit = false;
 	close_pipes(data, pipe_list, data->n_commands - 1, -1);
-	while (waitpid(-1, &status, 0) != -1)
+	printf("Last error 1 is %d\n", data->last_error);
+	pid = waitpid(-1, &status, 0);
+	while (pid != -1)
 	{
-		mark_status(status, data, &forcequit);
+		mark_status(status, data, &forcequit, pid);
+		pid = waitpid(-1, &status, 0);
 	}
+	printf("Last error 2 is %d\n", data->last_error);
 	close_safe(data, access_pipe(pipe_list, data->n_commands - 1)->p[1]);
 	if (read((access_pipe(pipe_list, data->n_commands - 1)->p[0]),
 			&(last_error), sizeof(int)) == -1)
@@ -72,31 +77,36 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 	if (forcequit == false)
 		data->last_error = (int)last_error;
 	free_pipes(data->pipe_list);
+	printf("Last error 3 is %d\n", data->last_error);
 }
 
-void	mark_status(int status, t_data *data, bool *forcequit)
+void	mark_status(int status, t_data *data, bool *forcequit, pid_t pid)
 {
 	int	term_sig;
 
-	if (WEXITSTATUS(status) != 0 && is_builtin(data) == 0)
+	printf("Last error mark status is %d\n", data->last_error);
+	if (pid == data->last_pid)
 	{
-		data->last_error = WEXITSTATUS(status);
-		*forcequit = true;
-	}
-	if (WIFSIGNALED(status))
-	{
-		term_sig = WTERMSIG(status);
-		if (term_sig == SIGQUIT)
+		if (WEXITSTATUS(status) != 0 && is_builtin(data) == 0)
 		{
-			write(2, "Quit (core dumped)\n", 20);
-			data->last_error = 131;
+			data->last_error = WEXITSTATUS(status);
+			*forcequit = true;
 		}
-		else if (term_sig == SIGINT)
+		if (WIFSIGNALED(status))
 		{
-			write(2, "\n", 1);
-			data->last_error = 130;
+			term_sig = WTERMSIG(status);
+			if (term_sig == SIGQUIT)
+			{
+				write(2, "Quit (core dumped)\n", 20);
+				data->last_error = 131;
+			}
+			else if (term_sig == SIGINT)
+			{
+				write(2, "\n", 1);
+				data->last_error = 130;
+			}
+			*forcequit = true;
 		}
-		*forcequit = true;
 	}
 }
 

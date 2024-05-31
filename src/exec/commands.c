@@ -22,9 +22,11 @@ void	free_commands(char **commands)
 	while (commands[i])
 	{
 		free(commands[i]);
+		commands[i] = NULL;
 		i++;
 	}
 	free(commands);
+	commands = NULL;
 	return ;
 }
 
@@ -109,7 +111,11 @@ void	handle_commands(t_data *data, t_pipe **pipe_list)
 		if (parent)
 			parent = fork();
 		if (parent)
+		{
 			i++;
+			if (i == data->n_commands)
+				data->last_pid = parent;
+		}
 		if (parent < 0)
 		{
 			perror("fork");

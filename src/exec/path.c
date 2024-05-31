@@ -95,8 +95,9 @@ char	*get_exec_path(char *command, t_data *data)
 	char	**paths;
 	char	*try_path;
 
-	if (command != NULL)
-		if (access(command, X_OK) == 0)
+	if (command == NULL)
+		return (NULL);
+	else if (access(command, X_OK) == 0)
 			return (command);
 	paths = get_env(data);
 	try_path = NULL;

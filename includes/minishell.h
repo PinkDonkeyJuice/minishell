@@ -70,7 +70,9 @@ typedef struct s_data
 {
 	int			fdin;
 	int			fdout;
+
 	size_t		i_command;
+	pid_t		last_pid;
 	char		*heredoc_name;
 	char		*delimiter;
 	int			last_error;
@@ -108,7 +110,7 @@ void		parent_process(t_data *data, t_pipe **pipe_list);
 void		signal_handler_is_sigint(t_data *data);
 char		*expand_line(char *line, t_data *data);
 
-void		mark_status(int status, t_data *data, bool *forcequit);
+void		mark_status(int status, t_data *data, bool *forcequit, pid_t pid);
 
 size_t		end_line(char *str);
 char		*clean(char *str);
@@ -265,5 +267,7 @@ int			search_equal(char *string);
 void		exec_real(t_data *data, size_t i);
 char		**recreate_env(t_data *data);
 void		redir_lasterror(t_data *data, size_t i);
+
+size_t	commands_len(char **commands);
 
 #endif

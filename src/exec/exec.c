@@ -20,15 +20,19 @@ void	do_no_commands(void)
 
 void	redir_lasterror(t_data *data, size_t i)
 {
-	if (data->n_commands > 1)
-		close_safe(data,
-			access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
 	if (i == data->n_commands - 1)
+	{
+		printf("Last error in redir is %d\n", data->last_error);
 		write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1],
 			&(data->last_error), sizeof(int));
-	if (data->n_commands > 1)
+	}
+	if (data->n_commands == 1 || i == data->n_commands - 1)
+	{
 		close_safe(data,
 			access_pipe(data->pipe_list, data->n_commands - 1)->p[1]);
+		close_safe(data,
+			access_pipe(data->pipe_list, data->n_commands - 1)->p[0]);
+	}
 	if (i == data->n_commands - 1)
 		free_pipes(data->pipe_list);
 }
