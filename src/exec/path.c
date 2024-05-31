@@ -41,6 +41,7 @@ char	*get_exec_path_return(t_data *data, char *command)
 	dup2(2, STDOUT_FILENO);
 	printf("Command not found: %s\n", command);
 	free_commands(data->commands);
+	data->commands = NULL;
 	free_command_list(data->command_list);
 	data->last_error = 127;
 	dup2(1, STDOUT_FILENO);

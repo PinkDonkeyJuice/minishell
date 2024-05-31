@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:26:03 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/28 13:24:21 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:50:36 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	redir_lasterror(t_data *data, size_t i)
 {
 	if (i == data->n_commands - 1)
 	{
-		printf("Last error in redir is %d\n", data->last_error);
 		write(access_pipe(data->pipe_list, data->n_commands - 1)->p[1],
 			&(data->last_error), sizeof(int));
 	}

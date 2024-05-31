@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
+/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:45:20 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/28 12:01:44 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:49:44 by gyvergni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	read_input_main(t_data *data)
 		if (data->line[0] != '\0')
 		{
 			init_commands(data);
-			if (data->n_commands == 0)
+			if (data->n_commands == 0 || data->command_list[0].command == NULL ||
+				data->command_list[0].command[0] == '\0')
 			{
 				no_commands(data);
 				continue ;

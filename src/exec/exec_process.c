@@ -61,14 +61,12 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 	last_error = 0;
 	forcequit = false;
 	close_pipes(data, pipe_list, data->n_commands - 1, -1);
-	printf("Last error 1 is %d\n", data->last_error);
 	pid = waitpid(-1, &status, 0);
 	while (pid != -1)
 	{
 		mark_status(status, data, &forcequit, pid);
 		pid = waitpid(-1, &status, 0);
 	}
-	printf("Last error 2 is %d\n", data->last_error);
 	close_safe(data, access_pipe(pipe_list, data->n_commands - 1)->p[1]);
 	if (read((access_pipe(pipe_list, data->n_commands - 1)->p[0]),
 			&(last_error), sizeof(int)) == -1)
@@ -77,14 +75,12 @@ void	parent_process(t_data *data, t_pipe **pipe_list)
 	if (forcequit == false)
 		data->last_error = (int)last_error;
 	free_pipes(data->pipe_list);
-	printf("Last error 3 is %d\n", data->last_error);
 }
 
 void	mark_status(int status, t_data *data, bool *forcequit, pid_t pid)
 {
 	int	term_sig;
 
-	printf("Last error mark status is %d\n", data->last_error);
 	if (pid == data->last_pid)
 	{
 		if (WEXITSTATUS(status) != 0 && is_builtin(data) == 0)
