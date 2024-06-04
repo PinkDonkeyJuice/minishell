@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 12:46:06 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/31 12:55:34 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:49:48 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int			void_event(void);
 
 void		here_doc_sigint(int sig);
 void		no_access_heredoc(t_data *data);
-int			heredoc_signal_handler(void);
+int			heredoc_signal_handler(t_data *data);
 void		signal_handler_is_sigint(t_data *data);
 void		handle_sign_heredoc(t_data *data, char *line);
 
@@ -269,5 +269,7 @@ void		redir_lasterror(t_data *data, size_t i);
 
 size_t		commands_len(char **commands);
 void		start_child_process(t_data *data, t_pipe **pipe_list, size_t i);
+
+void		init_parse_struct(t_parse *c);
 
 #endif
