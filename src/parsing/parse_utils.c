@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:04:51 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/31 12:55:37 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:41:48 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	last_check(t_command *parsed)
 	i = 0;
 	while (parsed[i].command)
 	{
-		if (parsed[i].type == TYPE_OPERATOR && !parsed[i + 1].command)
+		if (parsed[i].type == TYPE_OPERATOR && parsed[i + 1].command == NULL)
 			return (printf("minishell: Syntax error\n"), 0);
 		i++;
 	}

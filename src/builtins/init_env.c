@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:34:45 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/06/04 14:53:22 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:47:37 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	fill_basic_env(t_data *data)
 {
 	char	buf[PATH_MAX];
 	char	*result;
-	char 	*temp;
+	char	*temp;
 
 	getcwd(buf, PATH_MAX);
 	result = ft_strjoin("PWD=", buf);

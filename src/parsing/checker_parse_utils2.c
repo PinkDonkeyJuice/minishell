@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:13:57 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/30 14:18:33 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:50:18 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,10 @@ void	finish_check_var(char *line, char *new_line, t_parse *c, int *h)
 		h = 0;
 	if (line[c->i])
 		i_plusplus_j_plusplus(line, &(c->i), &(c->j));
+}
+
+void	init_parse_struct(t_parse *c)
+{
+	c->i = 0;
+	c->j = 0;
 }

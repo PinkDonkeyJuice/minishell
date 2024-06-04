@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/06/04 15:25:42 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:49:36 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int	check_var_real(char *line, char *new_line, t_data *data)
 	t_parse	c;
 	int		h;
 
-	c.i = 0;
-	c.j = 0;
+	init_parse_struct(&c);
 	h = 0;
 	while (line[c.i])
 	{

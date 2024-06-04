@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyvergni <gyvergni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:45:15 by gyvergni          #+#    #+#             */
-/*   Updated: 2024/05/24 16:47:18 by gyvergni         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:35:11 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ void	here_doc_sigint(int sig)
 	rl_done = 1;
 }
 
-int	heredoc_signal_handler(void)
+int	heredoc_signal_handler(t_data *data)
 {
 	struct sigaction	sa;
 
+	(void) data;
 	ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = here_doc_sigint;
 	if (sigaction(SIGINT, &sa, NULL))

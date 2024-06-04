@@ -27,7 +27,6 @@ void	child_first_command(t_data *data, t_pipe **pipe_list, size_t i)
 
 void	child_process(t_data *data, t_pipe **pipe_list, size_t i)
 {
-	data->last_error = 0;
 	if (i == 0)
 		child_first_command(data, pipe_list, i);
 	else if (i == data->n_commands - 1)

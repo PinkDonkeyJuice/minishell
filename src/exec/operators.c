@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/06/04 15:27:38 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:37:23 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	here_doc(t_data *data)
 
 	i = 0;
 	stop = false;
-	heredoc_signal_handler();
+	heredoc_signal_handler(data);
 	while (!stop)
 	{
 		number = ft_itoa(i);
