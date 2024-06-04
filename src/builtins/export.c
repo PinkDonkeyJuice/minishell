@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:46:31 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/31 11:28:37 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:53:51 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	is_valid(char *var)
 	{
 		if (((var[i] >= '0' && var[i] <= '9') || var[i] == '=') && i == 0)
 			return (0);
+		if (var[i] == '=' && i != 0)
+			return (1);
 		if (!ft_isalnum(var[i]) && var[i] != '_' && var[i] != '=')
 			return (0);
 		i++;
