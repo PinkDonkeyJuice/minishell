@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:34:45 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/29 16:22:57 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/06/04 14:53:22 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,41 @@ void	append_node(t_env **env, char *env_var)
 		node->modifiable = false;
 }
 
+void	fill_basic_env(t_data *data)
+{
+	char	buf[PATH_MAX];
+	char	*result;
+	char 	*temp;
+
+	getcwd(buf, PATH_MAX);
+	result = ft_strjoin("PWD=", buf);
+	if (!result)
+		return ;
+	append_node(&(data->env_c), result);
+	free(result);
+	append_node(&(data->env_c), "SHLVL=1");
+	temp = ft_strjoin(buf, "/./minishell");
+	if (!temp)
+		return ;
+	result = ft_strjoin("_=", temp);
+	if (!result)
+	{
+		free(temp);
+		return ;
+	}
+	append_node(&(data->env_c), result);
+	free(temp);
+	free(result);
+}
+
 void	init_env(char **env, t_data *data)
 {
 	int	i;
 
 	i = 0;
 	data->env_c = NULL;
+	if (env[i] == NULL)
+		fill_basic_env(data);
 	while (env[i])
 	{
 		append_node(&(data->env_c), env[i]);
