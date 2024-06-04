@@ -6,7 +6,7 @@
 /*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 15:48:32 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/30 14:19:40 by nchaize-         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:25:42 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	check_var_real(char *line, char *new_line, t_data *data)
 			if (h == 0)
 				do_dollars(data, line, new_line, &c);
 			new_line[c.j] = line[c.i];
+			if (line[c.i] == '$' && h == 0)
+				continue ;
 		}
 		finish_check_var(line, new_line, &c, &h);
 	}

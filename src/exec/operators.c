@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pinkdonkeyjuice <pinkdonkeyjuice@studen    +#+  +:+       +#+        */
+/*   By: nchaize- <@student.42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:03:59 by nchaize-          #+#    #+#             */
-/*   Updated: 2024/05/29 15:56:07 by pinkdonkeyj      ###   ########.fr       */
+/*   Updated: 2024/06/04 15:27:38 by nchaize-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	read_input_heredoc(t_data *data)
 			data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);
 			return ;
 		}
-		printf("Delimiter is : %s\n", data->delimiter);
 		if (g_signal_handle == SIGINT)
 			return (handle_sign_heredoc(data, line));
 		line = expand_line(line, data);
