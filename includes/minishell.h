@@ -272,4 +272,6 @@ void		start_child_process(t_data *data, t_pipe **pipe_list, size_t i);
 
 void		init_parse_struct(t_parse *c);
 
+int			handle_ctrld(t_data *data);
+
 #endif

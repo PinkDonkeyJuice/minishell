@@ -14,7 +14,7 @@
 
 int	g_signal_handle;
 
-void	read_input_heredoc(t_data *data)
+int	read_input_heredoc(t_data *data)
 {
 	char	*line;
 
@@ -26,10 +26,10 @@ void	read_input_heredoc(t_data *data)
 			if (close(data->fdin) == -1)
 				error(data, "error closing file\n");
 			data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);
-			return ;
+			return (0);
 		}
 		if (g_signal_handle == SIGINT)
-			return (handle_sign_heredoc(data, line));
+			return (handle_sign_heredoc(data, line), 0);
 		line = expand_line(line, data);
 		ft_putstr_fd(line, data->fdin);
 		ft_putstr_fd("\n", data->fdin);
@@ -37,8 +37,8 @@ void	read_input_heredoc(t_data *data)
 		line = readline("$> here_doc: ");
 	}
 	if (line == NULL)
-		printf("warning: here_doc ended with EOF (wanted \'%s\')\n",
-			data->delimiter);
+		return (handle_ctrld(data));
+	return (0);
 }
 
 void	here_doc(t_data *data)
@@ -73,9 +73,6 @@ void	signal_handler_is_sigint(t_data *data)
 {
 	g_signal_handle = 0;
 	data->last_error = 130;
-	if (close(data->fdin) == -1)
-		error(data, "error closing file\n");
-	data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);
 }
 
 void	handle_operator(t_data *data, size_t i)

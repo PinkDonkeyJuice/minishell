@@ -44,3 +44,13 @@ void	handle_sign_heredoc(t_data *data, char *line)
 	signal_handler_is_sigint(data);
 	free(line);
 }
+
+int	handle_ctrld(t_data *data)
+{
+	if (close(data->fdin) == -1)
+		error(data, "error closing file\n");
+	data->fdin = open(data->heredoc_name, O_RDWR | O_CREAT, 0644);
+	printf("warning: here_doc ended with EOF (wanted \'%s\')\n",
+		data->delimiter);
+	return (1);
+}
