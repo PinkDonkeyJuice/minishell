@@ -52,7 +52,6 @@ void	exec_unset(t_data *data)
 				prev_node->next = to_delete->next;
 			if (to_delete->next != NULL)
 				to_delete->next->previous = prev_node;
-			printf("env size = %zu\n", env_len(data->env_c));
 			if (prev_node == NULL)
 				data->env_c = to_delete->next;
 			free_to_delete(to_delete);

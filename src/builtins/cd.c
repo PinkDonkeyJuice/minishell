@@ -27,7 +27,8 @@ void	update_oldpwd(t_data *data, char *path_oldpwd)
 		free(oldpwd->content);
 		oldpwd->content = var_oldpwd;
 	}
-	free(var_oldpwd);
+	else
+		free(var_oldpwd);
 }
 
 void	update_pwd(t_data *data)
