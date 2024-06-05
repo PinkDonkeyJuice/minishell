@@ -17,9 +17,9 @@ int	is_heredoc(char *line, char *new_line, t_parse *c, int *h)
 	new_line[c->j] = line[c->i];
 	c->i += 1;
 	c->j += 1;
+	new_line[c->j] = line[c->i];
 	if (line[c->i] == '<')
 	{
-		new_line[c->j] = line[c->i];
 		*h = 1;
 		return (1);
 	}
